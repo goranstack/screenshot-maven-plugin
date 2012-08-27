@@ -10,3 +10,15 @@ the Maven release commands every time a release should be performed.
 
 Valuable tips of how to release was found at: http://code.google.com/p/maven-install4j/wiki/ReleaseProcedure
 
+
+If you get:
+
+ svn: MKACTIVITY .................: authorization failed: Could not authenticate to server: rejected Basic challenge
+ 
+ 
+ Try to add your svn password to the release prepare command:
+ 
+ mvn release:prepare -Dusername=[username] -Dpassword=[password]
+ 
+ 
+
