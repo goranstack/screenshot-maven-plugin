@@ -1,2 +1,2 @@
 cd ..
-mvn release:prepare -Dusername=goran.stack -DautoVersionSubmodules=true -Dresume=true
+mvn release:prepare -Dusername=goran.stack@gmail.com -DautoVersionSubmodules=true -Dresume=true
