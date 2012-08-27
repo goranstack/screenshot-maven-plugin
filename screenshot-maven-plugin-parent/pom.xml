@@ -2,17 +2,17 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>se.bluebrim.maven.plugin</groupId>
 	<artifactId>screenshot-maven-plugin-parent</artifactId>
-	<version>0.0.6</version>
+	<version>0.0.7-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Screenshot Maven Plugin Parent</name>
 	<description>Parent project to screenshot-maven-plugin and additional modules</description>
 	<url>http://code.google.com/p/screenshot-maven-plugin</url>
 	<scm>
-		<connection>scm:svn:http://screenshot-maven-plugin.googlecode.com/svn/tags/screenshot-maven-plugin-parent-0.0.6
+		<connection>scm:svn:http://screenshot-maven-plugin.googlecode.com/svn/trunk/screenshot-maven-plugin-parent
 		</connection>
-		<developerConnection>scm:svn:https://screenshot-maven-plugin.googlecode.com/svn/tags/screenshot-maven-plugin-parent-0.0.6
+		<developerConnection>scm:svn:https://screenshot-maven-plugin.googlecode.com/svn/trunk/screenshot-maven-plugin-parent
 		</developerConnection>
-		<url>http://code.google.com/p/screenshot-maven-plugin/source/browse/tags/screenshot-maven-plugin-parent-0.0.6</url>
+		<url>http://code.google.com/p/screenshot-maven-plugin/source/browse</url>
 	</scm>
 	<properties>
 		<jettyPort>8080</jettyPort>
