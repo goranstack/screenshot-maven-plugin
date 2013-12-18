@@ -240,6 +240,19 @@ public class SampleUtil {
 	        }
 	    }
 	}
+	
+	/**
+	 * This is an alternative approach to headless layout. <br>
+	 * Some components can't be properly be layouted without having a peer. The peer is normally created when the component is showed in i window.
+	 * Our usage of Swing components requires layout to be performed without displaying in a window (JFrame).
+	 * Found at: <a href="http://stackoverflow.com/questions/12500952/when-creating-a-bufferedimage-from-a-jpanel-w-o-a-jframe-can-i-also-use-a-lay">When creating a BufferedImage from a JPanel (w/o a JFrame), can I also use a layout manager?</a>
+	 */
+	public static void headlessPack(Component c) {
+		c.addNotify(); 
+		c.validate();
+		c.setSize(c.getPreferredSize());
+	}
+
 
 
 }
