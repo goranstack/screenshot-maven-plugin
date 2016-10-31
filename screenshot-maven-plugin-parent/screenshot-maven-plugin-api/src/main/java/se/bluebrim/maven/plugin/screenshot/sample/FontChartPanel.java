@@ -33,8 +33,8 @@ import javax.swing.JPanel;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
-import org.apache.commons.lang.mutable.MutableBoolean;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil.StaticMethodVisitor;
 

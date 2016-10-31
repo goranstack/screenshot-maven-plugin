@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 
 import javax.swing.JComponent;
 
-import org.apache.commons.lang.mutable.MutableBoolean;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 
 
 /**

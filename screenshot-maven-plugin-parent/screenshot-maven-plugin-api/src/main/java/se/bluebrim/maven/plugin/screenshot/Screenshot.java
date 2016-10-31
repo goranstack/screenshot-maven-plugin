@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * Used to annotate method in test classes that returns a JComponent suitable
@@ -21,7 +21,7 @@ public @interface Screenshot {
 	 * Specify the class that should be associated with the screen shot. Can be omitted if the screen shot 
 	 * method returns that class.
 	 */
-	Class targetClass() default ObjectUtils.Null.class;
+	Class<?> targetClass() default ObjectUtils.Null.class;
 	
 	/**
 	 * Used to generate different file names for several screen shots of the same class 

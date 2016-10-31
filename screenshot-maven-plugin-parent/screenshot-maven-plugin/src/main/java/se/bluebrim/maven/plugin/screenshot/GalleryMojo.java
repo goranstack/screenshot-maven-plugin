@@ -27,21 +27,21 @@ public class GalleryMojo extends AbstractMavenReport
 	/**
 	 * The directory containing generated test classes of the project.
 	 * 
-	 * @parameter expression="${project.build.testOutputDirectory}"
+	 * @parameter property="project.build.testOutputDirectory"
 	 */
 	protected File testClassesDirectory;
 	
 	/**
 	 * The directory containing generated classes of the project.
 	 * 
-	 * @parameter expression="${project.build.outputDirectory}"
+	 * @parameter property="project.build.outputDirectory"
 	 */
 	protected File classesDirectory;
 	
     /**
      * The classpath elements of the project being tested.
      *
-     * @parameter expression="${project.testClasspathElements}"
+     * @parameter property="project.testClasspathElements"
      * @required
      * @readonly
      */
@@ -65,7 +65,7 @@ public class GalleryMojo extends AbstractMavenReport
     /**
      * Directory where reports will go.
      *
-     * @parameter expression="${project.reporting.outputDirectory}"
+     * @parameter property="project.reporting.outputDirectory"
      * @required
      * @readonly
      */
@@ -79,7 +79,7 @@ public class GalleryMojo extends AbstractMavenReport
     private MavenProject project;
     
     /**
-     * @parameter expression="${rectorProjects}"
+     * @parameter property="rectorProjects"
      * @readonly
      */
     private ArrayList reactorProjects;

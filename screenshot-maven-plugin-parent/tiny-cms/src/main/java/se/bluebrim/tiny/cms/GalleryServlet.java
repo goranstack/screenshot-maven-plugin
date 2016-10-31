@@ -9,7 +9,6 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.text.StrTokenizer;
+import org.apache.commons.lang3.text.StrTokenizer;
 
 /**
  * The image Docbook template is based on: http://www.docbook.org/tdg/en/html/imageobject.html

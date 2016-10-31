@@ -17,8 +17,8 @@ import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.parser.ParserDelegator;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.mutable.MutableBoolean;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.maven.plugin.AbstractMojo;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
