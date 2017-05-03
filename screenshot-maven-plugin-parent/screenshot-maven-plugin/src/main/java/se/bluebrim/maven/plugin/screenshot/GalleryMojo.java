@@ -72,7 +72,7 @@ public class GalleryMojo extends AbstractMavenReport
     private String outputDirectory;
 
     /**
-     * @parameter default-value="${project}"
+     * @parameter default-value="project"
      * @required
      * @readonly
      */

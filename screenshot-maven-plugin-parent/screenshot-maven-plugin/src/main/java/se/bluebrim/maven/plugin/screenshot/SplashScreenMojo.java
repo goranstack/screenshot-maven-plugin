@@ -5,7 +5,6 @@ import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -21,6 +20,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.sonatype.plexus.build.incremental.BuildContext;
 
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
 
@@ -38,6 +38,8 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
  */
 public class SplashScreenMojo extends AbstractMojo
 {
+	  /** @component */
+	  private BuildContext buildContext;
 
     /**
      * The name of the splash screen panel class that will be rendered to the specified image file
@@ -58,7 +60,7 @@ public class SplashScreenMojo extends AbstractMojo
 	/**
 	 * The directory containing generated classes of the project.
 	 * 
-	 * @parameter expression="${project.build.outputDirectory}"
+	 * @parameter expression="project.build.outputDirectory"
 	 */
 	private File classesDirectory;
 	
@@ -66,7 +68,7 @@ public class SplashScreenMojo extends AbstractMojo
 	/**
      * The classpath elements of the project being tested.
      *
-     * @parameter expression="${project.testClasspathElements}"
+     * @parameter expression="project.testClasspathElements"
      * @required
      * @readonly
      */
@@ -75,39 +77,23 @@ public class SplashScreenMojo extends AbstractMojo
 	
 	public void execute() throws MojoExecutionException, MojoFailureException
 	{
-		getLog().info("Splash screen executed. Creating an image of: \"" + splashScreenPanelClassName + "\" and writing it to: \"" + imageFile.getPath() + "\"", null);
+//		getLog().info("Splash screen executed. Creating an image of: \"" + splashScreenPanelClassName + "\" and writing it to: \"" + imageFile.getPath() + "\"", null);
 		try {
 			imageFile.getParentFile().mkdirs();
 			imageFile.createNewFile();
 			BufferedImage splashScreenImage = createSplashScreenImage();
 			ImageIO.write(splashScreenImage, FilenameUtils.getExtension(imageFile.getName()), imageFile);
-		} catch (MalformedURLException e) {
+			buildContext.refresh(imageFile);
+		} catch (Exception e) {
 			getLog().error(e);
-		} catch (SecurityException e) {
-			getLog().error(e);
-		} catch (IllegalArgumentException e) {
-			getLog().error(e);
-		} catch (ClassNotFoundException e) {
-			getLog().error(e);
-		} catch (NoSuchMethodException e) {
-			getLog().error(e);
-		} catch (InstantiationException e) {
-			getLog().error(e);
-		} catch (IllegalAccessException e) {
-			getLog().error(e);
-		} catch (InvocationTargetException e) {
-			getLog().error(e);
-		} catch (IOException e) {
-			getLog().error(e);
-		}		
+		} 
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	private BufferedImage createSplashScreenImage() throws MalformedURLException, ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException
 	{
-		Class splashScreenPanelClass = Class.forName(splashScreenPanelClassName, true, createClassLoader());
-		Constructor	constructor = splashScreenPanelClass.getConstructor(new Class[]{});
+		Class<?> splashScreenPanelClass = Class.forName(splashScreenPanelClassName, true, createClassLoader());
+		Constructor<?>	constructor = splashScreenPanelClass.getConstructor(new Class[]{});
 		JComponent splashScreen = (JComponent)constructor.newInstance( new Object[]{});	
 		return ripSwingComponent(splashScreen);
 	}

@@ -25,28 +25,28 @@ public class UploadMojo extends AbstractMojo
 	/**
 	 * The directory containing generated test classes of the project.
 	 * 
-	 * @parameter expression="${project.build.testOutputDirectory}"
+	 * @parameter expression="project.build.testOutputDirectory"
 	 */
 	protected File testClassesDirectory;
 	
 	/**
 	 * The directory containing generated classes of the project.
 	 * 
-	 * @parameter expression="${project.build.outputDirectory}"
+	 * @parameter expression="project.build.outputDirectory"
 	 */
 	protected File classesDirectory;
 	
     /**
      * The classpath elements of the project being tested.
      *
-     * @parameter expression="${project.testClasspathElements}"
+     * @parameter expression="project.testClasspathElements"
      * @required
      * @readonly
      */
     private ArrayList<String> testClasspathElements;
     
     /**
-     * @parameter default-value="${project}"
+     * @parameter default-value="project"
      * @required
      * @readonly
      */

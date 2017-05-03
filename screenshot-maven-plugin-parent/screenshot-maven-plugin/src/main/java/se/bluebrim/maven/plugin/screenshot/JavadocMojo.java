@@ -53,7 +53,7 @@ public class JavadocMojo extends AbstractMojo
 	/**
 	 * Directory containing the Java source code
 	 * 
-	 * @parameter expression="${project.build.sourceDirectory}"
+	 * @parameter expression="project.build.sourceDirectory"
 	 * @required
 	 */
 	protected File sourceDirectory;
@@ -61,21 +61,21 @@ public class JavadocMojo extends AbstractMojo
 	/**
 	 * The directory containing generated test classes of the project.
 	 * 
-	 * @parameter expression="${project.build.testOutputDirectory}"
+	 * @parameter expression="project.build.testOutputDirectory"
 	 */
 	protected File testClassesDirectory;
 	
 	/**
 	 * The directory containing generated classes of the project.
 	 * 
-	 * @parameter expression="${project.build.outputDirectory}"
+	 * @parameter expression="project.build.outputDirectory"
 	 */
 	protected File classesDirectory;
 	
 	/**
      * The classpath elements of the project being tested.
      *
-     * @parameter expression="${project.testClasspathElements}"
+     * @parameter expression="project.testClasspathElements"
      * @required
      * @readonly
      */
