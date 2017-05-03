@@ -146,15 +146,4 @@ $RECYCLE.BIN/
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
-### ATG POS application ###
-log/
-printed-documents/
-scanned-images/
-scanned-coupons/
-A4ScannerOut.txt
-BarcodeScannerOut.txt
-derbydb/
-derby.log
-pdf-fonts/
-
 # End of https://www.gitignore.io/api/java,eclipse,maven,svn
