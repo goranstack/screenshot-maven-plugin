@@ -4,13 +4,13 @@
 	<parent>
 		<artifactId>screenshot-maven-plugin-parent</artifactId>
 		<groupId>se.bluebrim.maven.plugin</groupId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.7</version>
 	</parent>
 	<artifactId>screenshot-examples</artifactId>
 	<name>Screenshot Examples</name>
 	<description>Code example how to use the maven-screenshot-plugin</description>
 	<properties>
-		<screenshot-maven-plugin-version>0.0.7-SNAPSHOT</screenshot-maven-plugin-version>
+		<screenshot-maven-plugin-version>0.0.7</screenshot-maven-plugin-version>
 	</properties>	
 	<build>
 		<plugins>
