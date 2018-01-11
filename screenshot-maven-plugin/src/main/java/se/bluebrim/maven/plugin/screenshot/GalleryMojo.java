@@ -6,6 +6,11 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.maven.doxia.siterenderer.Renderer;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
@@ -17,78 +22,68 @@ import org.apache.maven.reporting.MavenReportException;
  * <p> @see <a href="http://teleal.org/weblog/Howto%20write%20a%20Maven%20report%20plugin.html">How to write a Maven report plugin 2010-03-05T12:30:00CET</a>
  * 
  * @author G Stack
- * @goal gallery
- * @phase site
- * @requiresDependencyResolution test
+ *
  */
+@Mojo( name = "gallery", defaultPhase = LifecyclePhase.SITE, requiresDependencyResolution = ResolutionScope.TEST )
 public class GalleryMojo extends AbstractMavenReport
 {
 
 	/**
 	 * The directory containing generated test classes of the project.
 	 * 
-	 * @parameter property="project.build.testOutputDirectory"
 	 */
+	@Parameter( defaultValue = "${project.build.testOutputDirectory}", readonly = true )
 	protected File testClassesDirectory;
 	
 	/**
 	 * The directory containing generated classes of the project.
 	 * 
-	 * @parameter property="project.build.outputDirectory"
 	 */
+	@Parameter( defaultValue = "${project.build.outputDirectory}", readonly = true )
 	protected File classesDirectory;
 	
     /**
      * The classpath elements of the project being tested.
      *
-     * @parameter property="project.testClasspathElements"
-     * @required
-     * @readonly
      */
+	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )
 	private ArrayList<String> testClasspathElements;
 
 	/**
      * URL to the source code used to build the source code links under each screenshot image in the report
      *
-     * @parameter
-     * @required
      */
+	@Parameter ( required = true )
 	private String sourceCodeURL;
 	
 	/**
      * Maximum screenshot width
      *
-     * @parameter default-value="600" 
      */
+	@Parameter ( defaultValue = "600" )
 	private int maxWidth;
 	
     /**
      * Directory where reports will go.
      *
-     * @parameter property="project.reporting.outputDirectory"
-     * @required
-     * @readonly
      */
+	@Parameter( defaultValue = "${project.reporting.outputDirectory}", readonly = true, required = true )
     private String outputDirectory;
 
     /**
-     * @parameter default-value="project"
-     * @required
-     * @readonly
+     * 
      */
+	@Parameter( defaultValue = "${project}", readonly = true )
     private MavenProject project;
     
     /**
-     * @parameter property="rectorProjects"
-     * @readonly
+     * Reactor projects
+     * 
      */
+	@Parameter( defaultValue = "${rectorProjects}", readonly = true )
     private ArrayList reactorProjects;
 
-    /**
-     * @component
-     * @required
-     * @readonly
-     */
+	@Component
     private Renderer siteRenderer;
 
 	@Override

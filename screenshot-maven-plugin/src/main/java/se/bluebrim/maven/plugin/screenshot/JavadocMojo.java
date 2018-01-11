@@ -3,20 +3,24 @@ package se.bluebrim.maven.plugin.screenshot;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.swing.text.html.parser.ParserDelegator;
+
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 
 
 /**
  * Mojo that generates screen shots to be included in the Javadoc for the panel class that is the source of the screenshot. 
  * 
- * @goal javadoc
- * @requiresDependencyResolution test
  * 
  * @author G Stack
  * 
  */
+@Mojo( name = "javadoc", requiresDependencyResolution = ResolutionScope.TEST )
 public class JavadocMojo extends AbstractMojo
 {
 
@@ -26,8 +30,8 @@ public class JavadocMojo extends AbstractMojo
      * 0.6 is a recommended value.<br>
      * Must be > 0.0 and =< 1.0
      *
-     * @parameter default-value="1"
      */
+	@Parameter ( defaultValue = "1" )
     private float javaDocImageScale = 1f;
 
     /**
@@ -39,46 +43,44 @@ public class JavadocMojo extends AbstractMojo
      * image tags are done by looping through the lines and trying to find the insertion point by simple string
      * comparision. This is the naive part that should be improved. 
      * 
-     * @parameter default-value="false"
      */
+	@Parameter ( defaultValue = "false" )
     private boolean updateSrcFiles = false;
 
     /**
      * The encoding of the Java source files to be used when the parameter {@code updateSrcFiles = true}
      * If not specified the default encoding of the platform will be used.
      * 
-     * @parameter
      */
+	@Parameter
     private String srcFileEncoding;
+    
 	/**
 	 * Directory containing the Java source code
 	 * 
-	 * @parameter expression="project.build.sourceDirectory"
-	 * @required
 	 */
+	@Parameter( defaultValue = "${project.build.sourceDirectory}", readonly = true )
 	protected File sourceDirectory;
 
 	/**
 	 * The directory containing generated test classes of the project.
 	 * 
-	 * @parameter expression="project.build.testOutputDirectory"
 	 */
+	@Parameter( defaultValue = "${project.build.testOutputDirectory}", readonly = true )
 	protected File testClassesDirectory;
 	
 	/**
 	 * The directory containing generated classes of the project.
 	 * 
-	 * @parameter expression="project.build.outputDirectory"
 	 */
+	@Parameter( defaultValue = "${project.build.outputDirectory}", readonly = true )
 	protected File classesDirectory;
 	
 	/**
      * The classpath elements of the project being tested.
      *
-     * @parameter expression="project.testClasspathElements"
-     * @required
-     * @readonly
      */
+	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )
     private ArrayList<String> testClasspathElements;
 
 

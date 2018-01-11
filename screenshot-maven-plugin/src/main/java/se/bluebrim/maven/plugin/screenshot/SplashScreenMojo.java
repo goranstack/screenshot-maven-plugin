@@ -20,6 +20,10 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.Component;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.sonatype.plexus.build.incremental.BuildContext;
 
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
@@ -30,48 +34,43 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
  * that uses the JVM splash screen feature for an early splash screen that is preceded
  * by Swing panel based splash screen for rich progress feedback. 
  * 
- * @goal splashscreen
- * @requiresDependencyResolution test
- * 
  * @author G Stack
  * 
  */
+@Mojo( name = "splashscreen", requiresDependencyResolution = ResolutionScope.TEST )
 public class SplashScreenMojo extends AbstractMojo
 {
-	  /** @component */
+	  @Component
 	  private BuildContext buildContext;
 
     /**
      * The name of the splash screen panel class that will be rendered to the specified image file
      * 
-     * @parameter
- 	 * @required
     */
+	@Parameter (required = true)  
 	private String splashScreenPanelClassName;
+	
 	/**
 	 * The image file where the splash screen image is written. The extension will be used as the image type
 	 * argument to the {@link ImageIO#write(java.awt.image.RenderedImage, String, File)} call.
 	 * 
-	 * @parameter
-	 * @required
 	 */
+	@Parameter (required = true)  
 	private File imageFile;
 
 	/**
 	 * The directory containing generated classes of the project.
 	 * 
-	 * @parameter expression="project.build.outputDirectory"
 	 */
+	@Parameter( defaultValue = "${project.build.outputDirectory}", readonly = true )
 	private File classesDirectory;
 	
 	
 	/**
      * The classpath elements of the project being tested.
      *
-     * @parameter expression="project.testClasspathElements"
-     * @required
-     * @readonly
      */
+	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )
     private ArrayList<String> testClasspathElements;
 	
 	
