@@ -10,7 +10,7 @@
 	<name>SwingSet3 Demo Application</name>
 	<description>The SwingSet3 application adjusted to Maven conventions with additional test classes and JavaDoc screenshots.</description>
 	<properties>
-		<screenshot-maven-plugin-version>0.0.7</screenshot-maven-plugin-version>
+		<screenshot-maven-plugin-version>0.0.8-SNAPSHOT</screenshot-maven-plugin-version>
 	</properties>
 	<build>
 		<!-- Include source files in the target jar -->

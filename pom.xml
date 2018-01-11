@@ -23,6 +23,9 @@
 		<repo.snapshot.id>svn-maven-repo-snapshots</repo.snapshot.id>
 		<repo.snapshot.url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo-snapshot</repo.snapshot.url>
 	</properties>
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
 	<build>
 		<resources>
 			<resource>
