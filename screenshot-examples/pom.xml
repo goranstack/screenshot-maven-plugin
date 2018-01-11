@@ -4,14 +4,14 @@
 	<parent>
 		<artifactId>screenshot-maven-plugin-parent</artifactId>
 		<groupId>se.bluebrim.maven.plugin</groupId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.8-SNAPSHOT</version>
 	</parent>
 	<artifactId>screenshot-examples</artifactId>
 	<name>Screenshot Examples</name>
 	<description>Code example how to use the maven-screenshot-plugin</description>
 	<properties>
-		<screenshot-maven-plugin-version>0.0.7-SNAPSHOT</screenshot-maven-plugin-version>
-	</properties>	
+		<screenshot-maven-plugin-version>0.0.7</screenshot-maven-plugin-version>
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
@@ -20,23 +20,20 @@
 				<version>${screenshot-maven-plugin-version}</version>
 				<configuration>
 					<goalPrefix>screenshot</goalPrefix>
-					<!--
-						Can't use ${project.scm.url} because that is appended with
-						artifactId of the module. See:
-						http://jira.codehaus.org/browse/MNG-2290
-					-->
+					<!-- Can't use ${project.scm.url} because that is appended with artifactId 
+						of the module. See: http://jira.codehaus.org/browse/MNG-2290 -->
 					<sourceCodeURL>http://code.google.com/p/screenshot-maven-plugin/source/browse/trunk/screenshot-maven-plugin-parent/${project.artifactId}/src/main/java</sourceCodeURL>
 					<javaDocImageScale>0.6</javaDocImageScale>
-						<locales>
-							<localeSpec>
-								<language>en</language>
-								<country>US</country>
-							</localeSpec>
-							<localeSpec>
-								<language>sv</language>
-								<country>SE</country>
-							</localeSpec>
-						</locales>
+					<locales>
+						<localeSpec>
+							<language>en</language>
+							<country>US</country>
+						</localeSpec>
+						<localeSpec>
+							<language>sv</language>
+							<country>SE</country>
+						</localeSpec>
+					</locales>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -60,6 +57,12 @@
 			<groupId>org.swinglabs</groupId>
 			<artifactId>swingx</artifactId>
 			<version>1.6.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout-swing</artifactId>
+			<version>5.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

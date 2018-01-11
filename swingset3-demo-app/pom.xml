@@ -4,13 +4,13 @@
 	<parent>
 		<artifactId>screenshot-maven-plugin-parent</artifactId>
 		<groupId>se.bluebrim.maven.plugin</groupId>
-		<version>0.0.7-SNAPSHOT</version>
+		<version>0.0.8-SNAPSHOT</version>
 	</parent>
 	<artifactId>swingset3-demo-app</artifactId>
 	<name>SwingSet3 Demo Application</name>
 	<description>The SwingSet3 application adjusted to Maven conventions with additional test classes and JavaDoc screenshots.</description>
 	<properties>
-		<screenshot-maven-plugin-version>0.0.7-SNAPSHOT</screenshot-maven-plugin-version>
+		<screenshot-maven-plugin-version>0.0.7</screenshot-maven-plugin-version>
 	</properties>
 	<build>
 		<!-- Include source files in the target jar -->

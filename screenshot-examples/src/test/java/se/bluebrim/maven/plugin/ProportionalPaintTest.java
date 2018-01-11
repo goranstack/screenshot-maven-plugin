@@ -13,15 +13,14 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import net.miginfocom.swing.MigLayout;
-
 import org.jdesktop.swingx.JXFrame;
 import org.jdesktop.swingx.JXPanel;
 import org.jdesktop.swingx.painter.MattePainter;
 
-import se.bluebrim.maven.plugin.screenshot.sample.NamedSamplePanel;
-
 import com.sun.scenario.scenegraph.ProportionalPaint;
+
+import net.miginfocom.swing.MigLayout;
+import se.bluebrim.maven.plugin.screenshot.sample.NamedSamplePanel;
 
 /**
  * 
