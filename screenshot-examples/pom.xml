@@ -22,7 +22,7 @@
 					<goalPrefix>screenshot</goalPrefix>
 					<!-- Can't use ${project.scm.url} because that is appended with artifactId 
 						of the module. See: http://jira.codehaus.org/browse/MNG-2290 -->
-					<sourceCodeURL>http://code.google.com/p/screenshot-maven-plugin/source/browse/trunk/screenshot-maven-plugin-parent/${project.artifactId}/src/main/java</sourceCodeURL>
+					<sourceCodeURL>https://github.com/goranstack/screenshot-maven-plugin/tree/master/${project.artifactId}/src/main/java</sourceCodeURL>
 					<javaDocImageScale>0.6</javaDocImageScale>
 					<locales>
 						<localeSpec>
@@ -40,16 +40,16 @@
 	</build>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>google-code</id>
+			<id>github</id>
 			<name>Screenshot Maven Plugin Repo</name>
-			<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+			<url>https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</url>
 		</pluginRepository>
 	</pluginRepositories>
 	<repositories>
 		<repository>
-			<id>google-code</id>
+			<id>github</id>
 			<name>Screenshot Maven API Repo</name>
-			<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+			<url>https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</url>
 		</repository>
 	</repositories>
 	<dependencies>

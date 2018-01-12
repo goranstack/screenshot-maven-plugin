@@ -6,22 +6,20 @@
 	<packaging>pom</packaging>
 	<name>Screenshot Maven Plugin Parent</name>
 	<description>Parent project to screenshot-maven-plugin and additional modules</description>
-	<url>http://code.google.com/p/screenshot-maven-plugin</url>
+	<url>https://github.com/goranstack/screenshot-maven-plugin</url>
 	<scm>
-		<connection>scm:svn:http://screenshot-maven-plugin.googlecode.com/svn/trunk/screenshot-maven-plugin-parent
-		</connection>
-		<developerConnection>scm:svn:https://screenshot-maven-plugin.googlecode.com/svn/trunk/screenshot-maven-plugin-parent
-		</developerConnection>
-		<url>http://code.google.com/p/screenshot-maven-plugin/source/browse</url>
+		<connection>scm:git:git@github.com:goranstack/screenshot-maven-plugin.git</connection>
+		<developerConnection>scm:git:git@github.com:goranstack/screenshot-maven-plugin.git</developerConnection>
+		<url>scm:git:https://github.com/goranstack/screenshot-maven-plugin</url>
 	</scm>
 	<properties>
 		<jettyPort>8080</jettyPort>
 		<!-- http://maven.apache.org/general.html#encoding-warning -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<repo.release.id>svn-maven-repo-relases</repo.release.id>
-		<repo.release.url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</repo.release.url>
-		<repo.snapshot.id>svn-maven-repo-snapshots</repo.snapshot.id>
-		<repo.snapshot.url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo-snapshot</repo.snapshot.url>
+		<repo.release.id>git-maven-repo-relases</repo.release.id>
+		<repo.release.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</repo.release.url>
+		<repo.snapshot.id>git-maven-repo-snapshots</repo.snapshot.id>
+		<repo.snapshot.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo-snapshot</repo.snapshot.url>
 	</properties>
 	<prerequisites>
 		<maven>3.0</maven>
