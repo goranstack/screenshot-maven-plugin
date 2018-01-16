@@ -14,8 +14,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 
 /**
- * Mojo that removes all uploaded screenshots from the content management system. 
- * 
+ * Remove all uploaded screenshots from the content management system. 
  * 
  * @author G Stack
  * 

@@ -30,7 +30,7 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
 
 
 /**
- * Mojo that generates an image file of a splash screen panel to be used in applications
+ * Generates an image file of a splash screen panel to be used in applications
  * that uses the JVM splash screen feature for an early splash screen that is preceded
  * by Swing panel based splash screen for rich progress feedback. 
  * 
@@ -67,7 +67,7 @@ public class SplashScreenMojo extends AbstractMojo
 	
 	
 	/**
-     * The classpath elements of the project being tested.
+     * The classpath elements of the project being processed.
      *
      */
 	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )

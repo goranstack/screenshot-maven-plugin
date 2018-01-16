@@ -7,6 +7,15 @@
 	<name>Screenshot Maven Plugin Parent</name>
 	<description>Parent project to screenshot-maven-plugin and additional modules</description>
 	<url>https://github.com/goranstack/screenshot-maven-plugin</url>
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+		</license>
+	</licenses>
 	<scm>
 		<connection>scm:git:git@github.com:goranstack/screenshot-maven-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:goranstack/screenshot-maven-plugin.git</developerConnection>
@@ -21,9 +30,6 @@
 		<repo.snapshot.id>git-maven-repo-snapshots</repo.snapshot.id>
 		<repo.snapshot.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo-snapshot</repo.snapshot.url>
 	</properties>
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
 	<build>
 		<resources>
 			<resource>

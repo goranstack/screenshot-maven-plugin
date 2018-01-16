@@ -30,16 +30,15 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 import org.jdesktop.swingx.image.GaussianBlurFilter;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.type.filter.AnnotationTypeFilter;
+import org.reflections.Reflections;
+import org.reflections.scanners.MethodAnnotationsScanner;
+import org.reflections.util.ConfigurationBuilder;
+
+import com.keypoint.PngEncoder;
 
 import se.bluebrim.maven.plugin.screenshot.decorate.DecoratorUtils;
 import se.bluebrim.maven.plugin.screenshot.decorate.ScreenshotDecorator;
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
-
-import com.keypoint.PngEncoder;
 
 /**
  * Abstract super class to objects that scans test classes for methods annotated with Screenshot annotation.
@@ -226,6 +225,14 @@ public abstract class ScreenshotScanner {
 		return urls;
 	}
 	
+	
+	private URL getURLtoScan() {
+		try {
+			return testClassesDirectory.toURI().toURL();
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 	
 	/**
@@ -239,23 +246,27 @@ public abstract class ScreenshotScanner {
 	 */
 	public void annotationScan()
 	{
-		ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
-		scanner.setResourceLoader(new DefaultResourceLoader(createAnnotationScanClassLoader()));
-		scanner.addIncludeFilter(new AnnotationTypeFilter(Screenshot.class));
-		Set<BeanDefinition> candidateComponents = scanner.findCandidateComponents("");
-		getLog().info("Found: " + candidateComponents.size() + " screenshot annotaded classes");
+		ClassLoader classLoader = createClassLoader();
+		screenshotAnnotation = loadAnnotationClass(Screenshot.class.getName(), classLoader);
+		Reflections reflections = null;
+			reflections = new Reflections(new ConfigurationBuilder()
+					.setUrls(getURLtoScan())
+					.addClassLoader(classLoader)
+					.setScanners(new MethodAnnotationsScanner()));
+				
+		Set<Method> annotadedMethods = reflections.getMethodsAnnotatedWith(Screenshot.class);
+
+		getLog().info("Found: " + annotadedMethods.size() + " screenshot annotaded methods");
 
 		ClassLoader oldContextClassLoader = Thread.currentThread().getContextClassLoader();
 		try
 		{
 			List<Locale> locales = getLocales();
-			ClassLoader classLoader;
 			for (Locale locale : locales) 
 			{
 				Locale.setDefault(locale);
-				classLoader = createClassLoader();
 				Thread.currentThread().setContextClassLoader(classLoader);
-				processCandidateClasses(candidateComponents, classLoader, screenshotAnnotation = loadAnnotationClass(Screenshot.class.getName(), classLoader));
+				processAnnotadedMethods(annotadedMethods);
 				classLoader = null;
 				Thread.currentThread().setContextClassLoader(null);
 				screenshotAnnotation = null;
@@ -282,53 +293,18 @@ public abstract class ScreenshotScanner {
 	/**
 	 * Process classes with one ore more screenshot annotated method
 	 */
-	@SuppressWarnings("unchecked")
-	private void processCandidateClasses(Set<BeanDefinition> candidateComponents, ClassLoader classLoader, Class screenshotAnnotation)
+	private void processAnnotadedMethods(Set<Method> annotadedMethods)
 	{
-		for (BeanDefinition bd : candidateComponents)
+		for (Method method : annotadedMethods)
 		{
-			getLog().debug("Found screenshot annotaded class: " + bd.getBeanClassName());
-			Class<?> candidateClass = loadClass(bd.getBeanClassName() ,classLoader);
-
-			for (Method method : candidateClass.getMethods())
-			{
-				getLog().debug("Checking method: \"" + method.getName() + "\" for screenshot annotation");
-				if (method.isAnnotationPresent(screenshotAnnotation))
-				{
-					getLog().debug("The method: \"" + method.getName() + "\" is annotated with Screenshot");
-					handleFoundMethod(candidateClass, method);
-				}
-			}
+			getLog().debug("The method: \"" + method.getName() + "\" is annotated with Screenshot");
+			handleFoundMethod(method.getDeclaringClass(), method);
 		}
+
 	}
 
-	private Class<?> loadClass(String testClassName, ClassLoader classLoader)
-	{
-		try
-		{
-			return classLoader.loadClass(testClassName);
-		} catch (ClassNotFoundException e)
-		{
-			throw new RuntimeException(e);
-		}
-	}
-
-	/**
-	 * Create a class loader that can be used in the resource loader injected in to the ClassPathScanningCandidateComponentProvider
-	 */
-	private ClassLoader createAnnotationScanClassLoader()
-	{
-		try
-		{
-			return new URLClassLoader(new URL[]{testClassesDirectory.toURI().toURL()});
-		} catch (MalformedURLException e)
-		{
-			throw new RuntimeException(e);
-		}
-	}
 	
-	@SuppressWarnings("unchecked")
-	protected Object callScreenshotMethod(Class targetClass, Method screenshotMethod)
+	protected Object callScreenshotMethod(Class<?> targetClass, Method screenshotMethod)
 	{
 		try
 		{

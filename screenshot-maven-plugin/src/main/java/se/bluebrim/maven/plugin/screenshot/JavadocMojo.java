@@ -14,7 +14,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 
 
 /**
- * Mojo that generates screen shots to be included in the Javadoc for the panel class that is the source of the screenshot. 
+ * Generates screenshots to be included in the Javadoc for the panel class that is the source of the screenshot. 
  * 
  * 
  * @author G Stack
@@ -63,21 +63,21 @@ public class JavadocMojo extends AbstractMojo
 	protected File sourceDirectory;
 
 	/**
-	 * The directory containing generated test classes of the project.
+	 * The directory containing compiled test classes of the project.
 	 * 
 	 */
 	@Parameter( defaultValue = "${project.build.testOutputDirectory}", readonly = true )
 	protected File testClassesDirectory;
 	
 	/**
-	 * The directory containing generated classes of the project.
+	 * The directory containing compiled classes of the project.
 	 * 
 	 */
 	@Parameter( defaultValue = "${project.build.outputDirectory}", readonly = true )
 	protected File classesDirectory;
 	
 	/**
-     * The classpath elements of the project being tested.
+     * The classpath elements of the project being processed.
      *
      */
 	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )

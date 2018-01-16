@@ -18,8 +18,7 @@ import org.apache.maven.reporting.MavenReportException;
 
 
 /**
- * Mojo that generates a screen shots gallery report.
- * <p> @see <a href="http://teleal.org/weblog/Howto%20write%20a%20Maven%20report%20plugin.html">How to write a Maven report plugin 2010-03-05T12:30:00CET</a>
+ * Generates a screenshots gallery report. 
  * 
  * @author G Stack
  *
@@ -29,21 +28,21 @@ public class GalleryMojo extends AbstractMavenReport
 {
 
 	/**
-	 * The directory containing generated test classes of the project.
+	 * The directory containing compiled test classes of the project.
 	 * 
 	 */
 	@Parameter( defaultValue = "${project.build.testOutputDirectory}", readonly = true )
 	protected File testClassesDirectory;
 	
 	/**
-	 * The directory containing generated classes of the project.
+	 * The directory containing compiled classes of the project.
 	 * 
 	 */
 	@Parameter( defaultValue = "${project.build.outputDirectory}", readonly = true )
 	protected File classesDirectory;
 	
     /**
-     * The classpath elements of the project being tested.
+     * The classpath elements of the project being processed.
      *
      */
 	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )
@@ -70,16 +69,9 @@ public class GalleryMojo extends AbstractMavenReport
 	@Parameter( defaultValue = "${project.reporting.outputDirectory}", readonly = true, required = true )
     private String outputDirectory;
 
-    /**
-     * 
-     */
 	@Parameter( defaultValue = "${project}", readonly = true )
     private MavenProject project;
     
-    /**
-     * Reactor projects
-     * 
-     */
 	@Parameter( defaultValue = "${rectorProjects}", readonly = true )
     private ArrayList reactorProjects;
 
