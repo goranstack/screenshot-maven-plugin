@@ -1,4 +1,5 @@
-image::https://travis-ci.org/goranstack/screenshot-maven-plugin.svg?branch=master[]
+// Badges
+image:http://img.shields.io/travis/goranstack/screenshot-maven-plugin/master.svg["Build Status (Travis CI)", link="https://travis-ci.org/goranstack/screenshot-maven-plugin"]
 
 = image:doc/images/camera.png[] screenshot-maven-plugin
 :toc: left
