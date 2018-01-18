@@ -1,11 +1,59 @@
-= screenshot-maven-plugin documentation
-:toc: left
+= Screenshot Maven Plugin
+:icons: font
 
-== Plugin documentation
 
-link:plugin-info/plugin-info.html[plugin-info]
+https://github.com/goranstack/screenshot-maven-plugin[Checkout source from GitHub] image:images/GitHub-Mark-32px.png[]
+
+link:plugin-info/plugin-info.html[Maven generated Plugin Documentation] image:http://maven.apache.org/images/logos/build-by-maven-white.png[]
 
 == Gallery examples
 
-link:swing-demo/screenshot-gallery.html[swingdemo] +
+To create a screenshot gallery add the following configuration to your `pom.xml` file:
+
+[source, xml]
+----
+<build>
+    <plugins>
+        <plugin>
+            <groupId>se.bluebrim.maven.plugin</groupId>
+            <artifactId>screenshot-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>gallery</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+----
+
+A `site` directory with a screenshot gallery is created in the target directory. In a multimodule
+project you can create a separate gh-pages module that collects screenshot galleries from modules
+and deploy the aggregated content to a provider such as GitHub pages.
+
+Travis has build in support for GitHub pages deployment. If you use a CI without this feature
+its also possible to use a script like this:
+
+[source, bash]
+----
+#!/bin/bash
+cd gh-pages/target <1>
+git init
+git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <2>
+git add .
+git commit -m "Updated generated doc"
+git push --force origin master:gh-pages <1>
+rm -rf .git
+----
+
+<1> https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages[gh-pages] is the name of the module that collects content from other modules
+<2> Specify your GitHub repo
+
+== Example of screenshot gallery created by the plugin
+
+link:swing-demo/screenshot-gallery.html[swingdemo]
+
 link:examples/screenshot-gallery.html[examples]

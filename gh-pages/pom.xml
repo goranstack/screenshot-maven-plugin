@@ -24,7 +24,8 @@
 				<artifactId>asciidoctor-maven-plugin</artifactId>
 				<version>1.5.6</version>
 				<configuration>
-					<backend>html</backend>
+					<backend>html5</backend>
+					<imagesDir>.</imagesDir>
 					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
 				<executions>
