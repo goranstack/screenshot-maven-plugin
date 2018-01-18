@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>screenshot-maven-plugin documentation</title>
+<title>Screenshot Maven Plugin</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -424,24 +424,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 </head>
-<body class="article toc2 toc-left">
+<body class="article">
 <div id="header">
-<h1>screenshot-maven-plugin documentation</h1>
-<div id="toc" class="toc2">
-<div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#_plugin_documentation">Plugin documentation</a></li>
-<li><a href="#_gallery_examples">Gallery examples</a></li>
-</ul>
-</div>
+<h1>Screenshot Maven Plugin</h1>
 </div>
 <div id="content">
-<div class="sect1">
-<h2 id="_plugin_documentation">Plugin documentation</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="plugin-info/plugin-info.html">plugin-info</a></p>
+<p><a href="https://github.com/goranstack/screenshot-maven-plugin">Checkout source from GitHub</a> <span class="image"><img src="./images/GitHub-Mark-32px.png" alt="GitHub Mark 32px"></span></p>
+</div>
+<div class="paragraph">
+<p><a href="plugin-info/plugin-info.html">Maven generated Plugin Documentation</a> <span class="image"><img src="http://maven.apache.org/images/logos/build-by-maven-white.png" alt="build by maven white"></span></p>
 </div>
 </div>
 </div>
@@ -449,15 +445,78 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_gallery_examples">Gallery examples</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="swing-demo/screenshot-gallery.html">swingdemo</a><br>
-<a href="examples/screenshot-gallery.html">examples</a></p>
+<p>To create a screenshot gallery add the following configuration to your <code>pom.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-xml" data-lang="xml">&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;se.bluebrim.maven.plugin&lt;/groupId&gt;
+            &lt;artifactId&gt;screenshot-maven-plugin&lt;/artifactId&gt;
+            &lt;executions&gt;
+                &lt;execution&gt;
+                    &lt;phase&gt;package&lt;/phase&gt;
+                    &lt;goals&gt;
+                        &lt;goal&gt;gallery&lt;/goal&gt;
+                    &lt;/goals&gt;
+                &lt;/execution&gt;
+            &lt;/executions&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>site</code> directory with a screenshot gallery is created in the target directory. In a multimodule
+project you can create a separate gh-pages module that collects screenshot galleries from modules
+and deploy the aggregated content to a provider such as GitHub pages.</p>
+</div>
+<div class="paragraph">
+<p>Travis has build in support for GitHub pages deployment. If you use a CI without this feature
+its also possible to use a script like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">#!/bin/bash
+cd gh-pages/target <i class="conum" data-value="1"></i><b>(1)</b>
+git init
+git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <i class="conum" data-value="2"></i><b>(2)</b>
+git add .
+git commit -m "Updated generated doc"
+git push --force origin master:gh-pages <i class="conum" data-value="1"></i><b>(1)</b>
+rm -rf .git</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><a href="https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages">gh-pages</a> is the name of the module that collects content from other modules</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specify your GitHub repo</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_of_screenshot_gallery_created_by_the_plugin">Example of screenshot gallery created by the plugin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="swing-demo/screenshot-gallery.html">swingdemo</a></p>
+</div>
+<div class="paragraph">
+<p><a href="examples/screenshot-gallery.html">examples</a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-01-18 12:42:50 UTC
+Last updated 2018-01-18 14:52:25 UTC
 </div>
 </div>
 </body>
