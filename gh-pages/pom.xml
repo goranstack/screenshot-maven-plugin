@@ -27,6 +27,11 @@
 					<backend>html5</backend>
 					<imagesDir>.</imagesDir>
 					<outputDirectory>${project.build.directory}</outputDirectory>
+					<sourceHighlighter>coderay</sourceHighlighter>
+					<attributes>
+						<revnumber>${project.version}</revnumber>
+						<revdate>${maven.build.timestamp}</revdate>
+					</attributes>
 				</configuration>
 				<executions>
 					<execution>
