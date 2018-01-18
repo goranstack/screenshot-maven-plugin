@@ -3,3 +3,12 @@ jdk:
   - oraclejdk8
 
 script: mvn package
+
+deploy:
+  provider: pages
+  local-dir: gh-pages/target
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  keep-history: true
+  on:
+    branch: master
