@@ -1,0 +1,11 @@
+= screenshot-maven-plugin documentation
+:toc: left
+
+== Plugin documentation
+
+link:plugin-info/plugin-info.html[plugin-info]
+
+== Gallery examples
+
+link:swing-demo/screenshot-gallery.html[swingdemo] +
+link:examples/screenshot-gallery.html[examples]

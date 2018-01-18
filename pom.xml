@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>se.bluebrim.maven.plugin</groupId>
 	<artifactId>screenshot-maven-plugin-parent</artifactId>
@@ -22,6 +23,7 @@
 		<url>scm:git:https://github.com/goranstack/screenshot-maven-plugin</url>
 	</scm>
 	<properties>
+		<screenshot-maven-plugin-version>${project.version}</screenshot-maven-plugin-version>
 		<jettyPort>8080</jettyPort>
 		<!-- http://maven.apache.org/general.html#encoding-warning -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,9 +37,7 @@
 			<resource>
 				<directory>src/main/resources</directory>
 			</resource>
-			<!--
-				Make it possible to put resource files along side the Java classes
-			-->
+			<!-- Make it possible to put resource files along side the Java classes -->
 			<resource>
 				<directory>src/main/java</directory>
 				<excludes>
@@ -86,15 +86,42 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>3.0.2</version>
-				<!--
-					Make it possible for test code to depend on test code in other
-					modules
-				-->
+				<!-- Make it possible for test code to depend on test code in other modules -->
 				<executions>
 					<execution>
 						<goals>
 							<goal>test-jar</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7</version>
+				<executions>
+					<execution>
+						<id>createsite</id>
+						<phase>package</phase>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<configuration>
+							<reportPlugins>
+								<plugin>
+									<groupId>org.apache.maven.plugins</groupId>
+									<artifactId>maven-project-info-reports-plugin</artifactId>
+									<version>2.9</version>
+									<reportSets>
+										<reportSet>
+											<reports>
+												<report>plugin-info</report>
+											</reports>
+										</reportSet>
+									</reportSets>
+								</plugin>
+							</reportPlugins>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
@@ -106,11 +133,33 @@
 					<artifactId>maven-release-plugin</artifactId>
 					<version>2.5.3</version>
 				</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-plugin-plugin</artifactId>
-				<version>3.5</version>
-			</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.5</version>
+				</plugin>
+				<plugin>
+					<groupId>se.bluebrim.maven.plugin</groupId>
+					<artifactId>screenshot-maven-plugin</artifactId>
+					<version>${screenshot-maven-plugin-version}</version>
+					<configuration>
+						<goalPrefix>screenshot</goalPrefix>
+						<!-- Can't use ${project.scm.url} because that is appended with artifactId 
+							of the module. See: http://jira.codehaus.org/browse/MNG-2290 -->
+						<sourceCodeURL>https://github.com/goranstack/screenshot-maven-plugin/tree/master/${project.artifactId}/src/main/java</sourceCodeURL>
+						<javaDocImageScale>0.6</javaDocImageScale>
+						<locales>
+							<localeSpec>
+								<language>en</language>
+								<country>US</country>
+							</localeSpec>
+							<localeSpec>
+								<language>sv</language>
+								<country>SE</country>
+							</localeSpec>
+						</locales>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<extensions>
@@ -121,10 +170,8 @@
 			</extension>
 		</extensions>
 	</build>
-	<!--
-		Found at Don Brown's Weblog:
-		http://www.jroller.com/mrdon/entry/find_of_the_day_wagon
-	-->
+
+	<!-- Found at Don Brown's Weblog: http://www.jroller.com/mrdon/entry/find_of_the_day_wagon -->
 	<distributionManagement>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
@@ -176,6 +223,7 @@
 	<modules>
 		<module>screenshot-maven-plugin-api</module>
 		<module>screenshot-maven-plugin</module>
+		<module>gh-pages</module>
 		<module>upload-maven-plugin</module>
 		<module>tiny-cms</module>
 		<module>swingset3-demo-app</module>
