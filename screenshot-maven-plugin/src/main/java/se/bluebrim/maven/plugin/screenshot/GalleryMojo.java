@@ -89,7 +89,7 @@ public class GalleryMojo extends AbstractMojo
 		GalleryScreenshotScanner screenshotScanner = new GalleryScreenshotScanner(this, project, testClassesDirectory, classesDirectory, testClasspathElements, maxWidth, outputDirectory, sourceCodeURL, locales);
 		screenshotScanner.setProject(project);
 		try {
-			screenshotScanner.annotationScan();
+			screenshotScanner.execute();
 		} catch (NoClassDefFoundError e) {
 			getLog().error("Unable to find class: " + e.getMessage() + " in the class path of: " + project.getArtifactId());
 		}

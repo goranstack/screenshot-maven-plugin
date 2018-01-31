@@ -101,7 +101,7 @@ public class JavadocMojo extends AbstractMojo
 			screenshotScanner.setScaleFactor(javaDocImageScale);
 		else
 			getLog().error("The \"imageScale\" parameter must be > 0 and <= 1");
-		screenshotScanner.annotationScan();
+		screenshotScanner.execute();
 	}
 		
 }

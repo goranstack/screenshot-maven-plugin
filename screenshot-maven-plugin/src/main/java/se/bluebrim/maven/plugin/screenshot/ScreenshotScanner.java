@@ -218,6 +218,15 @@ public abstract class ScreenshotScanner {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	public final void execute() {
+		processModule();
+		annotationScan();
+	}
+	
+	protected void processModule() {
+		
+	}
 
 	/**
 	 * Make sure that the test class and the annotation class are loaded with the
@@ -228,7 +237,7 @@ public abstract class ScreenshotScanner {
 	 * removing all references to the class loader and the force a garbage collect.
 	 * The same technique is used by Tomcat and OSGi.
 	 */
-	public void annotationScan() {
+	private void annotationScan() {
 		ClassLoader oldContextClassLoader = Thread.currentThread().getContextClassLoader();
 		try {
 			List<Locale> locales = getLocales();

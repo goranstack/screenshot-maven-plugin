@@ -26,6 +26,7 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	private File outputDirectory;
 	private File imagesOutputDirectory;
 	private MavenProject project;
+	private File asciiDoc;
 
 	public GalleryScreenshotScanner(AbstractMojo mojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory, String sourceCodeURL, List<LocaleSpec> locales) 
 	{
@@ -35,6 +36,23 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 		this.imagesOutputDirectory = new File(outputDirectory, project.getArtifactId());
 		this.outputDirectory.mkdirs();
 		this.imagesOutputDirectory.mkdirs();
+		asciiDoc = new File(outputDirectory, "gallery.adoc");
+	}
+	
+	@Override
+	protected void processModule() {
+		appendHeaderAsciiDoc();
+		appendModuleAsciiDoc();
+	}
+
+	private void appendHeaderAsciiDoc() {
+		if (asciiDoc.exists()) return;
+		String template = "= Screenshot Gallery\n"
+				+ ":toc: left\n" + 
+				":icons: font\n" + 
+				":sectnums:\n";
+		String data = MessageFormat.format(template, project.getArtifactId());
+		appendAsciiDoc(data);		
 	}
 
 	protected void handleFoundMethod(Class candidateClass, Method method) 
@@ -45,24 +63,33 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 			JComponent screenshotComponent = (JComponent)screenshot;
 			Class screenshotClass = getTargetClass(method, screenshotComponent);
 			File file = createScreenshotFile(screenshotComponent, screenshotClass, imagesOutputDirectory, method);
-			appendAsciiDoc(screenshotClass, file);
+			appendScreenshotAsciiDoc(screenshotClass, file);
 		}
 	}
 	
-	private void appendAsciiDoc(Class screenshotClass, File screenshotFile) {
+	private void appendModuleAsciiDoc() {
+		String template = "\n== {0}\n";
+		String data = MessageFormat.format(template, project.getArtifactId());
+		appendAsciiDoc(data);
+	}
+
+	private void appendAsciiDoc(String data) {
+		try {
+			getLog().info("Writing AsciDoc to: " + asciiDoc.getPath());
+			FileUtils.writeStringToFile(asciiDoc, data, Charset.defaultCharset(), true);
+		} catch (IOException e) {
+			getLog().info("Error when writing AsciiDoc to file", e);
+		}
+	}
+	
+	private void appendScreenshotAsciiDoc(Class screenshotClass, File screenshotFile) {
 		
 		String template = ".{0}\n"
 				+ "image::{1}[]\n";
 		
 		String imageFile = project.getArtifactId() + "/" + screenshotFile.getName();
 		String data = MessageFormat.format(template, screenshotClass.getName(), imageFile);
-		try {
-			File outputFile = new File(outputDirectory, "gallery.adoc");
-			getLog().info("Writing AsciDoc to: " + outputFile.getPath());
-			FileUtils.writeStringToFile(outputFile, data, Charset.defaultCharset(), true);
-		} catch (IOException e) {
-			getLog().info("Error when writing AsciiDoc to file", e);
-		}
+		appendAsciiDoc(data);
 	}
 	
 	protected Log getLog() 
