@@ -9,19 +9,14 @@
 	<artifactId>screenshot-examples</artifactId>
 	<name>Screenshot Examples</name>
 	<description>Code example how to use the maven-screenshot-plugin</description>
+	<properties>
+		<rootDirectory>${project.basedir}/..</rootDirectory>		
+	</properties>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>se.bluebrim.maven.plugin</groupId>
 				<artifactId>screenshot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>gallery</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>		
 	</build>

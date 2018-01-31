@@ -1,6 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>9</version>
+	</parent>
 	<groupId>se.bluebrim.maven.plugin</groupId>
 	<artifactId>screenshot-maven-plugin-parent</artifactId>
 	<version>0.0.8-SNAPSHOT</version>
@@ -31,6 +36,8 @@
 		<repo.release.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</repo.release.url>
 		<repo.snapshot.id>git-maven-repo-snapshots</repo.snapshot.id>
 		<repo.snapshot.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo-snapshot</repo.snapshot.url>
+		<rootDirectory>${project.basedir}</rootDirectory>
+		<screenshotGalleryTarget>${rootDirectory}/gh-pages/target/gallery-src</screenshotGalleryTarget>
 	</properties>
 	<build>
 		<resources>
@@ -56,7 +63,51 @@
 				</excludes>
 			</testResource>
 		</testResources>
-		<plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.5</version>
+				</plugin>
+				<plugin>
+					<groupId>se.bluebrim.maven.plugin</groupId>
+					<artifactId>screenshot-maven-plugin</artifactId>
+					<version>${screenshot-maven-plugin-version}</version>
+					<configuration>
+						<goalPrefix>screenshot</goalPrefix>
+						<!-- Can't use ${project.scm.url} because that is appended with artifactId 
+							of the module. See: http://jira.codehaus.org/browse/MNG-2290 -->
+						<sourceCodeURL>https://github.com/goranstack/screenshot-maven-plugin/tree/master/${project.artifactId}/src/main/java</sourceCodeURL>
+						<javaDocImageScale>0.6</javaDocImageScale>
+						<outputDirectory>${screenshotGalleryTarget}</outputDirectory>
+						<locales>
+							<localeSpec>
+								<language>en</language>
+								<country>US</country>
+							</localeSpec>
+						</locales>
+					</configuration>
+					<executions>
+						<execution>
+							<id>create-gallery</id>
+							<phase>install</phase>
+							<goals>
+								<goal>asciidoc-gallery</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>${screenshotGalleryTarget}</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement><plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -126,42 +177,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.5.3</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-plugin-plugin</artifactId>
-					<version>3.5</version>
-				</plugin>
-				<plugin>
-					<groupId>se.bluebrim.maven.plugin</groupId>
-					<artifactId>screenshot-maven-plugin</artifactId>
-					<version>${screenshot-maven-plugin-version}</version>
-					<configuration>
-						<goalPrefix>screenshot</goalPrefix>
-						<!-- Can't use ${project.scm.url} because that is appended with artifactId 
-							of the module. See: http://jira.codehaus.org/browse/MNG-2290 -->
-						<sourceCodeURL>https://github.com/goranstack/screenshot-maven-plugin/tree/master/${project.artifactId}/src/main/java</sourceCodeURL>
-						<javaDocImageScale>0.6</javaDocImageScale>
-						<locales>
-							<localeSpec>
-								<language>en</language>
-								<country>US</country>
-							</localeSpec>
-							<localeSpec>
-								<language>sv</language>
-								<country>SE</country>
-							</localeSpec>
-						</locales>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+		
 		<extensions>
 			<extension>
 				<groupId>org.jvnet.wagon-svn</groupId>

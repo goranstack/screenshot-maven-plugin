@@ -16,6 +16,16 @@
 			<artifactId>screenshot-maven-plugin</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>se.bluebrim.maven.plugin</groupId>
+			<artifactId>swingset3-demo-app</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>se.bluebrim.maven.plugin</groupId>
+			<artifactId>screenshot-examples</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -41,6 +51,17 @@
 							<goal>process-asciidoc</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>screenshot-gallery</id>
+						<phase>install</phase>
+						<goals>
+							<goal>process-asciidoc</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.build.directory}/gallery-src</sourceDirectory>
+							<outputDirectory>${project.build.directory}/gallery</outputDirectory>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -61,36 +82,6 @@
 								</resource>
 							</resources>
 							<outputDirectory>${project.build.directory}/plugin-info</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-examples-resources</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<resources>
-								<resource>
-									<directory>../screenshot-examples/target/site</directory>
-								</resource>
-							</resources>
-							<outputDirectory>${project.build.directory}/examples</outputDirectory>
-						</configuration>
-					</execution>
-					<execution>
-						<id>copy-swing-demo-resources</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<resources>
-								<resource>
-									<directory>../swingset3-demo-app/target/site</directory>
-								</resource>
-							</resources>
-							<outputDirectory>${project.build.directory}/swing-demo</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>

@@ -25,9 +25,9 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	private MavenProject project;
 	private String sourceCodeURL;
 
-	public GalleryScreenshotScanner(AbstractMavenReport reportMojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory, String sourceCodeURL) 
+	public GalleryScreenshotScanner(AbstractMavenReport reportMojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory, String sourceCodeURL, List<LocaleSpec> locales) 
 	{
-		super(reportMojo, testClassesDirectory, classesDirectory, testClasspathElements);
+		super(reportMojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
 		this.project = project;
 		this.outputDirectory = new File(outputDirectory);
 		this.outputDirectory.mkdirs();

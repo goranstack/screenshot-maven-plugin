@@ -27,30 +27,16 @@ import org.apache.maven.plugin.AbstractMojo;
 public class UploadScreenshotScanner extends ScreenshotScanner {
 
 	private String baseUrl;
-	private List<LocaleSpec> localeSpecs;
 	
 	public UploadScreenshotScanner(AbstractMojo mojo,
 			File testClassesDirectory, File classesDirectory,
 			List<String> testClasspathElements,
 			String baseUrl,
 			List<LocaleSpec> locales) {
-		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements);
+		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
 		this.baseUrl = baseUrl;
-		this.localeSpecs = locales;
 	}
 	
-	@Override
-	protected List<Locale> getLocales() 
-	{
-		List<Locale> locales = new ArrayList<Locale>();
-		if (localeSpecs != null)
-			for (LocaleSpec localeSpec : localeSpecs) 
-				locales.add(localeSpec.getLocale());
-		if (locales.isEmpty())
-			locales.add(Locale.getDefault());
-		return locales;
-	}
-
 	@Override
 	protected void handleFoundMethod(Class candidateClass, Method method) 
 	{

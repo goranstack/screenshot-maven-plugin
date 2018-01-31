@@ -2,6 +2,7 @@ package se.bluebrim.maven.plugin.screenshot;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.text.html.parser.ParserDelegator;
 
@@ -83,11 +84,19 @@ public class JavadocMojo extends AbstractMojo
 	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )
     private ArrayList<String> testClasspathElements;
 
+    /**
+     * A screenshot will be created for each Locale where the file name is appended with the
+     * Locale as string.
+     * 
+     */
+ 	@Parameter
+    private List<LocaleSpec> locales;
+ 	
 
 	public void execute() throws MojoExecutionException, MojoFailureException
 	{
 		getLog().info("Generate screenshot executed. The source directory is: " + sourceDirectory.getPath(), null);
-		JavaDocScreenshotScanner screenshotScanner = new JavaDocScreenshotScanner(this, testClassesDirectory, classesDirectory, testClasspathElements, sourceDirectory, updateSrcFiles, srcFileEncoding);
+		JavaDocScreenshotScanner screenshotScanner = new JavaDocScreenshotScanner(this, testClassesDirectory, classesDirectory, testClasspathElements, sourceDirectory, updateSrcFiles, srcFileEncoding, locales);
 		if (javaDocImageScale > 0 && javaDocImageScale <= 1)
 			screenshotScanner.setScaleFactor(javaDocImageScale);
 		else

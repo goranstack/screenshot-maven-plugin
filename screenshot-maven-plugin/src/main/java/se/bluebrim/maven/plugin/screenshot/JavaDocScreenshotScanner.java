@@ -41,9 +41,9 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
     private boolean updateSrcFiles;
     private String srcFileEncoding;
 
-	public JavaDocScreenshotScanner(AbstractMojo mojo, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, File sourceDirectory, boolean updateSrcFiles, String srcFileEncoding) 
+	public JavaDocScreenshotScanner(AbstractMojo mojo, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, File sourceDirectory, boolean updateSrcFiles, String srcFileEncoding, List<LocaleSpec> locales) 
 	{
-		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements);
+		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
 		this.sourceDirectory = sourceDirectory;
 		this.updateSrcFiles = updateSrcFiles;
 		this.srcFileEncoding = srcFileEncoding;
