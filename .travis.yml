@@ -6,7 +6,7 @@ script: mvn package
 
 deploy:
   provider: pages
-  local-dir: gh-pages/target
+  local-dir: gh-pages/target/generated-docs
   skip-cleanup: true
   github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
   keep-history: true

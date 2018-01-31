@@ -52,8 +52,6 @@ rm -rf .git
 <1> https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages[gh-pages] is the name of the module that collects content from other modules
 <2> Specify your GitHub repo
 
-== Example of screenshot gallery created by the plugin
+== Example of a screenshot gallery created by the plugin
 
-link:swing-demo/screenshot-gallery.html[swingdemo]
-
-link:examples/screenshot-gallery.html[examples]
+link:gallery/gallery.html[Screenshot Gallery]

@@ -10,6 +10,9 @@
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>Collects documentation from modules and pushes to GitHub pages</description>
+	<properties>
+		<generated.docs.directory>${project.build.directory}/generated-docs</generated.docs.directory>		
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>se.bluebrim.maven.plugin</groupId>
@@ -36,7 +39,7 @@
 				<configuration>
 					<backend>html5</backend>
 					<imagesDir>.</imagesDir>
-					<outputDirectory>${project.build.directory}</outputDirectory>
+					<outputDirectory>${generated.docs.directory}</outputDirectory>
 					<sourceHighlighter>coderay</sourceHighlighter>
 					<attributes>
 						<revnumber>${project.version}</revnumber>
@@ -59,7 +62,7 @@
 						</goals>
 						<configuration>
 							<sourceDirectory>${project.build.directory}/gallery-src</sourceDirectory>
-							<outputDirectory>${project.build.directory}/gallery</outputDirectory>
+							<outputDirectory>${generated.docs.directory}/gallery</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -81,7 +84,7 @@
 									<directory>../screenshot-maven-plugin/target/site</directory>
 								</resource>
 							</resources>
-							<outputDirectory>${project.build.directory}/plugin-info</outputDirectory>
+							<outputDirectory>${generated.docs.directory}/plugin-info</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
