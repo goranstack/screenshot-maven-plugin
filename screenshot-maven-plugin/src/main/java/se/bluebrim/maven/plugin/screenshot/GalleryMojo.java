@@ -3,18 +3,14 @@ package se.bluebrim.maven.plugin.screenshot;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
-import org.apache.maven.doxia.siterenderer.Renderer;
-import org.apache.maven.plugins.annotations.Component;
-import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.AbstractMavenReport;
-import org.apache.maven.reporting.MavenReportException;
 
 
 
@@ -24,8 +20,8 @@ import org.apache.maven.reporting.MavenReportException;
  * @author G Stack
  *
  */
-@Mojo( name = "gallery", defaultPhase = LifecyclePhase.SITE, requiresDependencyResolution = ResolutionScope.TEST )
-public class GalleryMojo extends AbstractMavenReport
+@Mojo( name = "asciidoc-gallery", requiresDependencyResolution = ResolutionScope.TEST )
+public class GalleryMojo extends AbstractMojo
 {
 
 	/**
@@ -64,10 +60,10 @@ public class GalleryMojo extends AbstractMavenReport
 	private int maxWidth;
 	
     /**
-     * Directory where reports will go.
+     * Directory where the generated AsciiDoc will go.
      *
      */
-	@Parameter( defaultValue = "${project.reporting.outputDirectory}", readonly = true, required = true )
+	@Parameter ( defaultValue = "${project.build.directory}", required = true )
     private String outputDirectory;
 
 	@Parameter( defaultValue = "${project}", readonly = true )
@@ -76,8 +72,6 @@ public class GalleryMojo extends AbstractMavenReport
 	@Parameter( defaultValue = "${rectorProjects}", readonly = true )
     private ArrayList reactorProjects;
 
-	@Component
-    private Renderer siteRenderer;
 
     /**
      * A screenshot will be created for each Locale where the file name is appended with the
@@ -89,7 +83,8 @@ public class GalleryMojo extends AbstractMavenReport
 
 	
 	@Override
-	protected void executeReport(Locale locale) throws MavenReportException {
+	public void execute() throws MojoExecutionException, MojoFailureException {
+		
 		getLog().info("Screenshot gallery executed. The report directory is: " + outputDirectory, null);
 		GalleryScreenshotScanner screenshotScanner = new GalleryScreenshotScanner(this, project, testClassesDirectory, classesDirectory, testClasspathElements, maxWidth, outputDirectory, sourceCodeURL, locales);
 		screenshotScanner.setProject(project);
@@ -99,41 +94,6 @@ public class GalleryMojo extends AbstractMavenReport
 			getLog().error("Unable to find class: " + e.getMessage() + " in the class path of: " + project.getArtifactId());
 		}
 		screenshotScanner.close();		
-	}
-
-	protected MavenProject getProject()
-	{
-	    return project;
-	}
-
-	protected String getOutputDirectory()
-	{
-	    return outputDirectory;
-	}
-
-	protected Renderer getSiteRenderer()
-	{
-	    return siteRenderer;
-	}
-
-	public String getDescription( Locale locale )
-	{
-	    return getBundle( locale ).getString( "report.gallery.description" );
-	}
-
-	public String getName( Locale locale )
-	{
-	    return getBundle( locale ).getString( "report.gallery.name" );
-	}
-
-	public String getOutputName()
-	{
-	    return "screenshot-gallery";
-	}
-
-	private ResourceBundle getBundle( Locale locale )
-	{
-	    return ResourceBundle.getBundle( "screenshot-gallery", locale, this.getClass().getClassLoader() );
 	}
 
 	

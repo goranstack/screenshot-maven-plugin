@@ -29,8 +29,6 @@
 	</scm>
 	<properties>
 		<screenshot-maven-plugin-version>${project.version}</screenshot-maven-plugin-version>
-		<jettyPort>8080</jettyPort>
-		<!-- http://maven.apache.org/general.html#encoding-warning -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<repo.release.id>git-maven-repo-relases</repo.release.id>
 		<repo.release.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</repo.release.url>
@@ -176,15 +174,7 @@
 					</execution>
 				</executions>
 			</plugin>
-		</plugins>
-		
-		<extensions>
-			<extension>
-				<groupId>org.jvnet.wagon-svn</groupId>
-				<artifactId>wagon-svn</artifactId>
-				<version>1.12</version>
-			</extension>
-		</extensions>
+		</plugins>		
 	</build>
 
 	<!-- Found at Don Brown's Weblog: http://www.jroller.com/mrdon/entry/find_of_the_day_wagon -->
@@ -210,38 +200,12 @@
 				<repo.snapshot.url>http://nexus.hastsportenshus.atg.se/content/repositories/snapshots</repo.snapshot.url>
 			</properties>
 		</profile>
-		<profile>
-			<id>local-jetty</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>se.bluebrim.maven.plugin</groupId>
-						<artifactId>screenshot-maven-plugin</artifactId>
-						<version>${project.version}</version>
-						<configuration>
-							<uploadBaseUrl>http://localhost:${jettyPort}/tiny-cms/upload</uploadBaseUrl>
-							<cleanUrl>http://localhost:${jettyPort}/tiny-cms/clean</cleanUrl>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>se.atg.maven.plugin</groupId>
-						<artifactId>upload-maven-plugin</artifactId>
-						<version>${project.version}</version>
-						<configuration>
-							<uploadUrl>http://localhost:${jettyPort}/tiny-cms/upload</uploadUrl>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
 	</profiles>
 
 	<modules>
 		<module>screenshot-maven-plugin-api</module>
 		<module>screenshot-maven-plugin</module>
 		<module>gh-pages</module>
-		<module>upload-maven-plugin</module>
-		<module>tiny-cms</module>
 		<module>swingset3-demo-app</module>
 		<module>screenshot-examples</module>
 		<module>worldclock-example</module>

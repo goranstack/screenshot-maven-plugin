@@ -1,15 +1,18 @@
 package se.bluebrim.maven.plugin.screenshot;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.JComponent;
 
-import org.apache.maven.doxia.sink.Sink;
+import org.apache.commons.io.FileUtils;
+import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.AbstractMavenReport;
 
 /**
  * Scans test classes for method annotated with the Screenshot annotation. Calls found methods and save a png-file with the same name as
@@ -21,27 +24,19 @@ import org.apache.maven.reporting.AbstractMavenReport;
 public class GalleryScreenshotScanner extends ScreenshotScanner 
 {
 	private File outputDirectory;
-	private Sink sink;
+	private File imagesOutputDirectory;
 	private MavenProject project;
-	private String sourceCodeURL;
 
-	public GalleryScreenshotScanner(AbstractMavenReport reportMojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory, String sourceCodeURL, List<LocaleSpec> locales) 
+	public GalleryScreenshotScanner(AbstractMojo mojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory, String sourceCodeURL, List<LocaleSpec> locales) 
 	{
-		super(reportMojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
+		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
 		this.project = project;
 		this.outputDirectory = new File(outputDirectory);
+		this.imagesOutputDirectory = new File(outputDirectory, project.getArtifactId());
 		this.outputDirectory.mkdirs();
-		this.sourceCodeURL = sourceCodeURL;
-		sink = reportMojo.getSink();
-		
+		this.imagesOutputDirectory.mkdirs();
 	}
 
-	/**	
-	 * See:
-	 * <a href="http://docs.codehaus.org/display/MAVENUSER/Write+your+own+report+plugin">Write your own report plugin</a>
-	 * The target class for the javadoc image file can be specified as annotation parameter. If Object.class is specified
-	 * the class returned from the screen shot method is used as target class.
-	 */
 	protected void handleFoundMethod(Class candidateClass, Method method) 
 	{
 		Object screenshot = callScreenshotMethod(candidateClass, method);
@@ -49,16 +44,24 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 		{
 			JComponent screenshotComponent = (JComponent)screenshot;
 			Class screenshotClass = getTargetClass(method, screenshotComponent);
-			File file = createScreenshotFile(screenshotComponent, screenshotClass, outputDirectory, method);
-			sink.paragraph();
-			sink.figure();
-			sink.figureGraphics(file.getName());
-			sink.figure_();
-			sink.lineBreak();
-			sink.link(sourceCodeURL + "/" + org.springframework.util.ClassUtils.convertClassNameToResourcePath(screenshotClass.getName()) + ".java");
-			sink.text(screenshotClass.getName());
-			sink.link_();
-			sink.paragraph_();
+			File file = createScreenshotFile(screenshotComponent, screenshotClass, imagesOutputDirectory, method);
+			appendAsciiDoc(screenshotClass, file);
+		}
+	}
+	
+	private void appendAsciiDoc(Class screenshotClass, File screenshotFile) {
+		
+		String template = ".{0}\n"
+				+ "image::{1}[]\n";
+		
+		String imageFile = project.getArtifactId() + "/" + screenshotFile.getName();
+		String data = MessageFormat.format(template, screenshotClass.getName(), imageFile);
+		try {
+			File outputFile = new File(outputDirectory, "gallery.adoc");
+			getLog().info("Writing AsciDoc to: " + outputFile.getPath());
+			FileUtils.writeStringToFile(outputFile, data, Charset.defaultCharset(), true);
+		} catch (IOException e) {
+			getLog().info("Error when writing AsciiDoc to file", e);
 		}
 	}
 	
@@ -69,8 +72,6 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 		
 	public void close()
 	{
-		sink.flush();
-	    sink.close();		
 	}
 
 }
