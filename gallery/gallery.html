@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>Screenshot Maven Plugin</title>
+<title>Screenshot Gallery</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -517,91 +517,83 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
-<h1>Screenshot Maven Plugin</h1>
+<h1>Screenshot Gallery</h1>
 <div class="details">
 <span id="revnumber">version 0.0.8-SNAPSHOT,</span>
-<span id="revdate">2018-01-31T15:02:21Z</span>
+<span id="revdate">2018-01-31T14:59:50Z</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_swingset3_demo_app">1. swingset3-demo-app</a></li>
+<li><a href="#_screenshot_examples">2. screenshot-examples</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="_swingset3_demo_app">1. swingset3-demo-app</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://github.com/goranstack/screenshot-maven-plugin">Checkout source from GitHub</a> <span class="image"><img src="./images/GitHub-Mark-32px.png" alt="GitHub Mark 32px"></span></p>
+<div class="imageblock">
+<div class="content">
+<img src="./swingset3-demo-app/ToggleButtonDemo.png" alt="ToggleButtonDemo">
 </div>
-<div class="paragraph">
-<p><a href="plugin-info/plugin-info.html">Maven generated Plugin Documentation</a> <span class="image"><img src="http://maven.apache.org/images/logos/build-by-maven-white.png" alt="build by maven white"></span></p>
+<div class="title">Figure 1. com.sun.swingset3.demos.togglebutton.ToggleButtonDemo</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./swingset3-demo-app/TreeDemo.png" alt="TreeDemo">
+</div>
+<div class="title">Figure 2. com.sun.swingset3.demos.tree.TreeDemo</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./swingset3-demo-app/ButtonDemo-laf-nimbus.png" alt="ButtonDemo laf nimbus">
+</div>
+<div class="title">Figure 3. com.sun.swingset3.demos.button.ButtonDemo</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./swingset3-demo-app/TableDemo.png" alt="TableDemo">
+</div>
+<div class="title">Figure 4. com.sun.swingset3.demos.table.TableDemo</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./swingset3-demo-app/ButtonDemo.png" alt="ButtonDemo">
+</div>
+<div class="title">Figure 5. com.sun.swingset3.demos.button.ButtonDemo</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_gallery_examples">Gallery examples</h2>
+<h2 id="_screenshot_examples">2. screenshot-examples</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>To create a screenshot gallery add the following configuration to your <code>pom.xml</code> file:</p>
-</div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;build&gt;</span>
-    <span class="tag">&lt;plugins&gt;</span>
-        <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>se.bluebrim.maven.plugin<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>screenshot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;executions&gt;</span>
-                <span class="tag">&lt;execution&gt;</span>
-                    <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
-                    <span class="tag">&lt;goals&gt;</span>
-                        <span class="tag">&lt;goal&gt;</span>gallery<span class="tag">&lt;/goal&gt;</span>
-                    <span class="tag">&lt;/goals&gt;</span>
-                <span class="tag">&lt;/execution&gt;</span>
-            <span class="tag">&lt;/executions&gt;</span>
-        <span class="tag">&lt;/plugin&gt;</span>
-    <span class="tag">&lt;/plugins&gt;</span>
-<span class="tag">&lt;/build&gt;</span></code></pre>
+<img src="./screenshot-examples/IconConstants.png" alt="IconConstants">
 </div>
+<div class="title">Figure 6. se.bluebrim.maven.plugin.screenshot.example.IconConstants</div>
 </div>
-<div class="paragraph">
-<p>A <code>site</code> directory with a screenshot gallery is created in the target directory. In a multimodule
-project you can create a separate gh-pages module that collects screenshot galleries from modules
-and deploy the aggregated content to a provider such as GitHub pages.</p>
-</div>
-<div class="paragraph">
-<p>Travis has build in support for GitHub pages deployment. If you use a CI without this feature
-its also possible to use a script like this:</p>
-</div>
-<div class="listingblock">
+<div class="imageblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
-cd gh-pages/target <i class="conum" data-value="1"></i><b>(1)</b>
-git init
-git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <i class="conum" data-value="2"></i><b>(2)</b>
-git add .
-git commit -m &quot;Updated generated doc&quot;
-git push --force origin master:gh-pages <i class="conum" data-value="1"></i><b>(1)</b>
-rm -rf .git</code></pre>
+<img src="./screenshot-examples/ColorConstants.png" alt="ColorConstants">
 </div>
+<div class="title">Figure 7. se.bluebrim.maven.plugin.screenshot.example.ColorConstants</div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><a href="https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages">gh-pages</a> is the name of the module that collects content from other modules</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Specify your GitHub repo</td>
-</tr>
-</table>
+<div class="imageblock">
+<div class="content">
+<img src="./screenshot-examples/FontFactory.png" alt="FontFactory">
 </div>
+<div class="title">Figure 8. se.bluebrim.maven.plugin.screenshot.example.FontFactory</div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="./screenshot-examples/HelloWorldPanel.png" alt="HelloWorldPanel">
 </div>
-<div class="sect1">
-<h2 id="_example_of_a_screenshot_gallery_created_by_the_plugin">Example of a screenshot gallery created by the plugin</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="gallery/gallery.html">Screenshot Gallery</a></p>
+<div class="title">Figure 9. se.bluebrim.maven.plugin.screenshot.example.HelloWorldPanel</div>
 </div>
 </div>
 </div>
@@ -609,7 +601,7 @@ rm -rf .git</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.8-SNAPSHOT<br>
-Last updated 2018-01-31 14:59:17 UTC
+Last updated 2018-01-31 15:02:09 UTC
 </div>
 </div>
 </body>
