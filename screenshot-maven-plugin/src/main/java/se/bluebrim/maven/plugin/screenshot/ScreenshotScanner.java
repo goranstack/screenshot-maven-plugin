@@ -129,7 +129,7 @@ public abstract class ScreenshotScanner {
 			return File.createTempFile(prefix, suffix, directory);
 		} catch (IOException e) {
 			throw new RuntimeException("Unable to create temp file for storing screenshot: " + directory.getPath() + "/"
-					+ prefix + "." + suffix, e);
+					+ prefix + suffix, e);
 		}
 	}
 
@@ -220,7 +220,6 @@ public abstract class ScreenshotScanner {
 	}
 	
 	public final void execute() {
-		processModule();
 		annotationScan();
 	}
 	
@@ -252,6 +251,10 @@ public abstract class ScreenshotScanner {
 				Set<Method> annotadedMethods = reflections.getMethodsAnnotatedWith(Screenshot.class);
 
 				getLog().info("Found: " + annotadedMethods.size() + " screenshot annotaded methods");
+				
+				if (annotadedMethods.size() > 0) {
+					processModule();
+				}
 
 				getLog().info("Processing annotaded metthods with Locale=" + locale);
 				Thread.currentThread().setContextClassLoader(classLoader);

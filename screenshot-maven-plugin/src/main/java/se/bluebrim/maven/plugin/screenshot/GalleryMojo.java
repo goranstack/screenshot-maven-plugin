@@ -20,7 +20,7 @@ import org.apache.maven.project.MavenProject;
  * @author G Stack
  *
  */
-@Mojo( name = "asciidoc-gallery", requiresDependencyResolution = ResolutionScope.TEST )
+@Mojo( name = "gallery", requiresDependencyResolution = ResolutionScope.TEST )
 public class GalleryMojo extends AbstractMojo
 {
 
@@ -85,7 +85,7 @@ public class GalleryMojo extends AbstractMojo
 	@Override
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		
-		getLog().info("Screenshot gallery executed. The report directory is: " + outputDirectory, null);
+		getLog().info("Screenshot gallery executed. The output directory is: " + outputDirectory, null);
 		GalleryScreenshotScanner screenshotScanner = new GalleryScreenshotScanner(this, project, testClassesDirectory, classesDirectory, testClasspathElements, maxWidth, outputDirectory, sourceCodeURL, locales);
 		screenshotScanner.setProject(project);
 		try {

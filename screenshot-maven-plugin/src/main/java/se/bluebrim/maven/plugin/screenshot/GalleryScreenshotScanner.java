@@ -23,7 +23,6 @@ import org.apache.maven.project.MavenProject;
  */
 public class GalleryScreenshotScanner extends ScreenshotScanner 
 {
-	private File outputDirectory;
 	private File imagesOutputDirectory;
 	private MavenProject project;
 	private File asciiDoc;
@@ -32,15 +31,13 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	{
 		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
 		this.project = project;
-		this.outputDirectory = new File(outputDirectory);
 		this.imagesOutputDirectory = new File(outputDirectory, project.getArtifactId());
-		this.outputDirectory.mkdirs();
-		this.imagesOutputDirectory.mkdirs();
 		asciiDoc = new File(outputDirectory, "gallery.adoc");
 	}
 	
 	@Override
 	protected void processModule() {
+		imagesOutputDirectory.mkdirs();
 		appendHeaderAsciiDoc();
 		appendModuleAsciiDoc();
 	}
@@ -68,8 +65,9 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	}
 	
 	private void appendModuleAsciiDoc() {
-		String template = "\n== {0}\n";
-		String data = MessageFormat.format(template, project.getArtifactId());
+		String template = "\n== {0}\n"
+				+ "{1}\n\n";
+		String data = MessageFormat.format(template, project.getArtifactId(), project.getDescription());
 		appendAsciiDoc(data);
 	}
 
@@ -91,6 +89,13 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 		String data = MessageFormat.format(template, screenshotClass.getName(), imageFile);
 		appendAsciiDoc(data);
 	}
+	
+	protected File createScreenshotFile(JComponent screenShotComponent, File dir, String screenshotName) {
+		File file = new File(dir.getPath(), screenshotName + "." + FORMAT_PNG);
+		takeScreenShot(screenShotComponent, file);
+		return file;
+	}
+
 	
 	protected Log getLog() 
 	{
