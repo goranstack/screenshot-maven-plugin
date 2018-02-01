@@ -96,7 +96,7 @@
 							<id>create-gallery</id>
 							<phase>install</phase>
 							<goals>
-								<goal>asciidoc-gallery</goal>
+								<goal>gallery</goal>
 							</goals>
 							<configuration>
 								<outputDirectory>${screenshotGalleryTarget}</outputDirectory>

@@ -40,7 +40,7 @@ its also possible to use a script like this:
 [source, bash]
 ----
 #!/bin/bash
-cd gh-pages/target <1>
+cd gh-pages/target/generated-docs <1>
 git init
 git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <2>
 git add .
