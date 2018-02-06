@@ -28,11 +28,11 @@ import javax.swing.JComponent;
 public class ScreenshotDescriptor 
 {
 	private JComponent screenshot;
-	private Class targetClass;
+	private Class<?> targetClass;
 	private String scene;
 	private boolean oneForEachLocale;
 	
-	public ScreenshotDescriptor(JComponent screenshot, Class targetClass, String scene, boolean oneForEachLocale) 
+	public ScreenshotDescriptor(JComponent screenshot, Class<?> targetClass, String scene, boolean oneForEachLocale) 
 	{
 		super();
 		this.screenshot = screenshot;
@@ -41,7 +41,7 @@ public class ScreenshotDescriptor
 		this.oneForEachLocale = oneForEachLocale;
 	}
 	
-	public ScreenshotDescriptor(JComponent screenshot, Class targetClass, String scene)
+	public ScreenshotDescriptor(JComponent screenshot, Class<?> targetClass, String scene)
 	{
 		this(screenshot, targetClass, scene, false);
 	}
@@ -54,11 +54,11 @@ public class ScreenshotDescriptor
 		this.screenshot = screenshot;
 	}
 
-	public Class getTargetClass() {
+	public Class<?> getTargetClass() {
 		return targetClass;
 	}
 
-	public void setTargetClass(Class targetClass) {
+	public void setTargetClass(Class<?> targetClass) {
 		this.targetClass = targetClass;
 	}
 

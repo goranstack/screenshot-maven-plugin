@@ -1,8 +1,6 @@
 package se.bluebrim.maven.plugin.screenshot.example;
 
 import java.awt.Color;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -23,11 +21,7 @@ public class HelloWorldPanel extends JPanel {
 	{
 		JLabel label = new JLabel("Hello World from Screenshot Maven Plugin");
 		ImageIcon icon;
-		try {
-			icon = new ImageIcon(new URL("http://screenshot-maven-plugin.googlecode.com/svn/site/images/camera.png"));
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
+		icon = new ImageIcon(getClass().getResource("camera.png"));
 		label.setIcon(icon);
 		label.setFont(label.getFont().deriveFont(32f));
 		label.setForeground(Color.DARK_GRAY);

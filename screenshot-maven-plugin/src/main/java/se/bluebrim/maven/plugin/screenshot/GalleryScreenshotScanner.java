@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JComponent;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
@@ -49,44 +51,66 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 				":icons: font\n" + 
 				":sectnums:\n";
 		String data = MessageFormat.format(template, project.getArtifactId());
+		getLog().debug("Writing header AsciDoc to: " + asciiDoc.getPath());
 		appendAsciiDoc(data);		
 	}
 
-	protected void handleFoundMethod(Class candidateClass, Method method) 
+	protected void handleFoundMethod(Class<?> candidateClass, Method method) 
 	{
 		Object screenshot = callScreenshotMethod(candidateClass, method);
 		if (screenshot instanceof JComponent)
 		{
-			JComponent screenshotComponent = (JComponent)screenshot;
-			Class screenshotClass = getTargetClass(method, screenshotComponent);
-			File file = createScreenshotFile(screenshotComponent, screenshotClass, imagesOutputDirectory, method);
-			appendScreenshotAsciiDoc(screenshotClass, file);
+			Class<?> targetClass = getTargetClass(method, (JComponent)screenshot);
+			emitScreenshot(getSceneName(method), targetClass, (JComponent)screenshot);
+		} // else
+//			handleScreenshotCollection(screenshot);	
+	}
+
+	/**
+	 * For now only for the "javadoc" goal but in case we want this for the "gallery" goal as well
+	 */
+	private void handleScreenshotCollection(Object screenshot) {
+		if (screenshot instanceof Collection<?>)
+		{
+			int index = 0;
+			Collection<ScreenshotDescriptor> screenShots = (Collection<ScreenshotDescriptor>) screenshot;
+			for (ScreenshotDescriptor screenshotDescriptor : screenShots) {
+				String scene = StringUtils.isEmpty(screenshotDescriptor.getScene()) ? "" + index++ : "-" + screenshotDescriptor.getScene();
+				emitScreenshot(scene, screenshotDescriptor.getTargetClass(), screenshotDescriptor.getScreenshot());
+			}
 		}
+	}
+
+	private void emitScreenshot(String sceneName, Class<?> targetClass, JComponent screenshotComponent) {
+		String screenshotName = createScreenshotName(targetClass, sceneName);
+		File file = createScreenshotFile(screenshotComponent, imagesOutputDirectory, screenshotName);
+		appendScreenshotAsciiDoc(screenshotName, file);
 	}
 	
 	private void appendModuleAsciiDoc() {
 		String template = "\n== {0}\n"
 				+ "{1}\n\n";
 		String data = MessageFormat.format(template, project.getArtifactId(), project.getDescription());
+		getLog().debug("Writing AsciDoc to: " + asciiDoc.getPath() + " for module: " + project.getArtifactId());
 		appendAsciiDoc(data);
 	}
 
 	private void appendAsciiDoc(String data) {
 		try {
-			getLog().info("Writing AsciDoc to: " + asciiDoc.getPath());
 			FileUtils.writeStringToFile(asciiDoc, data, Charset.defaultCharset(), true);
 		} catch (IOException e) {
 			getLog().info("Error when writing AsciiDoc to file", e);
 		}
 	}
 	
-	private void appendScreenshotAsciiDoc(Class screenshotClass, File screenshotFile) {
+	private void appendScreenshotAsciiDoc(String caption, File screenshotFile) {
 		
 		String template = ".{0}\n"
 				+ "image::{1}[]\n";
 		
 		String imageFile = project.getArtifactId() + "/" + screenshotFile.getName();
-		String data = MessageFormat.format(template, screenshotClass.getName(), imageFile);
+		String data = MessageFormat.format(template, caption, imageFile);
+		getLog().debug("Writing AsciDoc to: " + asciiDoc.getPath() + " for screenshot: " + caption);
 		appendAsciiDoc(data);
 	}
 	

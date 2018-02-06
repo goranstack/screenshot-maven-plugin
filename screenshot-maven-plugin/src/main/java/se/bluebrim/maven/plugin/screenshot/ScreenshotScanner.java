@@ -85,12 +85,6 @@ public abstract class ScreenshotScanner {
 
 	protected abstract void handleFoundMethod(Class<?> candidateClass, Method method);
 
-	protected File createScreenshotFile(JComponent screenShotComponent, Class<?> screenshotClass, File dir,
-			Method method) {
-		String screenshotName = createScreenshotName(screenshotClass, method);
-		return createScreenshotFile(screenShotComponent, dir, screenshotName);
-	}
-
 	protected File createScreenshotFile(JComponent screenShotComponent, File dir, String screenshotName) {
 		File file = new File(dir.getPath(), screenshotName + "." + FORMAT_PNG);
 		File tempFile = createTempFile(screenshotName, "." + FORMAT_PNG, dir);
@@ -99,13 +93,13 @@ public abstract class ScreenshotScanner {
 		return file;
 	}
 
-	protected String createScreenshotName(Class<?> screenshotClass, Method method) {
-		return createScreenshotName(screenshotClass, method, false);
+	protected String createScreenshotName(Class<?> screenshotClass, String sceneName) {
+		return createScreenshotName(screenshotClass, sceneName, false);
 	}
 
-	protected String createScreenshotName(Class<?> screenshotClass, Method method, boolean appendLocale) {
+	protected String createScreenshotName(Class<?> screenshotClass, String sceneName, boolean appendLocale) {
 		String locale = appendLocale ? "-" + Locale.getDefault().toString() : "";
-		return screenshotClass.getSimpleName() + getSceneName(method) + locale;
+		return screenshotClass.getSimpleName() + sceneName + locale;
 	}
 
 	private void overwriteIfChanged(File originalFile, File tempFile) {
@@ -151,7 +145,7 @@ public abstract class ScreenshotScanner {
 		return (Boolean) retrieveAnnotationPropertyValue(method, "oneForEachLocale");
 	}
 
-	private String getSceneName(Method method) {
+	protected String getSceneName(Method method) {
 		String scene = (String) retrieveAnnotationPropertyValue(method, "scene");
 		return (StringUtils.isEmpty(scene)) ? "" : "-" + scene;
 	}
@@ -262,7 +256,7 @@ public abstract class ScreenshotScanner {
 				classLoader = null;
 				Thread.currentThread().setContextClassLoader(null);
 				screenshotAnnotation = null;
-				System.gc(); // Asyncronous garbage collector might already run.
+				System.gc(); // Asynchronous garbage collector might already run.
 				System.gc(); // To make sure it does a full gc, call it twice
 			}
 		} catch (Exception e) {
