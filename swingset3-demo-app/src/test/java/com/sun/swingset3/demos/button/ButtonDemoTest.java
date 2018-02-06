@@ -12,7 +12,7 @@ import com.sun.swingset3.demos.togglebutton.ToggleButtonDemo;
 import com.sun.swingset3.demos.tree.TreeDemo;
 
 /**
- * Demonstrates how to create various screen shots of components in the SwingSet3 application
+ * Demonstrates how to create various screenshots of components in the SwingSet3 application
  * 
  * @author Goran Stack
  *

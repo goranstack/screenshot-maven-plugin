@@ -10,6 +10,6 @@
 
 - Let the documentation in the site get inspiration from http://code.google.com/p/c5-db-migration/wiki/MavenPlugin
 
-- Create a video tutorial how to use screen shots in Open Office using a screencasting software. 
+- Create a video tutorial how to use screenshots in Open Office using a screen casting software. 
 	See http://en.wikipedia.org/wiki/Comparison_of_screencasting_software
 	http://www.capturefox.com/

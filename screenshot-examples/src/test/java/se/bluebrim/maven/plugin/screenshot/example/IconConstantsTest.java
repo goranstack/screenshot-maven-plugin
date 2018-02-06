@@ -53,7 +53,7 @@ public class IconConstantsTest {
 
 	
 	/**
-	 * Creates a screen shot for each method in the IconConstants class 
+	 * Creates a screenshot for each method in the IconConstants class 
 	 */
 	@Screenshot
 	public Collection<ScreenshotDescriptor> createStaticFieldScreenshots()

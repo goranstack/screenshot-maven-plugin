@@ -5,20 +5,20 @@ import javax.swing.JComponent;
 
 /**
  * <p>
- * Used as element type for a {@code Collection} of screen shots returned 
+ * Used as element type for a {@code Collection} of screenshots returned 
  * by a {@code @Screenshot} annotated method in a test class.
  * </p>
  * <p>
  * Sometimes it's more convenient to return a {@code Collection} of screen 
  * shots from a {@code @Screenshot} annotated method
- * instead of writing a separate method for each screen shot. 
+ * instead of writing a separate method for each screenshot. 
  * In that case the parameters specified for the {@code @Screenshot} annotation
  * are ignored and instead you can specify the corresponding parameters in 
- * the {@code ScreenshotDescriptor} for each screen shot in the collection.
+ * the {@code ScreenshotDescriptor} for each screenshot in the collection.
  * </p>
  * <p>
  * Since the possibility to return a Collection of {@code ScreenshotDescriptor} was
- * added to generate screen shots for resource classes containing Paint, Fonts etc
+ * added to generate screenshots for resource classes containing Paint, Fonts etc
  * Collections of ScreenshotDescriptor are only processed by the {@code screenshot:javadoc} goal.
  * </p 
  * 

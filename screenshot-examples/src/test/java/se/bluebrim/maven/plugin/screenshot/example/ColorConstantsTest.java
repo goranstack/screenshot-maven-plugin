@@ -53,7 +53,7 @@ public class ColorConstantsTest {
 
 	
 	/**
-	 * Creates a screen shot for each field in the ColorConstants class
+	 * Creates a screenshot for each field in the ColorConstants class
 	 */
 	@Screenshot
 	public Collection<ScreenshotDescriptor> createStaticFieldScreenshots()

@@ -9,7 +9,7 @@ import org.apache.commons.lang3.ObjectUtils;
 
 /**
  * Used to annotate method in test classes that returns a JComponent suitable
- * for screen shot ripping.
+ * for screenshot ripping.
  * 
  * @author G Stack
  * 
@@ -18,13 +18,13 @@ import org.apache.commons.lang3.ObjectUtils;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Screenshot {
 	/**
-	 * Specify the class that should be associated with the screen shot. Can be omitted if the screen shot 
+	 * Specify the class that should be associated with the screenshot. Can be omitted if the screenshot 
 	 * method returns that class.
 	 */
 	Class<?> targetClass() default ObjectUtils.Null.class;
 	
 	/**
-	 * Used to generate different file names for several screen shots of the same class 
+	 * Used to generate different file names for several screenshots of the same class 
 	 * 
 	 */
 	String scene() default "";

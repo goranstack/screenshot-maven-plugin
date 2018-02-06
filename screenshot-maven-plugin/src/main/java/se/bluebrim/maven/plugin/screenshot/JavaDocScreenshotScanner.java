@@ -51,7 +51,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 
 
 	/**	
-	 * Use the Javadoc convention to name the screen shot file. See:
+	 * Use the Javadoc convention to name the screenshot file. See:
 	 * <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/#images">Including images in Javadoc</a>
 	 */
 	@Override

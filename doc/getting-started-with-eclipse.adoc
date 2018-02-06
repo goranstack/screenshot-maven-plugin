@@ -19,7 +19,7 @@
 Your Eclipse workspace should now be populated with the modules of the `screenshot-maven-plugin`
 project. The dependency jars should be automatically downloaded by Maven.
 
-See screen shots in action by open the class `ResourceConstantsUsage` and hover the mouse over
+See screenshots in action by open the class `ResourceConstantsUsage` and hover the mouse over
 the `ColorConstants` class.
 
 image::images/colorconstants-hover.jpg[]

@@ -508,7 +508,7 @@ public abstract class ScreenshotScanner {
 	// ios.flush();
 	// ios.close();
 	// } catch (Exception e) {
-	// throw new RuntimeException("Unable to write screen shot to: " +
+	// throw new RuntimeException("Unable to write screenshot to: " +
 	// file.getPath());
 	// }
 	// break;
@@ -534,7 +534,7 @@ public abstract class ScreenshotScanner {
 			outfile.flush();
 			outfile.close();
 		} catch (IOException e) {
-			throw new RuntimeException("Unable to write screen shot to: " + file.getPath());
+			throw new RuntimeException("Unable to write screenshot to: " + file.getPath());
 		}
 
 	}

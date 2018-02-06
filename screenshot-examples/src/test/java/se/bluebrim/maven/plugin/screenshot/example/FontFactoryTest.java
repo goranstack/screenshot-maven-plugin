@@ -53,7 +53,7 @@ public class FontFactoryTest {
 
 	
 	/**
-	 * Creates a screen shot for each method in the PaintFactory 
+	 * Creates a screenshot for each method in the PaintFactory 
 	 */
 	@Screenshot
 	public Collection<ScreenshotDescriptor> createStaticMethodScreenshots()

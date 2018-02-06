@@ -36,7 +36,7 @@ public class JavadocMojo extends AbstractMojo
     private float javaDocImageScale = 1f;
 
     /**
-     * If true, the Java source files of the screen shot target classes will be checked
+     * If true, the Java source files of the screenshot target classes will be checked
      * for missing &lt;img src="doc-files/xxxxxxx.png"&gt; tags and missing tags
      * will be added. The implementation of this feature are experimental and somewhat naive
      * so use this with care. The parsing of source files are done with <a href="http://qdox.codehaus.org">QDoc</a>

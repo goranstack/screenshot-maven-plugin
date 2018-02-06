@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * The classic "Hello World" used to demonstrate the Screen Shot Maven Plugin.
+ * The classic "Hello World" used to demonstrate the Screenshot Maven Plugin.
  * The camera image was found at: http://wefunction.com/2008/07/function-free-icon-set
  * 
  * @author Goran Stack
@@ -21,7 +21,7 @@ public class HelloWorldPanel extends JPanel {
 
 	public HelloWorldPanel() 
 	{
-		JLabel label = new JLabel("Hello World from Screen Shot Maven Plugin");
+		JLabel label = new JLabel("Hello World from Screenshot Maven Plugin");
 		ImageIcon icon;
 		try {
 			icon = new ImageIcon(new URL("http://screenshot-maven-plugin.googlecode.com/svn/site/images/camera.png"));

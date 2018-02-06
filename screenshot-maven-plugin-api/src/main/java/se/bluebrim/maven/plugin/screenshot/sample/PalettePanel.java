@@ -90,7 +90,6 @@ public class PalettePanel extends JPanel
 	public PalettePanel(int noOfColumns) 
 	{
 		setLayout(new MigLayout(new LC().wrapAfter(noOfColumns)));
-		setOpaque(false);
 	}
 	
 	public void addSample(JComponent sample, String name)
