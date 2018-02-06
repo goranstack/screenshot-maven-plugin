@@ -69,6 +69,7 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	/**
 	 * For now only for the "javadoc" goal but in case we want this for the "gallery" goal as well
 	 */
+	@SuppressWarnings("unused")
 	private void handleScreenshotCollection(Object screenshot) {
 		if (screenshot instanceof Collection<?>)
 		{

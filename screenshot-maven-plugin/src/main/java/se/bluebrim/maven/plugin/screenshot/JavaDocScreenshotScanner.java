@@ -55,13 +55,13 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	 * <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/#images">Including images in Javadoc</a>
 	 */
 	@Override
-	protected void handleFoundMethod(Class candidateClass, Method method) {
+	protected void handleFoundMethod(Class<?> candidateClass, Method method) {
 		Object screenshot = callScreenshotMethod(candidateClass, method);
 		if (screenshot instanceof JComponent)
 		{
 			JComponent screenshotComponent = (JComponent)screenshot;
-			Class javadocClass = getTargetClass(method, screenshotComponent);
-			String screenshotName = createScreenshotName(javadocClass, method);
+			Class<?> javadocClass = getTargetClass(method, screenshotComponent);
+			String screenshotName = createScreenshotName(javadocClass, getSceneName(method));
 			createJavadocScreenshot(screenshotName, screenshotComponent, javadocClass);
 			addMissingImageTagToJavadoc(javadocClass, screenshotName);
 		} else
@@ -70,14 +70,14 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 				int index = 0;
 				Collection<ScreenshotDescriptor> screenShots = (Collection<ScreenshotDescriptor>) screenshot;
 				for (ScreenshotDescriptor screenshotDescriptor : screenShots) {
-					Class javadocClass = screenshotDescriptor.getTargetClass();
+					Class<?> javadocClass = screenshotDescriptor.getTargetClass();
 					String scene = StringUtils.isEmpty(screenshotDescriptor.getScene()) ? "" + index : screenshotDescriptor.getScene();
 					createJavadocScreenshot(javadocClass.getSimpleName() + "-" + scene, screenshotDescriptor.getScreenshot(), javadocClass);
 				}
 			}				
 	}
 
-	private void createJavadocScreenshot(String screenshotName, JComponent screenshotComponent, Class javadocClass) 
+	private void createJavadocScreenshot(String screenshotName, JComponent screenshotComponent, Class<?> javadocClass) 
 	{
 		File docFilesDirectory = new File(sourceDirectory, org.springframework.util.ClassUtils.classPackageAsResourcePath(javadocClass) + "/" + DOC_FILES);
 		docFilesDirectory.mkdirs();
@@ -94,7 +94,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	 * Nice to have but not needed, so just skip it with a info line in the log, if anything fails.
 	 * </p>
 	 */
-	private void addMissingImageTagToJavadoc(Class javadocClass, String screenshotName)
+	private void addMissingImageTagToJavadoc(Class<?> javadocClass, String screenshotName)
 	{
 		final String srcPath = DOC_FILES + "/" + screenshotName + "." + FORMAT_PNG;
 		// TODO: Find a solution that works for inner classes as well.
@@ -145,7 +145,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 		
 		try {
 			boolean notAddedYet = true;
-			List lines = FileUtils.readLines(javaFile, srcFileEncoding);
+			List<String> lines = FileUtils.readLines(javaFile, srcFileEncoding);
 			List<String> out = new ArrayList<String>();
 			for (Object object : lines) {
 				String line = (String)object;
@@ -175,7 +175,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	{
 		try {
 			boolean notAddedYet = true;
-			List lines = FileUtils.readLines(javaFile, srcFileEncoding);
+			List<String> lines = FileUtils.readLines(javaFile, srcFileEncoding);
 			List<String> out = new ArrayList<String>();
 			for (Object object : lines) {
 				String line = (String)object;
