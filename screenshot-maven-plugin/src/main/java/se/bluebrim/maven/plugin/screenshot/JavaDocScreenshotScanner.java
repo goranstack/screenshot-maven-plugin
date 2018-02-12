@@ -55,13 +55,13 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	 * <a href="http://java.sun.com/j2se/javadoc/writingdoccomments/#images">Including images in Javadoc</a>
 	 */
 	@Override
-	protected void handleFoundMethod(Class<?> candidateClass, Method method) {
+	protected void handleFoundMethod(Class<?> candidateClass, Method method, Screenshot annotation) {
 		Object screenshot = callScreenshotMethod(candidateClass, method);
 		if (screenshot instanceof JComponent)
 		{
 			JComponent screenshotComponent = (JComponent)screenshot;
-			Class<?> javadocClass = getTargetClass(method, screenshotComponent);
-			String screenshotName = createScreenshotName(javadocClass, getSceneName(method));
+			Class<?> javadocClass = getTargetClass(annotation, screenshotComponent);
+			String screenshotName = createScreenshotName(javadocClass, getSceneName(annotation));
 			createJavadocScreenshot(screenshotName, screenshotComponent, javadocClass);
 			addMissingImageTagToJavadoc(javadocClass, screenshotName);
 		} else

@@ -69,10 +69,6 @@ public class GalleryMojo extends AbstractMojo
 	@Parameter( defaultValue = "${project}", readonly = true )
     private MavenProject project;
     
-	@Parameter( defaultValue = "${rectorProjects}", readonly = true )
-    private ArrayList reactorProjects;
-
-
     /**
      * A screenshot will be created for each Locale where the file name is appended with the
      * Locale as string.

@@ -94,7 +94,7 @@
 					<executions>
 						<execution>
 							<id>create-gallery</id>
-							<phase>install</phase>
+							<phase>none</phase>
 							<goals>
 								<goal>gallery</goal>
 							</goals>

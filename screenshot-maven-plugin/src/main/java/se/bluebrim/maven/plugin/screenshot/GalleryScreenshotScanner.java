@@ -55,13 +55,13 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 		appendAsciiDoc(data);		
 	}
 
-	protected void handleFoundMethod(Class<?> candidateClass, Method method) 
+	protected void handleFoundMethod(Class<?> candidateClass, Method method, Screenshot annotation) 
 	{
 		Object screenshot = callScreenshotMethod(candidateClass, method);
 		if (screenshot instanceof JComponent)
 		{
-			Class<?> targetClass = getTargetClass(method, (JComponent)screenshot);
-			emitScreenshot(getSceneName(method), targetClass, (JComponent)screenshot);
+			Class<?> targetClass = getTargetClass(annotation, (JComponent)screenshot);
+			emitScreenshot(getSceneName(annotation), targetClass, (JComponent)screenshot);
 		} // else
 //			handleScreenshotCollection(screenshot);	
 	}

@@ -83,7 +83,7 @@ public abstract class ScreenshotScanner {
 		this.scaleFactor = scaleFactor;
 	}
 
-	protected abstract void handleFoundMethod(Class<?> candidateClass, Method method);
+	protected abstract void handleFoundMethod(Class<?> candidateClass, Method method, Screenshot annotation);
 
 	protected File createScreenshotFile(JComponent screenShotComponent, File dir, String screenshotName) {
 		File file = new File(dir.getPath(), screenshotName + "." + FORMAT_PNG);
@@ -135,49 +135,16 @@ public abstract class ScreenshotScanner {
 	 *         cases where the screenShotComponent is a generic panel class
 	 *         containing the specific screenshot class.
 	 */
-	protected Class<?> getTargetClass(Method method, JComponent screenShotComponent) {
-		Class<?> targetClass = (Class<?>) retrieveAnnotationPropertyValue(method, "targetClass");
+	protected Class<?> getTargetClass(Screenshot annotation, JComponent screenShotComponent) {
+		Class<?> targetClass = annotation.annotationType();
 		return ObjectUtils.Null.class.getName().equals(targetClass.getName()) ? screenShotComponent.getClass()
 				: targetClass;
 	}
 
-	protected boolean isOneForEachLocale(Method method) {
-		return (Boolean) retrieveAnnotationPropertyValue(method, "oneForEachLocale");
-	}
 
-	protected String getSceneName(Method method) {
-		String scene = (String) retrieveAnnotationPropertyValue(method, "scene");
+	protected String getSceneName(Screenshot annotation) {
+		String scene = annotation.scene();
 		return (StringUtils.isEmpty(scene)) ? "" : "-" + scene;
-	}
-
-	/**
-	 * We have to retrieve the property values of the Screenshot annotation by using
-	 * reflection to avoid ClassCastException when assigning a Screenshot annotation
-	 * to variable typed with a Screenshot that is loaded with a different
-	 * ClassLoader. By using reflection there is no need for that assignment.
-	 */
-	private Object retrieveAnnotationPropertyValue(Method method, String propertyName) {
-		Method annotationProperty = null;
-		try {
-			annotationProperty = screenshotAnnotation.getMethod(propertyName, new Class[] {});
-		} catch (SecurityException e) {
-			getLog().error("Unable to access Screenshot annotation property \"" + propertyName + "\"", e);
-		} catch (NoSuchMethodException e) {
-			getLog().error("Annotation property \"" + propertyName + "\" is missing", e);
-		}
-		Object annotation = method.getAnnotation(screenshotAnnotation);
-		Object value = null;
-		try {
-			value = annotationProperty.invoke(annotation);
-		} catch (IllegalArgumentException e) {
-			getLog().error("Unable to access annotation property \"" + propertyName + "\"", e);
-		} catch (IllegalAccessException e) {
-			getLog().error("Unable to access annotation property \"" + propertyName + "\"", e);
-		} catch (InvocationTargetException e) {
-			getLog().error("Unable to access annotation property \"" + propertyName + "\"", e);
-		}
-		getLog().debug("Screenshot annotation property " + propertyName + ": " + value);
-		return value;
 	}
 
 	protected Log getLog() {
@@ -239,22 +206,23 @@ public abstract class ScreenshotScanner {
 				ClassLoader classLoader = createClassLoader();
 				screenshotAnnotation = loadAnnotationClass(Screenshot.class.getName(), classLoader);
 				Reflections reflections = null;
-				reflections = new Reflections(new ConfigurationBuilder().setUrls(getURLtoScan())
+				URL urLtoScan = getURLtoScan();
+				reflections = new Reflections(new ConfigurationBuilder().setUrls(urLtoScan)
 						.addClassLoader(classLoader).setScanners(new MethodAnnotationsScanner()));
 
 				Set<Method> annotadedMethods = reflections.getMethodsAnnotatedWith(Screenshot.class);
 
-				getLog().info("Found: " + annotadedMethods.size() + " screenshot annotaded methods");
+				getLog().info("Found: " + annotadedMethods.size() + " screenshot annotaded methods in: " + urLtoScan);
 				
 				if (annotadedMethods.size() > 0) {
 					processModule();
+					getLog().info("Processing annotaded methods with Locale=" + locale);
+					Thread.currentThread().setContextClassLoader(classLoader);
+					processAnnotadedMethods(annotadedMethods);
+					classLoader = null;
+					Thread.currentThread().setContextClassLoader(null);
 				}
 
-				getLog().info("Processing annotaded metthods with Locale=" + locale);
-				Thread.currentThread().setContextClassLoader(classLoader);
-				processAnnotadedMethods(annotadedMethods);
-				classLoader = null;
-				Thread.currentThread().setContextClassLoader(null);
 				screenshotAnnotation = null;
 				System.gc(); // Asynchronous garbage collector might already run.
 				System.gc(); // To make sure it does a full gc, call it twice
@@ -285,9 +253,9 @@ public abstract class ScreenshotScanner {
 			Class<?> declaringClass = method.getDeclaringClass();
 			if (Modifier.isAbstract(declaringClass.getModifiers()))
 				continue;
-			getLog().debug("The method: \"" + method.getName() + "\" is annotated with Screenshot");
-			Screenshot annotation = method.getAnnotation(Screenshot.class);
-			handleFoundMethod(declaringClass, method);
+			Screenshot annotation = method.getAnnotation(screenshotAnnotation);
+			getLog().debug("The method: \"" + method.getName() + "\" is annotated with: " + annotation);
+			handleFoundMethod(declaringClass, method, annotation);
 		}
 	}
 
