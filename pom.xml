@@ -1,27 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.sonatype.oss</groupId>
-		<artifactId>oss-parent</artifactId>
-		<version>9</version>
-	</parent>
 	<groupId>se.bluebrim.maven.plugin</groupId>
 	<artifactId>screenshot-maven-plugin-parent</artifactId>
 	<version>0.0.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Screenshot Maven Plugin Parent</name>
+	<name>${project.artifactId}</name>
 	<description>Parent project to screenshot-maven-plugin and additional modules</description>
-	<url>https://github.com/goranstack/screenshot-maven-plugin</url>
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-		</license>
-	</licenses>
 	<scm>
 		<connection>scm:git:git@github.com:goranstack/screenshot-maven-plugin.git</connection>
 		<developerConnection>scm:git:git@github.com:goranstack/screenshot-maven-plugin.git</developerConnection>
@@ -203,8 +188,7 @@
 	</profiles>
 
 	<modules>
-		<module>screenshot-maven-plugin-api</module>
-		<module>screenshot-maven-plugin</module>
+		<module>maven-central-parent</module>
 		<module>gh-pages</module>
 		<module>swingset3-demo-app</module>
 		<module>screenshot-examples</module>
