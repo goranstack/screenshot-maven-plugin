@@ -79,7 +79,7 @@
 					<executions>
 						<execution>
 							<id>create-gallery</id>
-							<phase>none</phase>
+							<phase>install</phase>
 							<goals>
 								<goal>gallery</goal>
 							</goals>
@@ -90,7 +90,8 @@
 					</executions>
 				</plugin>
 			</plugins>
-		</pluginManagement><plugins>
+		</pluginManagement>
+		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -101,80 +102,9 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-							<goal>test-jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.0.2</version>
-				<!-- Make it possible for test code to depend on test code in other modules -->
-				<executions>
-					<execution>
-						<goals>
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.7</version>
-				<executions>
-					<execution>
-						<id>createsite</id>
-						<phase>package</phase>
-						<goals>
-							<goal>site</goal>
-						</goals>
-						<configuration>
-							<reportPlugins>
-								<plugin>
-									<groupId>org.apache.maven.plugins</groupId>
-									<artifactId>maven-project-info-reports-plugin</artifactId>
-									<version>2.9</version>
-									<reportSets>
-										<reportSet>
-											<reports>
-												<report>plugin-info</report>
-											</reports>
-										</reportSet>
-									</reportSets>
-								</plugin>
-							</reportPlugins>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>		
+		</plugins>
 	</build>
 
-	<!-- Found at Don Brown's Weblog: http://www.jroller.com/mrdon/entry/find_of_the_day_wagon -->
-	<distributionManagement>
-		<repository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>${repo.release.id}</id>
-			<url>${repo.release.url}</url>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>false</uniqueVersion>
-			<id>${repo.snapshot.id}</id>
-			<url>${repo.snapshot.url}</url>
-		</snapshotRepository>
-	</distributionManagement>
 	<profiles>
 		<profile>
 			<id>atg-private-maven-repo</id>

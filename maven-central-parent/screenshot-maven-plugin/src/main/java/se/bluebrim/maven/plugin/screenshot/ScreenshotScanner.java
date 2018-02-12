@@ -136,7 +136,7 @@ public abstract class ScreenshotScanner {
 	 *         containing the specific screenshot class.
 	 */
 	protected Class<?> getTargetClass(Screenshot annotation, JComponent screenShotComponent) {
-		Class<?> targetClass = annotation.annotationType();
+		Class<?> targetClass = annotation.targetClass();
 		return ObjectUtils.Null.class.getName().equals(targetClass.getName()) ? screenShotComponent.getClass()
 				: targetClass;
 	}

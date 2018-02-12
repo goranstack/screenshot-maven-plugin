@@ -7,7 +7,7 @@
 		<version>0.0.8-SNAPSHOT</version>
 	</parent>
 	<artifactId>screenshot-examples</artifactId>
-	<name>Screenshot Examples</name>
+	<name>${project.artifactId}</name>
 	<description>Code example how to use the maven-screenshot-plugin</description>
 	<properties>
 		<rootDirectory>${project.basedir}/..</rootDirectory>		
@@ -20,20 +20,6 @@
 			</plugin>
 		</plugins>		
 	</build>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>github</id>
-			<name>Screenshot Maven Plugin Repo</name>
-			<url>https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</url>
-		</pluginRepository>
-	</pluginRepositories>
-	<repositories>
-		<repository>
-			<id>github</id>
-			<name>Screenshot Maven API Repo</name>
-			<url>https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.swinglabs</groupId>

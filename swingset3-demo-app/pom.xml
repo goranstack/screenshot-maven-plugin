@@ -7,10 +7,10 @@
 		<version>0.0.8-SNAPSHOT</version>
 	</parent>
 	<artifactId>swingset3-demo-app</artifactId>
-	<name>SwingSet3 Demo Application</name>
+	<name>${project.artifactId}</name>
 	<description>The SwingSet3 application adjusted to Maven conventions with additional test classes and JavaDoc screenshots.</description>
 	<properties>
-		<rootDirectory>${project.basedir}/..</rootDirectory>		
+		<rootDirectory>${project.basedir}/..</rootDirectory>
 	</properties>
 	<build>
 		<!-- Include source files in the target jar -->
@@ -29,13 +29,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>github</id>
-			<name>Screenshot Maven Plugin Repo</name>
-			<url>https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</url>
-		</pluginRepository>
-	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.swinglabs</groupId>
@@ -53,11 +46,9 @@
 			<version>1.03</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.jnlp</groupId>
-			<artifactId>jnlp</artifactId>
-			<version>1.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/jnlp-1.2.jar</systemPath>
+			<groupId>com.massisframework</groupId>
+			<artifactId>jnlp-definitions</artifactId>
+			<version>7.0</version>
 		</dependency>
 		<dependency>
 			<groupId>se.bluebrim.maven.plugin</groupId>
@@ -66,16 +57,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<repositories>
-		<repository>
-			<id>freehep</id>
-			<name>FreeHEP Maven Repository</name>
-			<url>http://java.freehep.org/maven2</url>
-		</repository>
-		<repository>
-			<id>github</id>
-			<name>Screenshot Maven API Repo</name>
-			<url>https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</url>
-		</repository>
-	</repositories>
 </project>

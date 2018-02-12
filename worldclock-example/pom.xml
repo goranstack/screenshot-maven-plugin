@@ -6,7 +6,7 @@
     <version>0.0.8-SNAPSHOT</version>
   </parent>
   <artifactId>worldclock-example</artifactId>
-  <name>World Clock</name>
+  <name>${project.artifactId}</name>
   <description>A Swing example project showing how to use the screenshot-maven-plugin</description>
   <dependencies>
   	<dependency>
