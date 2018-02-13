@@ -56,7 +56,7 @@
 					</execution>
 					<execution>
 						<id>screenshot-gallery</id>
-						<phase>install</phase>
+						<phase>verify</phase>
 						<goals>
 							<goal>process-asciidoc</goal>
 						</goals>
