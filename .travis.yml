@@ -19,6 +19,6 @@ deploy:
     script: .travis/deploy.sh
     skip_cleanup: true
     on:
-      repo: idealo/logback-redis
+      repo: goranstack/screenshot-maven-plugin
       tags: true
       jdk: oraclejdk8
