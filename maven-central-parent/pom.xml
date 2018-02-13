@@ -19,10 +19,6 @@
 	
 	<url>https://github.com/goranstack/screenshot-maven-plugin</url>
 	
-	<prerequisites>
-		<maven>3.0</maven>
-	</prerequisites>
-	
 	<developers>
 		<developer>
 			<id>goran.stack</id>

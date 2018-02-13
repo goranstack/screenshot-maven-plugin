@@ -10,6 +10,11 @@
 	<description>A plugin for creating screenshots by running screenshot annotated methods in test classes. The screenshot method returns a JComponent that is ripped and saved to a file to be used in JavaDoc, AsciiDoc or as splash screen.</description>
 	<packaging>maven-plugin</packaging>
 	<name>${project.artifactId}</name>
+	
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.reflections</groupId>
