@@ -1,14 +1,24 @@
 language: java
+
 jdk:
   - oraclejdk8
 
-script: mvn package
+script: mvn --settings .travis/settings.xml clean  verify
 
 deploy:
+- 
   provider: pages
   local-dir: gh-pages/target/generated-docs
   skip-cleanup: true
-  github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
+  github-token: $GITHUB_TOKEN
   keep-history: true
-  on:
+  true:
     branch: master
+-
+    provider: script
+    script: .travis/deploy.sh
+    skip_cleanup: true
+    on:
+      repo: idealo/logback-redis
+      tags: true
+      jdk: oraclejdk8
