@@ -10,15 +10,76 @@
 	<name>${project.artifactId}</name>
 	<description>Code example how to use the maven-screenshot-plugin</description>
 	<properties>
-		<rootDirectory>${project.basedir}/..</rootDirectory>		
+		<rootDirectory>${project.basedir}/..</rootDirectory>
 	</properties>
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>se.bluebrim.maven.plugin</groupId>
 				<artifactId>screenshot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>splashscreen</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>splashscreen</goal>
+						</goals>
+						<configuration>
+							<splashScreenPanelClassName>se.bluebrim.maven.plugin.screenshot.example.SplashScreenPanel</splashScreenPanelClassName>
+							<imageFile>${project.build.outputDirectory}/splash.png</imageFile>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
-		</plugins>		
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>templating-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<id>filter-src</id>
+						<goals>
+							<goal>filter-sources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											se.bluebrim.maven.plugin
+										</groupId>
+										<artifactId>
+											screenshot-maven-plugin
+										</artifactId>
+										<versionRange>
+											[0.0.8-SNAPSHOT,)
+										</versionRange>
+										<goals>
+											<goal>splashscreen</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<dependencies>
 		<dependency>

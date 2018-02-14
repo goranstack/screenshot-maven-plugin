@@ -168,6 +168,25 @@
 										<ignore></ignore>
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											se.bluebrim.maven.plugin
+										</groupId>
+										<artifactId>
+											screenshot-maven-plugin
+										</artifactId>
+										<versionRange>
+											[0.0.8-SNAPSHOT,)
+										</versionRange>
+										<goals>
+											<goal>splashscreen</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>

@@ -9,38 +9,65 @@ image:http://img.shields.io/travis/goranstack/screenshot-maven-plugin/master.svg
 Create Java Swing screenshots as part of your Maven build
 
 == Introduction
-The `screenshot-maven-plugin` is used to generate screenshots from Java Swing applications for two purposes. One is to 
-include the screenshots in the JavaDoc of your classes. The other is to create screenshot galleries that are uploaded 
-in a Content Management System to be accessed when producing documents including screenshots such as user manuals and technical documentation.
+The `screenshot-maven-plugin` is used to generate screenshots from Java Swing test classes.
 
-The usual way to create screenshots is to start the application, navigate to the desired screen, use the screen capture function in the OS to get a screenshot of the active window in the clip board and finally saving the screenshot by pasting the content from the clip board to an image editing program. Sometimes you have to crop the image before saving it if the captured window contains several sub panels and you only want a screenshot of one of them.
+The usual way to create screenshots is to start the application, navigate to the desired screen, use the screen capture
+function in the OS to get a screenshot of the active window in the clip board and finally saving the screenshot by pasting
+the content from the clip board to an image editing program. Sometimes you have to crop the image before saving it if the
+captured window contains several sub panels and you only want a screenshot of one of them.
 
 image::doc/images/atg/PaymentPanel-deco.png[]
 
-When screenshots are included in user manuals its common to decorate the screenshots with call outs that are referred from the text. This creates even more work to create the screenshot since you have to manual add the call out graphics in the image editor before saving it.
+When screenshots are included in user manuals its common to decorate the screenshots with call outs that are referred
+from the text. This creates even more work to create the screenshot since you have to manual add the call out graphics
+in the image editor before saving it.
 
-If your application supports multiple languages and you have to produce user manuals for those languages the steps above have to be repeated for each supported language.
+If your application supports multiple languages and you have to produce user manuals for those languages the steps above
+have to be repeated for each supported language.
 
-The `screenshot-maven-plugin` automates the task of creating those kind of screenshots with a little bit of coding from your side
+The `screenshot-maven-plugin` automates the task of creating those kind of screenshots with a little bit of coding from
+your side
 
-== Screenshots for JavaDoc
+== The plugin goals
 
-The support for images in JavaDoc is excellent in Eclipse IDE and probably in other IDE's as well. You can see images in some classes in the JDK for example in http://download.oracle.com/javase/6/docs/api/java/awt/LinearGradientPaint.html[LinearGradientPaint] and http://download.oracle.com/javase/6/docs/api/javax/swing/JLayeredPane.html[JLayeredPane]. It's very easy to include images in the JavaDoc by adding an image tag such as
+The plugin has three goals for various purposes:
+
+* Create screenshots of UI components to include in the JavaDoc of your classes.
+
+* Create a screenshot galleries of all your UI component. The gallery is created as an AsciiDoc article for further
+processing to HTML, pdf or other format that AsciiDoctor is capable of.
+
+* Create a splash screen with variable content such as version number. You can configure the JVM to show this splash screen
+when starting up.
+
+=== Screenshots for JavaDoc
+
+The support for images in JavaDoc is excellent in Eclipse IDE and probably in other IDE's as well. You can see images in
+some classes in the JDK for example in
+ http://download.oracle.com/javase/6/docs/api/java/awt/LinearGradientPaint.html[LinearGradientPaint] and
+ http://download.oracle.com/javase/6/docs/api/javax/swing/JLayeredPane.html[JLayeredPane].
+ It's very easy to include images in the JavaDoc by adding an image tag such as
 [source, xml]
 ----
 <img src = "doc-files/LinearGradientPaint.png">
 ----
 and putting the corresponding image file in a doc-files folder in the same location as the source file of the class. +
 See: 
-http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#images[How to Write Doc Comments for the Javadoc Tool - Including Images]
+http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html#images[How to Write Doc Comments for the
+Javadoc Tool - Including Images]
 
-When developing a Swing based application it's nice to include an image in the JavaDoc for all classes and/or methods that have a visual presentation. Your co-developers will be very happy when they discover that a visual representation pop ups when hovering over a class in Eclipse.
+When developing a Swing based application it's nice to include an image in the JavaDoc for all classes and/or methods
+that have a visual presentation. Your co-developers will be very happy when they discover that a visual representation
+pop ups when hovering over a class in Eclipse.
 
+.Hover a class name in Eclipse
 image::doc/images/buttondemo-mouse-over.jpg[]
 
-This project include examples how to use the `screenshot-maven-plugin` to generate screenshots of panels in the https://swingset3.dev.java.net/[SwingSet3] demo application. The screenshot above was created by the following steps:
+This project include examples how to use the `screenshot-maven-plugin` to generate screenshots of panels in the
+https://swingset3.dev.java.net/[SwingSet3] demo application. The screenshot above was created by the following steps:
 
-. Add a method in a test class that returns an instance of the `ButtonDemo` class and annotate the method with the `@Screenshot` annotation
+. Add a method in a test class that returns an instance of the `ButtonDemo` class and annotate the method with
+the `@Screenshot` annotation
 +
 [source, java]
 ----
@@ -61,23 +88,36 @@ public JComponent createButtonDemoScreenShot() {
 
 . Run the javadoc goal of `screenshot-maven-plugin`.
 
-== Screenshots for CMS
+=== Screenshot gallery
 
-The `screenshot-maven-plugin` is capable of generating screenshots that is uploaded to a CMS as part of the continuous integration build in a build server for example Hudson. A tiny CMS implemented as a Java servlet is included in this project. It can be used together with the `screenshot-maven-plugin` to produce a screenshot gallery web page.
+The `screenshot-maven-plugin` is capable of generating a screenshot gallery as an AsciiDoc article. You can create
+an aggregated screenshot gallery for a multi module project where each module generates a section in the document that
+appears in the Table of Contents.
 
-image::doc/images/atg/gallery.png[]
+.A gallery created of the axample modules in this project
+image::doc/images/gallery.png[]
 
-Save a bookmark in your web browser to the page and you can easy check all generated screenshots produced by the last build. In cases where the developers uses Windows on their workstations and the build server runs Linux you get a valuable check that the UI's look good on Linux as well.
+This project is set up to process the AsciiDoc source to HTML and deployed to GitHub pages.
 
-The `screenshot-maven-plugin` can be configured to generate a gallery with a column for each supported locale. You get the screenshots for the supported languages side by side and can quickly detect layout problems caused by the multi language support.
+=== Splash screen
+It's common to show a window with a progress bar and som info about the application when starting a Java desktop
+application. By using the `splashscreen` goal you can create an image that includes variables from
+the current build. There is a very nice http://www.mojohaus.org/templating-maven-plugin[templating-maven-plugin]
+that you can use to filter Java source classes to inject Maven properties as constant values. The `screenshot-examples`
+contains an example how this is done.
 
-Below each screenshot a xml snippet is displayed that can be included in a DocBook source file. Although DocBook is a great concept it can be a little bit difficult to master. The support for DocBook in the `screenshot-maven-plugin` is experimental and there is room for improvements. The goal of supporting DocBook is to create a work flow where both pdf and html documents including generated screenshots are produced from a single source and the whole process is performed by a Maven build.
+.Splash screen image created from the `SplashScreenPanel` class
+image::doc/images/splash.png[]
+
 
 == How to use the screenshot-maven-plugin in your project
 
 See: <<doc/configure-your-pom-files.adoc#,Configure your pom files>>
 
-== Check out the code in Eclipse
+== Development
+
+The project is structured as multi-module build. The two artifacts deployed to Maven central has a separate
+parent module.
 
 See: <<doc/getting-started-with-eclipse.adoc#,Getting started with Eclipse>>
 
