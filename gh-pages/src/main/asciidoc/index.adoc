@@ -1,57 +1,31 @@
 = Screenshot Maven Plugin
 :icons: font
 
+A plugin that generates screenshots from Java Swing GUI components to be used in JavaDoc or in
+a AsciiDoc based screenshot gallery.
 
-https://github.com/goranstack/screenshot-maven-plugin[Checkout source from GitHub] image:images/GitHub-Mark-32px.png[]
+== Documentation
 
-link:plugin-info/plugin-info.html[Maven generated Plugin Documentation] image:http://maven.apache.org/images/logos/build-by-maven-white.png[]
+[horizontal]
+image:images/GitHub-Mark-32px.png[]:: https://github.com/goranstack/screenshot-maven-plugin[The readme of the GitHub project]
 
-== Gallery examples
+image:http://maven.apache.org/images/logos/build-by-maven-black.png[]:: link:plugin-info/plugin-info.html[Maven generated Plugin Documentation]
 
-To create a screenshot gallery add the following configuration to your `pom.xml` file:
+image:images/xml-file.svg[width=40]:: <<configure-your-pom-files.adoc#,Configure your pom files>>
 
-[source, xml]
-----
-<build>
-    <plugins>
-        <plugin>
-            <groupId>se.bluebrim.maven.plugin</groupId>
-            <artifactId>screenshot-maven-plugin</artifactId>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>gallery</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-----
+image:https://upload.wikimedia.org/wikipedia/commons/c/cf/Eclipse-SVG.svg[]:: <<getting-started-with-eclipse.adoc#,Getting started developing with Eclipse>>
 
-A `site` directory with a screenshot gallery is created in the target directory. In a multimodule
-project you can create a separate gh-pages module that collects screenshot galleries from modules
-and deploy the aggregated content to a provider such as GitHub pages.
-
-Travis has build in support for GitHub pages deployment. If you use a CI without this feature
-its also possible to use a script like this:
-
-[source, bash]
-----
-#!/bin/bash
-cd gh-pages/target/generated-docs <1>
-git init
-git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <2>
-git add .
-git commit -m "Updated generated doc"
-git push --force origin master:gh-pages <1>
-rm -rf .git
-----
-
-<1> https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages[gh-pages] is the name of the module that collects content from other modules
-<2> Specify your GitHub repo
 
 == Example of a screenshot gallery created by the plugin
+The GitHub project contains a couple of example modules to demonstrate the output of the Screenshot Maven Plugin.
+The example modules has test classes providing Swing components that is included in the gallery.
 
-link:gallery/gallery.html[Screenshot Gallery]
+link:gallery/gallery.html[Example Screenshot Gallery]
+
+'''
+++++
+<small>
+<div>XML icon made by <a href="https://www.flaticon.com/authors/icomoon" title="Icomoon">Icomoon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+<div>Eclipse icon by Eduemoni (Own work) [<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AEclipse-SVG.svg">via Wikimedia Commons</a></div>
+</small>
+++++

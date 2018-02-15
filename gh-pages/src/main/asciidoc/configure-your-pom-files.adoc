@@ -3,43 +3,24 @@
 :icons: font
 :sectnums:
 
-We assume that you have a multi module project. Otherwise you put all configuration in your
-single pom file. This is a minimal configuration that let you run the javadoc goal only.
-The other goals need some more configuration.
+We assume that you have a multi module project and the screenshot gallery should be aggregated from several
+modules and published with GitHub pages.
 
 == Configuration in the parent pom
 
-Specify a property for the version number:
+=== Specify the following properties
 
 [source, xml]
 ----
 <properties> 
-    <screenshot-maven-plugin-version>0.0.7</screenshot-maven-plugin-version>
+    <screenshot-maven-plugin.version>0.0.7</screenshot-maven-plugin.version>
+    <rootDirectory>${project.basedir}</rootDirectory>
+    <localRepositoryPath>${rootDirectory}/maven-repo</localRepositoryPath>
+    <screenshotGalleryTarget>${rootDirectory}/asciidoc/target/gallery-src</screenshotGalleryTarget>
 </properties>
 ----
 
-Since the screenshot-maven-plugin artifacts do not appear in Maven Central Repository you have to add a repository and a pluginRepository element:
-
-[source, xml]
-----
-<repositories> 
-	<repository> 
-		<id>github-screenshot-maven-plugin</id>
-		<name>Screenshot Maven Plugin Repository</name>
-		<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
-	</repository> 
-</repositories>
-
-<pluginRepositories> 
-	<pluginRepository> 
-		<id>github-screenshot-maven-plugin</id>
-		<name>Screenshot Maven Plugin Repository</name>
-		<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
-	</pluginRepository> 
-</pluginRepositories>
-----
-
-Add a plugin element to the pluginManagement part
+=== Add a plugin element to the pluginManagement part
 
 [source, xml]
 ----
@@ -50,8 +31,28 @@ Add a plugin element to the pluginManagement part
             <artifactId>screenshot-maven-plugin</artifactId>
             <version>${screenshot-maven-plugin-version}</version>
             <configuration>
-               <goalPrefix>screenshot</goalPrefix>
+                <goalPrefix>screenshot</goalPrefix>
+                <sourceCodeURL>${project.scm.url}/src/main/java</sourceCodeURL>
+                <javaDocImageScale>0.6</javaDocImageScale>
+                <locales>
+                    <localeSpec>
+                        <language>sv</language>
+                        <country>SE</country>
+                    </localeSpec>
+                </locales>
             </configuration>
+            <executions>
+                <execution>
+                    <id>create-gallery</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>gallery</goal>
+                    </goals>
+                    <configuration>
+                        <outputDirectory>${screenshotGalleryTarget}</outputDirectory>
+                    </configuration>
+                </execution>
+            </executions>
         </plugin>
         .
         .
@@ -69,7 +70,7 @@ Add a dependency element to the dependencyManagement part
         <dependency>
             <groupId>se.bluebrim.maven.plugin</groupId>
             <artifactId>screenshot-maven-plugin-api</artifactId>
-            <version>${screenshot-maven-plugin-version}</version>
+            <version>${screenshot-maven-plugin.version}</version>
             <scope>test</scope>
         </dependency>
         .
@@ -95,6 +96,27 @@ Add the following to the pom files of modules containing Swing classes that you 
 </dependencies>
 ----
 
+The configuration above makes it possible to annotate test class method with `@Screenshot`.
+Since its most convenient to run the javadoc goal from command line you don't have to
+add any plugin configuration in the build section. To run the `gallery` as part of your Maven build
+add the following in the build section:
+[source, xml]
+----
+<plugins>
+    <plugin>
+        <groupId>se.bluebrim.maven.plugin</groupId>
+        <artifactId>screenshot-maven-plugin</artifactId>
+    </plugin>
+</plugins>
+----
+
+== Add a gh-pages module
+To create an aggregated screenshot gallery you need a common output directory for all modules that
+provides content to the gallery. This module also contains the AsciiDoc configuration necessary to
+process the generated Asciidoc to html.
+
+
+== Test your configuration
 Verify the configuration by adding the following classes to one of those modules:
 
 In `src/main/java` add:
@@ -182,3 +204,49 @@ The screenshot plugin detect the missing img tag in the Javadoc of `HelloWorldPa
 
 To include the screenshot in the Javadoc of the HelloWorldPanel class copy the image tag from Maven console and paste
 into the Javadoc. You should now be able to see the image as part of the Javadoc.
+
+== Screenshot Gallery
+
+To create a screenshot gallery add the following configuration to your `pom.xml` file:
+
+[source, xml]
+----
+<build>
+    <plugins>
+        <plugin>
+            <groupId>se.bluebrim.maven.plugin</groupId>
+            <artifactId>screenshot-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>gallery</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+----
+
+A `site` directory with a screenshot gallery is created in the target directory. In a multimodule
+project you can create a separate gh-pages module that collects screenshot galleries from modules
+and deploy the aggregated content to a provider such as GitHub pages.
+
+Travis has build in support for GitHub pages deployment. If you use a CI without this feature
+its also possible to use a script like this:
+
+[source, bash]
+----
+#!/bin/bash
+cd gh-pages/target/generated-docs <1>
+git init
+git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <2>
+git add .
+git commit -m "Updated generated doc"
+git push --force origin master:gh-pages <1>
+rm -rf .git
+----
+
+<1> https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages[gh-pages] is the name of the module that collects content from other modules
+<2> Specify your GitHub repo

@@ -1,7 +1,7 @@
 // Badges
 image:http://img.shields.io/travis/goranstack/screenshot-maven-plugin/master.svg["Build Status (Travis CI)", link="https://travis-ci.org/goranstack/screenshot-maven-plugin"]
 
-= image:doc/images/camera.png[] screenshot-maven-plugin
+= image:doc/images/photo-camera.svg[width=50] screenshot-maven-plugin
 :toc: left
 :icons: font
 :sectnums:
@@ -109,18 +109,14 @@ contains an example how this is done.
 .Splash screen image created from the `SplashScreenPanel` class
 image::doc/images/splash.png[]
 
+=== Documentation
+Instructions how to configure the plugin can be found at
+http://goranstack.github.io/screenshot-maven-plugin[GitHub Pages]
 
-== How to use the screenshot-maven-plugin in your project
-
-See: <<doc/configure-your-pom-files.adoc#,Configure your pom files>>
-
-== Development
-
-The project is structured as multi-module build. The two artifacts deployed to Maven central has a separate
-parent module.
-
-See: <<doc/getting-started-with-eclipse.adoc#,Getting started with Eclipse>>
 
 '''
-The project logotype: http://wefunction.com/2008/07/function-free-icon-set
-
+++++
+<small>
+<div>The camera icon made by <a href="https://www.flaticon.com/authors/daniel-bruce" title="Daniel Bruce">Daniel Bruce</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+</small>
+++++

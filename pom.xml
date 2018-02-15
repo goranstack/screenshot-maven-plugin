@@ -64,9 +64,7 @@
 					<version>${screenshot-maven-plugin-version}</version>
 					<configuration>
 						<goalPrefix>screenshot</goalPrefix>
-						<!-- Can't use ${project.scm.url} because that is appended with artifactId 
-							of the module. See: http://jira.codehaus.org/browse/MNG-2290 -->
-						<sourceCodeURL>https://github.com/goranstack/screenshot-maven-plugin/tree/master/${project.artifactId}/src/main/java</sourceCodeURL>
+						<sourceCodeURL>${project.scm.url}/src/main/java</sourceCodeURL>
 						<javaDocImageScale>0.6</javaDocImageScale>
 						<outputDirectory>${screenshotGalleryTarget}</outputDirectory>
 						<locales>
