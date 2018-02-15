@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>Screenshot Maven Plugin</title>
+<title>Getting started with Eclipse</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -424,7 +424,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <style>
 /* Stylesheet for CodeRay to match GitHub theme | MIT License | http://foundation.zurb.com */
 /*pre.CodeRay {background-color:#f7f7f8;}*/
@@ -519,77 +518,55 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article">
 <div id="header">
-<h1>Screenshot Maven Plugin</h1>
+<h1>Getting started with Eclipse</h1>
 <div class="details">
 <span id="revnumber">version 0.0.8-SNAPSHOT,</span>
 <span id="revdate">2018-02-15T15:43:12Z</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<div class="paragraph">
-<p>A plugin that generates screenshots from Java Swing GUI components to be used in JavaDoc or in
-a AsciiDoc based screenshot gallery.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_documentation">Documentation</h2>
-<div class="sectionbody">
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="./images/GitHub-Mark-32px.png" alt="GitHub Mark 32px"></span>
-</td>
-<td class="hdlist2">
-<p><a href="https://github.com/goranstack/screenshot-maven-plugin">The readme of the GitHub project</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="http://maven.apache.org/images/logos/build-by-maven-black.png" alt="build by maven black"></span>
-</td>
-<td class="hdlist2">
-<p><a href="plugin-info/plugin-info.html">Maven generated Plugin Documentation</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="./images/xml-file.svg" alt="xml file" width="40"></span>
-</td>
-<td class="hdlist2">
-<p><a href="configure-your-pom-files.html">Configure your pom files</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Eclipse-SVG.svg" alt="Eclipse SVG"></span>
-</td>
-<td class="hdlist2">
-<p><a href="getting-started-with-eclipse.html">Getting started developing with Eclipse</a></p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_example_of_a_screenshot_gallery_created_by_the_plugin">Example of a screenshot gallery created by the plugin</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The GitHub project contains a couple of example modules to demonstrate the output of the Screenshot Maven Plugin.
-The example modules has test classes providing Swing components that is included in the gallery.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Download and install JDK 8</p>
+</li>
+<li>
+<p>Download latest Eclipse for Java development</p>
+</li>
+<li>
+<p>Clone the git repo</p>
+</li>
+<li>
+<p>In Eclipse Package Explorer right click &#8594; New &#8594; Project &#8594; General &#8594; Project and give the project a name that
+is <strong>not</strong> a Maven module in the project. The name of the branch for example.</p>
+</li>
+<li>
+<p>Drag and drop the cloned repo to the project you created in Eclipse</p>
+</li>
+<li>
+<p>Select create links when prompted by Eclipse</p>
+</li>
+<li>
+<p>Right click on the <code>screenshot-maven-plugin</code> folder in Eclipse Package Explorer and
+Import&#8230;&#8203; &#8594; Maven &#8594; Existing Maven Projects.
+Press the Next button</p>
+</li>
+<li>
+<p>Press the Finish button</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p><a href="gallery/gallery.html">Example Screenshot Gallery</a></p>
+<p>Your Eclipse workspace should now be populated with the modules of the <code>screenshot-maven-plugin</code>
+project. The dependency jars should be automatically downloaded by Maven.</p>
 </div>
-<hr>
-<small>
-<div>XML icon made by <a href="https://www.flaticon.com/authors/icomoon" title="Icomoon">Icomoon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-<div>Eclipse icon by Eduemoni (Own work) [<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AEclipse-SVG.svg">via Wikimedia Commons</a></div>
-</small>
+<div class="paragraph">
+<p>See screenshots in action by open the class <code>ResourceConstantsUsage</code> and hover the mouse over
+the <code>ColorConstants</code> class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/colorconstants-hover.jpg" alt="colorconstants hover">
 </div>
 </div>
 </div>

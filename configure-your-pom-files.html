@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>Screenshot Maven Plugin</title>
+<title>Configure your pom files</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -517,79 +517,335 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .head .head{color:#f4f}
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
-<h1>Screenshot Maven Plugin</h1>
+<h1>Configure your pom files</h1>
 <div class="details">
 <span id="revnumber">version 0.0.8-SNAPSHOT,</span>
 <span id="revdate">2018-02-15T15:43:12Z</span>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_configuration_in_the_parent_pom">1. Configuration in the parent pom</a>
+<ul class="sectlevel2">
+<li><a href="#_specify_the_following_properties">1.1. Specify the following properties</a></li>
+<li><a href="#_add_a_plugin_element_to_the_pluginmanagement_part">1.2. Add a plugin element to the pluginManagement part</a></li>
+</ul>
+</li>
+<li><a href="#_configuration_in_module_pom">2. Configuration in module pom</a></li>
+<li><a href="#_add_a_gh_pages_module">3. Add a gh-pages module</a></li>
+<li><a href="#_test_your_configuration">4. Test your configuration</a></li>
+<li><a href="#_screenshot_gallery">5. Screenshot Gallery</a></li>
+</ul>
 </div>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>A plugin that generates screenshots from Java Swing GUI components to be used in JavaDoc or in
-a AsciiDoc based screenshot gallery.</p>
+<p>We assume that you have a multi module project and the screenshot gallery should be aggregated from several
+modules and published with GitHub pages.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_documentation">Documentation</h2>
+<h2 id="_configuration_in_the_parent_pom">1. Configuration in the parent pom</h2>
 <div class="sectionbody">
-<div class="hdlist">
+<div class="sect2">
+<h3 id="_specify_the_following_properties">1.1. Specify the following properties</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
+    <span class="tag">&lt;screenshot-maven-plugin.version&gt;</span>0.0.7<span class="tag">&lt;/screenshot-maven-plugin.version&gt;</span>
+    <span class="tag">&lt;rootDirectory&gt;</span>${project.basedir}<span class="tag">&lt;/rootDirectory&gt;</span>
+    <span class="tag">&lt;localRepositoryPath&gt;</span>${rootDirectory}/maven-repo<span class="tag">&lt;/localRepositoryPath&gt;</span>
+    <span class="tag">&lt;screenshotGalleryTarget&gt;</span>${rootDirectory}/asciidoc/target/gallery-src<span class="tag">&lt;/screenshotGalleryTarget&gt;</span>
+<span class="tag">&lt;/properties&gt;</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_add_a_plugin_element_to_the_pluginmanagement_part">1.2. Add a plugin element to the pluginManagement part</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;pluginManagement&gt;</span>
+    <span class="tag">&lt;plugins&gt;</span>
+        <span class="tag">&lt;plugin&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>se.bluebrim.maven.plugin<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>screenshot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>${screenshot-maven-plugin-version}<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;configuration&gt;</span>
+                <span class="tag">&lt;goalPrefix&gt;</span>screenshot<span class="tag">&lt;/goalPrefix&gt;</span>
+                <span class="tag">&lt;sourceCodeURL&gt;</span>${project.scm.url}/src/main/java<span class="tag">&lt;/sourceCodeURL&gt;</span>
+                <span class="tag">&lt;javaDocImageScale&gt;</span>0.6<span class="tag">&lt;/javaDocImageScale&gt;</span>
+                <span class="tag">&lt;locales&gt;</span>
+                    <span class="tag">&lt;localeSpec&gt;</span>
+                        <span class="tag">&lt;language&gt;</span>sv<span class="tag">&lt;/language&gt;</span>
+                        <span class="tag">&lt;country&gt;</span>SE<span class="tag">&lt;/country&gt;</span>
+                    <span class="tag">&lt;/localeSpec&gt;</span>
+                <span class="tag">&lt;/locales&gt;</span>
+            <span class="tag">&lt;/configuration&gt;</span>
+            <span class="tag">&lt;executions&gt;</span>
+                <span class="tag">&lt;execution&gt;</span>
+                    <span class="tag">&lt;id&gt;</span>create-gallery<span class="tag">&lt;/id&gt;</span>
+                    <span class="tag">&lt;phase&gt;</span>verify<span class="tag">&lt;/phase&gt;</span>
+                    <span class="tag">&lt;goals&gt;</span>
+                        <span class="tag">&lt;goal&gt;</span>gallery<span class="tag">&lt;/goal&gt;</span>
+                    <span class="tag">&lt;/goals&gt;</span>
+                    <span class="tag">&lt;configuration&gt;</span>
+                        <span class="tag">&lt;outputDirectory&gt;</span>${screenshotGalleryTarget}<span class="tag">&lt;/outputDirectory&gt;</span>
+                    <span class="tag">&lt;/configuration&gt;</span>
+                <span class="tag">&lt;/execution&gt;</span>
+            <span class="tag">&lt;/executions&gt;</span>
+        <span class="tag">&lt;/plugin&gt;</span>
+        .
+        .
+        .
+    <span class="tag">&lt;/plugins&gt;</span>
+<span class="tag">&lt;/pluginManagement&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Add a dependency element to the dependencyManagement part</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependencyManagement&gt;</span>
+    <span class="tag">&lt;dependencies&gt;</span>
+        <span class="tag">&lt;dependency&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>se.bluebrim.maven.plugin<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>screenshot-maven-plugin-api<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;version&gt;</span>${screenshot-maven-plugin.version}<span class="tag">&lt;/version&gt;</span>
+            <span class="tag">&lt;scope&gt;</span>test<span class="tag">&lt;/scope&gt;</span>
+        <span class="tag">&lt;/dependency&gt;</span>
+        .
+        .
+        .
+    <span class="tag">&lt;/dependencies&gt;</span>
+<span class="tag">&lt;/dependencyManagement&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_configuration_in_module_pom">2. Configuration in module pom</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Add the following to the pom files of modules containing Swing classes that you like to generate screenshots of.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependencies&gt;</span>
+    <span class="tag">&lt;dependency&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>se.bluebrim.maven.plugin<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>screenshot-maven-plugin-api<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;/dependency&gt;</span>
+    .
+    .
+    .
+<span class="tag">&lt;/dependencies&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The configuration above makes it possible to annotate test class method with <code>@Screenshot</code>.
+Since its most convenient to run the javadoc goal from command line you don&#8217;t have to
+add any plugin configuration in the build section. To run the <code>gallery</code> as part of your Maven build
+add the following in the build section:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugins&gt;</span>
+    <span class="tag">&lt;plugin&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>se.bluebrim.maven.plugin<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>screenshot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+    <span class="tag">&lt;/plugin&gt;</span>
+<span class="tag">&lt;/plugins&gt;</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_add_a_gh_pages_module">3. Add a gh-pages module</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To create an aggregated screenshot gallery you need a common output directory for all modules that
+provides content to the gallery. This module also contains the AsciiDoc configuration necessary to
+process the generated Asciidoc to html.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_your_configuration">4. Test your configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Verify the configuration by adding the following classes to one of those modules:</p>
+</div>
+<div class="paragraph">
+<p>In <code>src/main/java</code> add:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">se.bluebrim.maven.plugin.screenshot.example</span>;
+
+<span class="keyword">import</span> <span class="include">java.awt.Color</span>;
+<span class="keyword">import</span> <span class="include">java.net.MalformedURLException</span>;
+<span class="keyword">import</span> <span class="include">java.net.URL</span>;
+
+<span class="keyword">import</span> <span class="include">javax.swing.BorderFactory</span>;
+<span class="keyword">import</span> <span class="include">javax.swing.ImageIcon</span>;
+<span class="keyword">import</span> <span class="include">javax.swing.JLabel</span>;
+<span class="keyword">import</span> <span class="include">javax.swing.JPanel</span>;
+
+<span class="comment">/**
+ * The classic &quot;Hello World&quot; used to demonstrate the Screenshot Maven Plugin.
+ * The camera image was found at: http://wefunction.com/2008/07/function-free-icon-set
+ *
+ * @author Goran Stack
+ *
+ */</span>
+<span class="annotation">@SuppressWarnings</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">serial</span><span class="delimiter">&quot;</span></span>)
+<span class="directive">public</span> <span class="type">class</span> <span class="class">HelloWorldPanel</span> <span class="directive">extends</span> <span class="predefined-type">JPanel</span> {
+
+        <span class="directive">public</span> HelloWorldPanel()
+        {
+                <span class="predefined-type">JLabel</span> label = <span class="keyword">new</span> <span class="predefined-type">JLabel</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Hello World from Screenshot Maven Plugin</span><span class="delimiter">&quot;</span></span>);
+                <span class="predefined-type">ImageIcon</span> icon;
+                <span class="keyword">try</span> {
+                        icon = <span class="keyword">new</span> <span class="predefined-type">ImageIcon</span>(<span class="keyword">new</span> <span class="predefined-type">URL</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://screenshot-maven-plugin.googlecode.com/svn/site/images/camera.png</span><span class="delimiter">&quot;</span></span>));
+                } <span class="keyword">catch</span> (<span class="exception">MalformedURLException</span> e) {
+                        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">RuntimeException</span>(e);
+                }
+                label.setIcon(icon);
+                label.setFont(label.getFont().deriveFont(<span class="float">32f</span>));
+                label.setForeground(<span class="predefined-type">Color</span>.DARK_GRAY);
+                add(label);
+                setBorder(<span class="predefined-type">BorderFactory</span>.createCompoundBorder(<span class="predefined-type">BorderFactory</span>.createLineBorder(<span class="predefined-type">Color</span>.RED.darker(), <span class="integer">4</span>), <span class="predefined-type">BorderFactory</span>.createEmptyBorder(<span class="integer">60</span>, <span class="integer">20</span>, <span class="integer">60</span>, <span class="integer">20</span>)));
+        }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In src/test/java add:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">se.bluebrim.maven.plugin.screenshot.example</span>;
+
+<span class="keyword">import</span> <span class="include">javax.swing.JComponent</span>;
+
+<span class="keyword">import</span> <span class="include">se.bluebrim.maven.plugin.screenshot.Screenshot</span>;
+
+<span class="comment">/**
+ *
+ * @author Goran Stack
+ *
+ */</span>
+<span class="directive">public</span> <span class="type">class</span> <span class="class">HelloWorldPanelTest</span> {
+
+        <span class="annotation">@Screenshot</span>
+        <span class="directive">public</span> <span class="predefined-type">JComponent</span> createScreenShot()
+        {
+                <span class="keyword">return</span> <span class="keyword">new</span> HelloWorldPanel();
+        }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are using Eclipse adding these classes are very simple. Just copy the source from this page and paste it into the
+<code>src/main</code> or <code>src/test</code> folder in the Package Explorer view. Eclipse will create the package and the class for you.</p>
+</div>
+<div class="paragraph">
+<p>From the command line run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>mvn screenshot:javadoc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A doc-files folder containing a HelloWorldPanel.png is created at the same location as the source code for
+HelloWorldPanel class.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/HelloWorldPanel.png" alt="HelloWorldPanel">
+</div>
+</div>
+<div class="paragraph">
+<p>The screenshot plugin detect the missing img tag in the Javadoc of <code>HelloWorldPanel</code> class and writes to the console.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[INFO] Missing "&lt;img src="doc-files/HelloWorldPanel.png"&gt;" in class:se.bluebrim.maven.plugin.screenshot.example.HelloWorldPanel</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To include the screenshot in the Javadoc of the HelloWorldPanel class copy the image tag from Maven console and paste
+into the Javadoc. You should now be able to see the image as part of the Javadoc.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_screenshot_gallery">5. Screenshot Gallery</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To create a screenshot gallery add the following configuration to your <code>pom.xml</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;build&gt;</span>
+    <span class="tag">&lt;plugins&gt;</span>
+        <span class="tag">&lt;plugin&gt;</span>
+            <span class="tag">&lt;groupId&gt;</span>se.bluebrim.maven.plugin<span class="tag">&lt;/groupId&gt;</span>
+            <span class="tag">&lt;artifactId&gt;</span>screenshot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+            <span class="tag">&lt;executions&gt;</span>
+                <span class="tag">&lt;execution&gt;</span>
+                    <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
+                    <span class="tag">&lt;goals&gt;</span>
+                        <span class="tag">&lt;goal&gt;</span>gallery<span class="tag">&lt;/goal&gt;</span>
+                    <span class="tag">&lt;/goals&gt;</span>
+                <span class="tag">&lt;/execution&gt;</span>
+            <span class="tag">&lt;/executions&gt;</span>
+        <span class="tag">&lt;/plugin&gt;</span>
+    <span class="tag">&lt;/plugins&gt;</span>
+<span class="tag">&lt;/build&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A <code>site</code> directory with a screenshot gallery is created in the target directory. In a multimodule
+project you can create a separate gh-pages module that collects screenshot galleries from modules
+and deploy the aggregated content to a provider such as GitHub pages.</p>
+</div>
+<div class="paragraph">
+<p>Travis has build in support for GitHub pages deployment. If you use a CI without this feature
+its also possible to use a script like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">#!/bin/bash
+cd gh-pages/target/generated-docs <i class="conum" data-value="1"></i><b>(1)</b>
+git init
+git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <i class="conum" data-value="2"></i><b>(2)</b>
+git add .
+git commit -m &quot;Updated generated doc&quot;
+git push --force origin master:gh-pages <i class="conum" data-value="1"></i><b>(1)</b>
+rm -rf .git</code></pre>
+</div>
+</div>
+<div class="colist arabic">
 <table>
 <tr>
-<td class="hdlist1">
-<span class="image"><img src="./images/GitHub-Mark-32px.png" alt="GitHub Mark 32px"></span>
-</td>
-<td class="hdlist2">
-<p><a href="https://github.com/goranstack/screenshot-maven-plugin">The readme of the GitHub project</a></p>
-</td>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td><a href="https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages">gh-pages</a> is the name of the module that collects content from other modules</td>
 </tr>
 <tr>
-<td class="hdlist1">
-<span class="image"><img src="http://maven.apache.org/images/logos/build-by-maven-black.png" alt="build by maven black"></span>
-</td>
-<td class="hdlist2">
-<p><a href="plugin-info/plugin-info.html">Maven generated Plugin Documentation</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="./images/xml-file.svg" alt="xml file" width="40"></span>
-</td>
-<td class="hdlist2">
-<p><a href="configure-your-pom-files.html">Configure your pom files</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Eclipse-SVG.svg" alt="Eclipse SVG"></span>
-</td>
-<td class="hdlist2">
-<p><a href="getting-started-with-eclipse.html">Getting started developing with Eclipse</a></p>
-</td>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specify your GitHub repo</td>
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_example_of_a_screenshot_gallery_created_by_the_plugin">Example of a screenshot gallery created by the plugin</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The GitHub project contains a couple of example modules to demonstrate the output of the Screenshot Maven Plugin.
-The example modules has test classes providing Swing components that is included in the gallery.</p>
-</div>
-<div class="paragraph">
-<p><a href="gallery/gallery.html">Example Screenshot Gallery</a></p>
-</div>
-<hr>
-<small>
-<div>XML icon made by <a href="https://www.flaticon.com/authors/icomoon" title="Icomoon">Icomoon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-<div>Eclipse icon by Eduemoni (Own work) [<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AEclipse-SVG.svg">via Wikimedia Commons</a></div>
-</small>
 </div>
 </div>
 </div>
