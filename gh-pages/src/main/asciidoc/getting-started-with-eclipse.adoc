@@ -1,4 +1,5 @@
 = Getting started with Eclipse
+:docinfo: shared
 
 . Download and install JDK 8
 . Download latest Eclipse for Java development

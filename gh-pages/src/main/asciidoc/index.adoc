@@ -1,4 +1,5 @@
 = Screenshot Maven Plugin
+:docinfo: shared
 :icons: font
 
 A plugin that generates screenshots from Java Swing GUI components to be used in JavaDoc or in

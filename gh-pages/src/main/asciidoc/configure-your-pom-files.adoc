@@ -1,4 +1,5 @@
 = Configure your pom files
+:docinfo: shared
 :toc: left
 :icons: font
 :sectnums:
@@ -11,8 +12,6 @@ in the Screenshot Maven Plugin project it self.
 Define as much as possible in the parent pom to avoid duplicated configuration.
 
 === Specify the following properties
-
-:current-version: 1.2.3
 
 [source,xml,subs="verbatim,attributes"]
 ----
