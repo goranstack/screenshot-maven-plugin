@@ -4,21 +4,35 @@
 :sectnums:
 
 We assume that you have a multi module project and the screenshot gallery should be aggregated from several
-modules and published with GitHub pages.
+modules and published with GitHub pages. You find a working example of the configuration described here
+in the Screenshot Maven Plugin project it self.
 
 == Configuration in the parent pom
+Define as much as possible in the parent pom to avoid duplicated configuration.
 
 === Specify the following properties
 
-[source, xml]
+:current-version: 1.2.3
+
+[source,xml,subs="verbatim,attributes"]
 ----
-<properties> 
-    <screenshot-maven-plugin.version>0.0.7</screenshot-maven-plugin.version>
-    <rootDirectory>${project.basedir}</rootDirectory>
+<properties>
+    <screenshot-maven-plugin.version>{current-version}</screenshot-maven-plugin.version>
+    <rootDirectory>${project.basedir}</rootDirectory> <1>
     <localRepositoryPath>${rootDirectory}/maven-repo</localRepositoryPath>
-    <screenshotGalleryTarget>${rootDirectory}/asciidoc/target/gallery-src</screenshotGalleryTarget>
+    <screenshotGalleryTarget>${rootDirectory}/gh-pages/target/gallery-src</screenshotGalleryTarget> <2>
 </properties>
 ----
+
+<1> I haven't found any Maven property that specifies the root of the project so I've made one up. The `rootDirectory`
+property is redefined in every module with a relative path to the root. Append as many `/..` necessary to reach the root.
++
+[source, xml]
+----
+<rootDirectory>${project.basedir}/..</rootDirectory>
+----
+
+<2> Specify a common directory for gallery screenshots from different modules
 
 === Add a plugin element to the pluginManagement part
 
@@ -35,21 +49,21 @@ modules and published with GitHub pages.
                 <sourceCodeURL>${project.scm.url}/src/main/java</sourceCodeURL>
                 <javaDocImageScale>0.6</javaDocImageScale>
                 <locales>
-                    <localeSpec>
-                        <language>sv</language>
-                        <country>SE</country>
+                    <localeSpec> <1>
+                        <language>en</language>
+                        <country>US</country>
                     </localeSpec>
                 </locales>
             </configuration>
             <executions>
                 <execution>
                     <id>create-gallery</id>
-                    <phase>verify</phase>
+                    <phase>verify</phase> <2>
                     <goals>
                         <goal>gallery</goal>
                     </goals>
                     <configuration>
-                        <outputDirectory>${screenshotGalleryTarget}</outputDirectory>
+                        <outputDirectory>${screenshotGalleryTarget}</outputDirectory> <3>
                     </configuration>
                 </execution>
             </executions>
@@ -60,6 +74,22 @@ modules and published with GitHub pages.
     </plugins>
 </pluginManagement>
 ----
+<1> In a previous version of the `gallery` goal it was possible to specify multiple locales and
+get a side-by-side view of screenshots. This feature is unavailable for now. Pick one locale
+at the time.
+
+<2> In this example the screenshot gallery is created in the default maven build cycle. The modules that
+provides gallery content is build before the `gh-pages` module by adding them as dependencies to the `gh-pages` module.
+You can exclude the gallery generation from the build cycle by specify `<phase>none</phase>` and then execute with the
+command:
++
+[source, bash]
+----
+mvn se.bluebrim.maven.plugin:screenshot-maven-plugin:gallery@create-gallery
+----
+
+<3> Specify a path to the directory where the `gallery` goal aggregates screenshots from different modules.
+Screenshot images are stored in a separate directory for each module.
 
 Add a dependency element to the dependencyManagement part 
 
@@ -113,7 +143,8 @@ add the following in the build section:
 == Add a gh-pages module
 To create an aggregated screenshot gallery you need a common output directory for all modules that
 provides content to the gallery. This module also contains the AsciiDoc configuration necessary to
-process the generated Asciidoc to html.
+process the generated Asciidoc to html. The `gh-pages` module i this project combines generated and
+handwritten AsciiDoc and publish it on GitHub pages.
 
 
 == Test your configuration
@@ -122,67 +153,13 @@ Verify the configuration by adding the following classes to one of those modules
 In `src/main/java` add:
 [source, java]
 ----
-package se.bluebrim.maven.plugin.screenshot.example;
-
-import java.awt.Color;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-/**
- * The classic "Hello World" used to demonstrate the Screenshot Maven Plugin.
- * The camera image was found at: http://wefunction.com/2008/07/function-free-icon-set
- *
- * @author Goran Stack
- *
- */
-@SuppressWarnings("serial")
-public class HelloWorldPanel extends JPanel {
-
-	public HelloWorldPanel()
-	{
-		JLabel label = new JLabel("Hello World from Screenshot Maven Plugin");
-		ImageIcon icon;
-		try {
-			icon = new ImageIcon(new URL("http://screenshot-maven-plugin.googlecode.com/svn/site/images/camera.png"));
-		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
-		}
-		label.setIcon(icon);
-		label.setFont(label.getFont().deriveFont(32f));
-		label.setForeground(Color.DARK_GRAY);
-		add(label);
-		setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(Color.RED.darker(), 4), BorderFactory.createEmptyBorder(60, 20, 60, 20)));
-	}
-}
+include::../../../../screenshot-examples/src/main/java/se/bluebrim/maven/plugin/screenshot/example/HelloWorldPanel.java[]
 ----
 
 In src/test/java add:
 [source, java]
 ----
-package se.bluebrim.maven.plugin.screenshot.example;
-
-import javax.swing.JComponent;
-
-import se.bluebrim.maven.plugin.screenshot.Screenshot;
-
-/**
- *
- * @author Goran Stack
- *
- */
-public class HelloWorldPanelTest {
-
-	@Screenshot
-	public JComponent createScreenShot()
-	{
-		return new HelloWorldPanel();
-	}
-}
+include::../../../../screenshot-examples/src/test/java/se/bluebrim/maven/plugin/screenshot/example/HelloWorldPanelTest.java[]
 ----
 
 If you are using Eclipse adding these classes are very simple. Just copy the source from this page and paste it into the
@@ -192,7 +169,7 @@ From the command line run:
 ----
 mvn screenshot:javadoc
 ----
-A doc-files folder containing a HelloWorldPanel.png is created at the same location as the source code for
+A doc-files folder containing a `HelloWorldPanel.png` is created at the same location as the source code for
 HelloWorldPanel class.
 
 image::images/HelloWorldPanel.png[]
@@ -205,34 +182,7 @@ The screenshot plugin detect the missing img tag in the Javadoc of `HelloWorldPa
 To include the screenshot in the Javadoc of the HelloWorldPanel class copy the image tag from Maven console and paste
 into the Javadoc. You should now be able to see the image as part of the Javadoc.
 
-== Screenshot Gallery
-
-To create a screenshot gallery add the following configuration to your `pom.xml` file:
-
-[source, xml]
-----
-<build>
-    <plugins>
-        <plugin>
-            <groupId>se.bluebrim.maven.plugin</groupId>
-            <artifactId>screenshot-maven-plugin</artifactId>
-            <executions>
-                <execution>
-                    <phase>package</phase>
-                    <goals>
-                        <goal>gallery</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-----
-
-A `site` directory with a screenshot gallery is created in the target directory. In a multimodule
-project you can create a separate gh-pages module that collects screenshot galleries from modules
-and deploy the aggregated content to a provider such as GitHub pages.
-
+== Deploy content to GitHub pages
 Travis has build in support for GitHub pages deployment. If you use a CI without this feature
 its also possible to use a script like this:
 
@@ -244,9 +194,10 @@ git init
 git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <2>
 git add .
 git commit -m "Updated generated doc"
-git push --force origin master:gh-pages <1>
+git push --force origin master:gh-pages <3>
 rm -rf .git
 ----
 
-<1> https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages[gh-pages] is the name of the module that collects content from other modules
+<1> Specify a module with a build output to be published on GitHub pages
 <2> Specify your GitHub repo
+<3> Use force push since to completely replace old content with new

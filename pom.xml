@@ -13,12 +13,9 @@
 		<url>scm:git:https://github.com/goranstack/screenshot-maven-plugin</url>
 	</scm>
 	<properties>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm</maven.build.timestamp.format>
 		<screenshot-maven-plugin-version>${project.version}</screenshot-maven-plugin-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<repo.release.id>git-maven-repo-relases</repo.release.id>
-		<repo.release.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo</repo.release.url>
-		<repo.snapshot.id>git-maven-repo-snapshots</repo.snapshot.id>
-		<repo.snapshot.url>git:https://github.com/goranstack/screenshot-maven-plugin/tree/master/mavenrepo-snapshot</repo.snapshot.url>
 		<rootDirectory>${project.basedir}</rootDirectory>
 		<screenshotGalleryTarget>${rootDirectory}/gh-pages/target/gallery-src</screenshotGalleryTarget>
 	</properties>
@@ -97,7 +94,6 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -42,6 +42,7 @@
 					<outputDirectory>${generated.docs.directory}</outputDirectory>
 					<sourceHighlighter>coderay</sourceHighlighter>
 					<attributes>
+						<current-version>${project.version}</current-version>
 						<revnumber>${project.version}</revnumber>
 						<revdate>${maven.build.timestamp}</revdate>
 					</attributes>

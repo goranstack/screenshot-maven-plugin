@@ -18,7 +18,7 @@ image:https://upload.wikimedia.org/wikipedia/commons/c/cf/Eclipse-SVG.svg[]:: <<
 
 == Example of a screenshot gallery created by the plugin
 The GitHub project contains a couple of example modules to demonstrate the output of the Screenshot Maven Plugin.
-The example modules has test classes providing Swing components that is included in the gallery.
+The example modules have test classes providing Swing components that is included in the gallery.
 
 link:gallery/gallery.html[Example Screenshot Gallery]
 
