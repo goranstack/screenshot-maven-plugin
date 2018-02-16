@@ -522,7 +522,7 @@ table.CodeRay td.code>pre{padding:0}
 <h1>Configure your pom files</h1>
 <div class="details">
 <span id="revnumber">version 0.0.8-SNAPSHOT,</span>
-<span id="revdate">2018-02-15T15:43:12Z</span>
+<span id="revdate">2018-02-16 13:51</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -536,7 +536,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#_configuration_in_module_pom">2. Configuration in module pom</a></li>
 <li><a href="#_add_a_gh_pages_module">3. Add a gh-pages module</a></li>
 <li><a href="#_test_your_configuration">4. Test your configuration</a></li>
-<li><a href="#_screenshot_gallery">5. Screenshot Gallery</a></li>
+<li><a href="#_deploy_content_to_github_pages">5. Deploy content to GitHub pages</a></li>
 </ul>
 </div>
 </div>
@@ -545,24 +545,46 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sectionbody">
 <div class="paragraph">
 <p>We assume that you have a multi module project and the screenshot gallery should be aggregated from several
-modules and published with GitHub pages.</p>
+modules and published with GitHub pages. You find a working example of the configuration described here
+in the Screenshot Maven Plugin project it self.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_configuration_in_the_parent_pom">1. Configuration in the parent pom</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Define as much as possible in the parent pom to avoid duplicated configuration.</p>
+</div>
 <div class="sect2">
 <h3 id="_specify_the_following_properties">1.1. Specify the following properties</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
-    <span class="tag">&lt;screenshot-maven-plugin.version&gt;</span>0.0.7<span class="tag">&lt;/screenshot-maven-plugin.version&gt;</span>
-    <span class="tag">&lt;rootDirectory&gt;</span>${project.basedir}<span class="tag">&lt;/rootDirectory&gt;</span>
+    <span class="tag">&lt;screenshot-maven-plugin.version&gt;</span>0.0.8-SNAPSHOT<span class="tag">&lt;/screenshot-maven-plugin.version&gt;</span>
+    <span class="tag">&lt;rootDirectory&gt;</span>${project.basedir}<span class="tag">&lt;/rootDirectory&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="tag">&lt;localRepositoryPath&gt;</span>${rootDirectory}/maven-repo<span class="tag">&lt;/localRepositoryPath&gt;</span>
-    <span class="tag">&lt;screenshotGalleryTarget&gt;</span>${rootDirectory}/asciidoc/target/gallery-src<span class="tag">&lt;/screenshotGalleryTarget&gt;</span>
+    <span class="tag">&lt;screenshotGalleryTarget&gt;</span>${rootDirectory}/gh-pages/target/gallery-src<span class="tag">&lt;/screenshotGalleryTarget&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
 <span class="tag">&lt;/properties&gt;</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>I haven&#8217;t found any Maven property that specifies the root of the project so I&#8217;ve made one up. The <code>rootDirectory</code>
+property is redefined in every module with a relative path to the root. Append as many <code>/..</code> necessary to reach the root.
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;rootDirectory&gt;</span>${project.basedir}/..<span class="tag">&lt;/rootDirectory&gt;</span></code></pre>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Specify a common directory for gallery screenshots from different modules</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -580,21 +602,21 @@ modules and published with GitHub pages.</p>
                 <span class="tag">&lt;sourceCodeURL&gt;</span>${project.scm.url}/src/main/java<span class="tag">&lt;/sourceCodeURL&gt;</span>
                 <span class="tag">&lt;javaDocImageScale&gt;</span>0.6<span class="tag">&lt;/javaDocImageScale&gt;</span>
                 <span class="tag">&lt;locales&gt;</span>
-                    <span class="tag">&lt;localeSpec&gt;</span>
-                        <span class="tag">&lt;language&gt;</span>sv<span class="tag">&lt;/language&gt;</span>
-                        <span class="tag">&lt;country&gt;</span>SE<span class="tag">&lt;/country&gt;</span>
+                    <span class="tag">&lt;localeSpec&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
+                        <span class="tag">&lt;language&gt;</span>en<span class="tag">&lt;/language&gt;</span>
+                        <span class="tag">&lt;country&gt;</span>US<span class="tag">&lt;/country&gt;</span>
                     <span class="tag">&lt;/localeSpec&gt;</span>
                 <span class="tag">&lt;/locales&gt;</span>
             <span class="tag">&lt;/configuration&gt;</span>
             <span class="tag">&lt;executions&gt;</span>
                 <span class="tag">&lt;execution&gt;</span>
                     <span class="tag">&lt;id&gt;</span>create-gallery<span class="tag">&lt;/id&gt;</span>
-                    <span class="tag">&lt;phase&gt;</span>verify<span class="tag">&lt;/phase&gt;</span>
+                    <span class="tag">&lt;phase&gt;</span>verify<span class="tag">&lt;/phase&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
                     <span class="tag">&lt;goals&gt;</span>
                         <span class="tag">&lt;goal&gt;</span>gallery<span class="tag">&lt;/goal&gt;</span>
                     <span class="tag">&lt;/goals&gt;</span>
                     <span class="tag">&lt;configuration&gt;</span>
-                        <span class="tag">&lt;outputDirectory&gt;</span>${screenshotGalleryTarget}<span class="tag">&lt;/outputDirectory&gt;</span>
+                        <span class="tag">&lt;outputDirectory&gt;</span>${screenshotGalleryTarget}<span class="tag">&lt;/outputDirectory&gt;</span> <i class="conum" data-value="3"></i><b>(3)</b>
                     <span class="tag">&lt;/configuration&gt;</span>
                 <span class="tag">&lt;/execution&gt;</span>
             <span class="tag">&lt;/executions&gt;</span>
@@ -605,6 +627,33 @@ modules and published with GitHub pages.</p>
     <span class="tag">&lt;/plugins&gt;</span>
 <span class="tag">&lt;/pluginManagement&gt;</span></code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>In a previous version of the <code>gallery</code> goal it was possible to specify multiple locales and
+get a side-by-side view of screenshots. This feature is unavailable for now. Pick one locale
+at the time.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>In this example the screenshot gallery is created in the default maven build cycle. The modules that
+provides gallery content is build before the <code>gh-pages</code> module by adding them as dependencies to the <code>gh-pages</code> module.
+You can exclude the gallery generation from the build cycle by specify <code>&lt;phase&gt;none&lt;/phase&gt;</code> and then execute with the
+command:
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mvn se.bluebrim.maven.plugin:screenshot-maven-plugin:gallery@create-gallery</code></pre>
+</div>
+</div></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Specify a path to the directory where the <code>gallery</code> goal aggregates screenshots from different modules.
+Screenshot images are stored in a separate directory for each module.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
 <p>Add a dependency element to the dependencyManagement part</p>
@@ -672,7 +721,8 @@ add the following in the build section:</p>
 <div class="paragraph">
 <p>To create an aggregated screenshot gallery you need a common output directory for all modules that
 provides content to the gallery. This module also contains the AsciiDoc configuration necessary to
-process the generated Asciidoc to html.</p>
+process the generated Asciidoc to html. The <code>gh-pages</code> module i this project combines generated and
+handwritten AsciiDoc and publish it on GitHub pages.</p>
 </div>
 </div>
 </div>
@@ -690,8 +740,6 @@ process the generated Asciidoc to html.</p>
 <pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">se.bluebrim.maven.plugin.screenshot.example</span>;
 
 <span class="keyword">import</span> <span class="include">java.awt.Color</span>;
-<span class="keyword">import</span> <span class="include">java.net.MalformedURLException</span>;
-<span class="keyword">import</span> <span class="include">java.net.URL</span>;
 
 <span class="keyword">import</span> <span class="include">javax.swing.BorderFactory</span>;
 <span class="keyword">import</span> <span class="include">javax.swing.ImageIcon</span>;
@@ -712,11 +760,7 @@ process the generated Asciidoc to html.</p>
         {
                 <span class="predefined-type">JLabel</span> label = <span class="keyword">new</span> <span class="predefined-type">JLabel</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">Hello World from Screenshot Maven Plugin</span><span class="delimiter">&quot;</span></span>);
                 <span class="predefined-type">ImageIcon</span> icon;
-                <span class="keyword">try</span> {
-                        icon = <span class="keyword">new</span> <span class="predefined-type">ImageIcon</span>(<span class="keyword">new</span> <span class="predefined-type">URL</span>(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://screenshot-maven-plugin.googlecode.com/svn/site/images/camera.png</span><span class="delimiter">&quot;</span></span>));
-                } <span class="keyword">catch</span> (<span class="exception">MalformedURLException</span> e) {
-                        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="exception">RuntimeException</span>(e);
-                }
+                icon = <span class="keyword">new</span> <span class="predefined-type">ImageIcon</span>(getClass().getResource(<span class="string"><span class="delimiter">&quot;</span><span class="content">camera.png</span><span class="delimiter">&quot;</span></span>));
                 label.setIcon(icon);
                 label.setFont(label.getFont().deriveFont(<span class="float">32f</span>));
                 label.setForeground(<span class="predefined-type">Color</span>.DARK_GRAY);
@@ -737,11 +781,6 @@ process the generated Asciidoc to html.</p>
 
 <span class="keyword">import</span> <span class="include">se.bluebrim.maven.plugin.screenshot.Screenshot</span>;
 
-<span class="comment">/**
- *
- * @author Goran Stack
- *
- */</span>
 <span class="directive">public</span> <span class="type">class</span> <span class="class">HelloWorldPanelTest</span> {
 
         <span class="annotation">@Screenshot</span>
@@ -765,7 +804,7 @@ process the generated Asciidoc to html.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>A doc-files folder containing a HelloWorldPanel.png is created at the same location as the source code for
+<p>A doc-files folder containing a <code>HelloWorldPanel.png</code> is created at the same location as the source code for
 HelloWorldPanel class.</p>
 </div>
 <div class="imageblock">
@@ -788,36 +827,8 @@ into the Javadoc. You should now be able to see the image as part of the Javadoc
 </div>
 </div>
 <div class="sect1">
-<h2 id="_screenshot_gallery">5. Screenshot Gallery</h2>
+<h2 id="_deploy_content_to_github_pages">5. Deploy content to GitHub pages</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>To create a screenshot gallery add the following configuration to your <code>pom.xml</code> file:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;build&gt;</span>
-    <span class="tag">&lt;plugins&gt;</span>
-        <span class="tag">&lt;plugin&gt;</span>
-            <span class="tag">&lt;groupId&gt;</span>se.bluebrim.maven.plugin<span class="tag">&lt;/groupId&gt;</span>
-            <span class="tag">&lt;artifactId&gt;</span>screenshot-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-            <span class="tag">&lt;executions&gt;</span>
-                <span class="tag">&lt;execution&gt;</span>
-                    <span class="tag">&lt;phase&gt;</span>package<span class="tag">&lt;/phase&gt;</span>
-                    <span class="tag">&lt;goals&gt;</span>
-                        <span class="tag">&lt;goal&gt;</span>gallery<span class="tag">&lt;/goal&gt;</span>
-                    <span class="tag">&lt;/goals&gt;</span>
-                <span class="tag">&lt;/execution&gt;</span>
-            <span class="tag">&lt;/executions&gt;</span>
-        <span class="tag">&lt;/plugin&gt;</span>
-    <span class="tag">&lt;/plugins&gt;</span>
-<span class="tag">&lt;/build&gt;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>A <code>site</code> directory with a screenshot gallery is created in the target directory. In a multimodule
-project you can create a separate gh-pages module that collects screenshot galleries from modules
-and deploy the aggregated content to a provider such as GitHub pages.</p>
-</div>
 <div class="paragraph">
 <p>Travis has build in support for GitHub pages deployment. If you use a CI without this feature
 its also possible to use a script like this:</p>
@@ -830,7 +841,7 @@ git init
 git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <i class="conum" data-value="2"></i><b>(2)</b>
 git add .
 git commit -m &quot;Updated generated doc&quot;
-git push --force origin master:gh-pages <i class="conum" data-value="1"></i><b>(1)</b>
+git push --force origin master:gh-pages <i class="conum" data-value="3"></i><b>(3)</b>
 rm -rf .git</code></pre>
 </div>
 </div>
@@ -838,11 +849,15 @@ rm -rf .git</code></pre>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><a href="https://github.com/goranstack/screenshot-maven-plugin/tree/master/gh-pages">gh-pages</a> is the name of the module that collects content from other modules</td>
+<td>Specify a module with a build output to be published on GitHub pages</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>Specify your GitHub repo</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>Use force push since to completely replace old content with new</td>
 </tr>
 </table>
 </div>
@@ -852,7 +867,7 @@ rm -rf .git</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.8-SNAPSHOT<br>
-Last updated 2018-02-15 15:42:47 UTC
+Last updated 2018-02-16 13:51:06 UTC
 </div>
 </div>
 </body>
