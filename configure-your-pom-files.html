@@ -527,7 +527,7 @@ table.CodeRay td.code>pre{padding:0}
 </script>
 
 <!-- Favicon -->
-<link rel="icon"
+<link rel="shortcut icon"
 type="image/svg"
 href="images/photo-camera.svg">
 
@@ -536,8 +536,8 @@ href="images/photo-camera.svg">
 <div id="header">
 <h1>Configure your pom files</h1>
 <div class="details">
-<span id="revnumber">version 0.0.8-SNAPSHOT,</span>
-<span id="revdate">2018-02-16 14:24</span>
+<span id="revnumber">version 1.0.0-SNAPSHOT,</span>
+<span id="revdate">2018-02-21 11:26</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -576,7 +576,7 @@ in the Screenshot Maven Plugin project it self.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;properties&gt;</span>
-    <span class="tag">&lt;screenshot-maven-plugin.version&gt;</span>0.0.8-SNAPSHOT<span class="tag">&lt;/screenshot-maven-plugin.version&gt;</span>
+    <span class="tag">&lt;screenshot-maven-plugin.version&gt;</span>1.0.0-SNAPSHOT<span class="tag">&lt;/screenshot-maven-plugin.version&gt;</span>
     <span class="tag">&lt;rootDirectory&gt;</span>${project.basedir}<span class="tag">&lt;/rootDirectory&gt;</span> <i class="conum" data-value="1"></i><b>(1)</b>
     <span class="tag">&lt;localRepositoryPath&gt;</span>${rootDirectory}/maven-repo<span class="tag">&lt;/localRepositoryPath&gt;</span>
     <span class="tag">&lt;screenshotGalleryTarget&gt;</span>${rootDirectory}/gh-pages/target/gallery-src<span class="tag">&lt;/screenshotGalleryTarget&gt;</span> <i class="conum" data-value="2"></i><b>(2)</b>
@@ -654,7 +654,7 @@ at the time.</td>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td>In this example the screenshot gallery is created in the default maven build cycle. The modules that
-provides gallery content is build before the <code>gh-pages</code> module by adding them as dependencies to the <code>gh-pages</code> module.
+provides gallery content are build before the <code>gh-pages</code> module by adding them as dependencies to the <code>gh-pages</code> module.
 You can exclude the gallery generation from the build cycle by specify <code>&lt;phase&gt;none&lt;/phase&gt;</code> and then execute with the
 command:
 <div class="listingblock">
@@ -872,7 +872,7 @@ rm -rf .git</code></pre>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Use force push since to completely replace old content with new</td>
+<td>Use force push to completely replace old content with new</td>
 </tr>
 </table>
 </div>
@@ -881,8 +881,8 @@ rm -rf .git</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.0.8-SNAPSHOT<br>
-Last updated 2018-02-16 14:24:27 UTC
+Version 1.0.0-SNAPSHOT<br>
+Last updated 2018-02-21 11:26:19 UTC
 </div>
 </div>
 </body>
