@@ -78,7 +78,7 @@ get a side-by-side view of screenshots. This feature is unavailable for now. Pic
 at the time.
 
 <2> In this example the screenshot gallery is created in the default maven build cycle. The modules that
-provides gallery content is build before the `gh-pages` module by adding them as dependencies to the `gh-pages` module.
+provides gallery content are build before the `gh-pages` module by adding them as dependencies to the `gh-pages` module.
 You can exclude the gallery generation from the build cycle by specify `<phase>none</phase>` and then execute with the
 command:
 +
@@ -199,4 +199,4 @@ rm -rf .git
 
 <1> Specify a module with a build output to be published on GitHub pages
 <2> Specify your GitHub repo
-<3> Use force push since to completely replace old content with new
+<3> Use force push to completely replace old content with new

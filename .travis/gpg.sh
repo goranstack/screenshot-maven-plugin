@@ -13,7 +13,7 @@ cat >gen-key-script <<EOF
       Subkey-Type: 1
       Subkey-Length: 4096
       Name-Real: Göran Stäck
-      Name-Email: goran.stack@gmail.com
+      Name-Email: goran.stack@bluebrim.se
       Expire-Date: 2y
       Passphrase: ${GPG_PASSPHRASE}
       %commit

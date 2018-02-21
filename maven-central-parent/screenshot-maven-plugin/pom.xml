@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>se.bluebrim.maven.plugin</groupId>
 		<artifactId>maven-central-parent</artifactId>
-		<version>0.0.8-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>screenshot-maven-plugin</artifactId>
 	<description>A plugin for creating screenshots by running screenshot annotated methods in test classes. The screenshot method returns a JComponent that is ripped and saved to a file to be used in JavaDoc, AsciiDoc or as splash screen.</description>
@@ -177,7 +177,7 @@
 											screenshot-maven-plugin
 										</artifactId>
 										<versionRange>
-											[0.0.8-SNAPSHOT,)
+											[1.0.0-SNAPSHOT,)
 										</versionRange>
 										<goals>
 											<goal>splashscreen</goal>

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>se.bluebrim.maven.plugin</groupId>
 		<artifactId>maven-central-parent</artifactId>
-		<version>0.0.8-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>screenshot-maven-plugin-api</artifactId>
 	<description>API for annotation of methods in test classes used by the screenshot-maven-plugin.</description>
