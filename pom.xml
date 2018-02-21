@@ -47,8 +47,8 @@
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.5.3</version>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.0.0</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -96,20 +96,21 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>gh-pages/target</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>atg-private-maven-repo</id>
-			<properties>
-				<repo.release.id>atg-releases</repo.release.id>
-				<repo.release.url>http://nexus.hastsportenshus.atg.se/content/repositories/releases</repo.release.url>
-				<repo.snapshot.id>atg-snapshots</repo.snapshot.id>
-				<repo.snapshot.url>http://nexus.hastsportenshus.atg.se/content/repositories/snapshots</repo.snapshot.url>
-			</properties>
-		</profile>
-	</profiles>
 
 	<modules>
 		<module>maven-central-parent</module>

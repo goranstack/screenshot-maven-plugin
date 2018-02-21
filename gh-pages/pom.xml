@@ -11,7 +11,7 @@
 	<name>${project.artifactId}</name>
 	<description>Collects documentation from modules and pushes to GitHub pages</description>
 	<properties>
-		<generated.docs.directory>${project.build.directory}/generated-docs</generated.docs.directory>		
+		<generated.docs.directory>${project.build.directory}/generated-docs</generated.docs.directory>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -32,6 +32,12 @@
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
