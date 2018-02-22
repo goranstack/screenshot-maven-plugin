@@ -8,8 +8,8 @@ We assume that you have a multi module project and the screenshot gallery should
 modules and published with GitHub pages. You find a working example of the configuration described here
 in the Screenshot Maven Plugin project it self.
 
-== Configuration in the parent pom
-Define as much as possible in the parent pom to avoid duplicated configuration.
+== Configuration in the parent `pom`
+Define as much as possible in the parent `pom` to avoid duplicated configuration.
 
 === Specify the following properties
 
@@ -109,8 +109,8 @@ Add a dependency element to the dependencyManagement part
 </dependencyManagement>
 ----
 
-== Configuration in module pom
-Add the following to the pom files of modules containing Swing classes that you like to generate screenshots of.
+== Configuration in module `pom`
+Add the following to the `pom` files of modules containing Swing classes that you like to generate screenshots of.
 
 [source, xml]
 ----
@@ -147,7 +147,7 @@ process the generated Asciidoc to html. The `gh-pages` module in this project co
 handwritten AsciiDoc and publish it on GitHub pages.
 
 Since other modules writes to the `target` directory of the `gh-pages` module before the `gh-pages` module
-is build, we must skip the cleaning by adding the following in the pom file:
+is build, we must skip the cleaning by adding the following in the `pom` file:
 
 [source, xml]
 ----
@@ -166,7 +166,7 @@ is build, we must skip the cleaning by adding the following in the pom file:
 ----
 
 Instead the cleaning of the `gh-pages` module is done at the beginning of the build by adding the following to the
-root parent pom file:
+root parent `pom` file:
 
 [source, xml]
 ----

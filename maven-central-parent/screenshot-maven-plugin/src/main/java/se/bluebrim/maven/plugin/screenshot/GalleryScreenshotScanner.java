@@ -29,7 +29,7 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	private MavenProject project;
 	private File asciiDoc;
 
-	public GalleryScreenshotScanner(AbstractMojo mojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory, String sourceCodeURL, List<LocaleSpec> locales) 
+	public GalleryScreenshotScanner(AbstractMojo mojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, String outputDirectory, List<LocaleSpec> locales) 
 	{
 		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
 		this.project = project;

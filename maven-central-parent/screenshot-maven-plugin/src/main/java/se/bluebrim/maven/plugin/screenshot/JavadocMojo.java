@@ -85,11 +85,11 @@ public class JavadocMojo extends AbstractMojo
     private ArrayList<String> testClasspathElements;
 
     /**
-     * A screenshot will be created for each Locale where the file name is appended with the
-     * Locale as string.
-     * 
+     * Specify the locale to be used when generating the screenshots. In a previous version it was possible to specify
+     * several locales and get side-by-side screenshots for each locale. This feature is disabled for now but you can still
+     * use this parameter to specify one single locale in cases where the default locale is not desirable.
      */
- 	@Parameter
+ 	@Parameter  (required = false)
     private List<LocaleSpec> locales;
  	
 

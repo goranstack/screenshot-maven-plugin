@@ -8,7 +8,7 @@
 	</parent>
 	<artifactId>screenshot-examples</artifactId>
 	<name>${project.artifactId}</name>
-	<description>Code example how to use the maven-screenshot-plugin</description>
+	<description>Code example how to use the Screenshot Maven Plugin</description>
 	<properties>
 		<rootDirectory>${project.basedir}/..</rootDirectory>
 	</properties>

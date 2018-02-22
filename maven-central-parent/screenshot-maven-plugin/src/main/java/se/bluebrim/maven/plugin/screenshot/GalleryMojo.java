@@ -44,20 +44,7 @@ public class GalleryMojo extends AbstractMojo
      */
 	@Parameter( defaultValue = "${project.testClasspathElements}", readonly = true, required = true )
 	private ArrayList<String> testClasspathElements;
-
-	/**
-     * URL to the source code used to build the source code links under each screenshot image in the report
-     *
-     */
-	@Parameter ( required = true )
-	private String sourceCodeURL;
 	
-	/**
-     * Maximum screenshot width
-     *
-     */
-	@Parameter ( defaultValue = "600" )
-	private int maxWidth;
 	
     /**
      * Directory where the generated AsciiDoc will go.
@@ -70,11 +57,11 @@ public class GalleryMojo extends AbstractMojo
     private MavenProject project;
     
     /**
-     * A screenshot will be created for each Locale where the file name is appended with the
-     * Locale as string.
-     * 
+     * Specify the locale to be used when generating the screenshots. In a previous version it was possible to specify
+     * several locales and get side-by-side screenshots for each locale. This feature is disabled for now but you can still
+     * use this parameter to specify one single locale in cases where the default locale is not desirable.
      */
- 	@Parameter
+ 	@Parameter (required = false)
     private List<LocaleSpec> locales;
 
 	
@@ -82,7 +69,7 @@ public class GalleryMojo extends AbstractMojo
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		
 		getLog().info("Screenshot gallery executed. The output directory is: " + outputDirectory, null);
-		GalleryScreenshotScanner screenshotScanner = new GalleryScreenshotScanner(this, project, testClassesDirectory, classesDirectory, testClasspathElements, maxWidth, outputDirectory, sourceCodeURL, locales);
+		GalleryScreenshotScanner screenshotScanner = new GalleryScreenshotScanner(this, project, testClassesDirectory, classesDirectory, testClasspathElements, outputDirectory, locales);
 		screenshotScanner.setProject(project);
 		try {
 			screenshotScanner.execute();
