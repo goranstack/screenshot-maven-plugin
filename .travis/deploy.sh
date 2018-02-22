@@ -5,6 +5,7 @@ set -e
 # only do deployment, when travis detects a new tag
 if [ ! -z "$TRAVIS_TAG" ]
 then
+	cd maven-central-parent
     echo "on a tag -> set pom.xml <version> to $TRAVIS_TAG"
     mvn --settings .travis/settings.xml org.codehaus.mojo:versions-maven-plugin:2.3:set -DnewVersion=$TRAVIS_TAG -P release
 
