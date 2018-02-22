@@ -12,11 +12,10 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.swingx.JXPanel;
 
 /**
- * <p>
  * A small panel with a sample of something that can be drawn by a {@link JComponent}
  * with a text label below the sample.
- * </p>
- * <img src="doc-files/NamedSamplePanel.png">
+ * <p>
+ * <img src="doc-files/NamedSamplePanel.png" alt="xxx" >
  * 
  * @author Goran Stack
  *

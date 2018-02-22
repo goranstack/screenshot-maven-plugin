@@ -92,7 +92,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	 * </pre>
 	 * <p>
 	 * Nice to have but not needed, so just skip it with a info line in the log, if anything fails.
-	 * </p>
+	 * 
 	 */
 	private void addMissingImageTagToJavadoc(Class<?> javadocClass, String screenshotName)
 	{
@@ -114,7 +114,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 			getLog().info("Unable to parse source file due to: " + e.getMessage());
 			return;			
 		}
-		String screenShotImageTag = "<img src=\"" + srcPath + "\">";
+		String screenShotImageTag = "<img src=\"" + srcPath + "\" alt=\"xxx\">";
 		if (StringUtils.isEmpty(classComment))
 		{
 			getLog().info("Missing \"" + screenShotImageTag + "\" in class: " + javadocClass.getName());

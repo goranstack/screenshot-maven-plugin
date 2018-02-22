@@ -39,13 +39,11 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil.StaticMethodVisitor;
 
 /**
- * <p>
  * The {@code FontChartPanel} draw an example of each specified font using a pangram and a character sets. 
  * Various sizes of the same font are grouped together. The fonts are specified as a Map to enable each font
  * to be associated with a string that is drawn as the font source.
- * </p>
- * 
- * <img src="doc-files/FontChartPanel.png">
+ * <p>
+ * <img src="doc-files/FontChartPanel.png" alt="xxx" >
  * 
  * @author Goran Stack
  *
@@ -117,10 +115,9 @@ public class FontChartPanel extends JPanel
 		
 	}
 	/**
-	 * <p>
 	 * A panel that draw font info and sample text of the font. 
-	 * </p>
-	 * <img src="doc-files/FontPanel.png">
+	 * <p>
+	 * <img src="doc-files/FontPanel.png" alt="xxx" >
 	 */
 	public static class FontPanel extends JPanel implements Comparable<FontChartPanel.FontPanel>
 	{
@@ -198,10 +195,9 @@ public class FontChartPanel extends JPanel
 	}
 
 	/**
-	 * <p>
 	 * A panel that draw the font size as a formatted number. 
-	 * </p>
-	 * <img src="doc-files/FontSizeLabel.png">
+	 * <p>
+	 * <img src="doc-files/FontSizeLabel.png" alt="xxx" >
 	 */
 	public static class FontSizeLabel extends AntialiasedLabel
 	{
@@ -243,11 +239,10 @@ public class FontChartPanel extends JPanel
 	}
 	
 	/**
-	 * <p>
 	 * A panel that illustrates the font metrics by drawing ascender, base and descender line
 	 * on top of text sample with a rather large font size.
-	 * </p>
-	 * <img src="doc-files/FontMetricPanel.png">
+	 * <p>
+	 * <img src="doc-files/FontMetricPanel.png" alt="xxx" >
 	 */
 	public static class FontMetricPanel extends BestRenderQualityLabel
 	{
@@ -285,10 +280,9 @@ public class FontChartPanel extends JPanel
 	}
 	
 	/**
-	 * <p>
 	 * Draw a text sample twice one with kerning on and one without kerning.
-	 * </p>
-	 * <img src="doc-files/FontKerningPanel.png">
+	 * <p>
+	 * <img src="doc-files/FontKerningPanel.png" alt="xxx" >
 	 *
 	 */
 	public static class FontKerningPanel extends JPanel

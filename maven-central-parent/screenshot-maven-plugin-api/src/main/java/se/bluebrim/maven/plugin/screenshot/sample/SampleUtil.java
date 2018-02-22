@@ -59,9 +59,8 @@ public class SampleUtil {
 	}
 	
 	/**
-	 * <p>
 	 * Only non argument methods is visited.
-	 * </p>
+	 * <p>
 	 * @param ofClass the class whose methods will be visited
 	 * @param returnType only methods of this return type will be visited 
 	 * @param visitor the visit method in the visitor will be called for each method

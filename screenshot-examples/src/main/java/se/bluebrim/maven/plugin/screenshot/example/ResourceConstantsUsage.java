@@ -6,10 +6,9 @@ import java.awt.Font;
 import javax.swing.Icon;
 
 /**
- * <p>
  * A class to demonstrate the visual experience of images included in the Javadoc
  * when activating code completion in your IDE.
- * </p>
+ * <p>
  * In Eclipse IDE (works probably in other IDE's as well) try the following:
  * <ul>
  * <li>Hover your mouse pointer over a {@code ColorConstants} class reference and see how the Javadoc pop ups</li>

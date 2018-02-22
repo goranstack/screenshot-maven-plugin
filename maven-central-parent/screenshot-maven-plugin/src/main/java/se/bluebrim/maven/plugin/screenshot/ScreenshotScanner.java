@@ -45,10 +45,6 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
  * Abstract super class to objects that scans test classes for methods annotated
  * with Screenshot annotation. Since our two mojo's has different superclass we
  * can't use inheritance to provide the features in this class to our mojo's.
- * <p>
- * <a href=
- * "http://www.mail-archive.com/user@mojo.codehaus.org/msg01547.html">Adding
- * project dependencies to a plugin</a>
  * 
  * @author G Stack
  *
@@ -398,7 +394,7 @@ public abstract class ScreenshotScanner {
 	 * At:
 	 * <p>
 	 * http://www.mail-archive.com/docbook-apps@lists.oasis-open.org/msg08803.html
-	 * </p>
+	 * <p>
 	 * you can read the following: <br>
 	 * <p>
 	 * "I think the bottom line here is that specifying pixel dimensions (if you
@@ -406,12 +402,12 @@ public abstract class ScreenshotScanner {
 	 * way to way to tell FOP to ignore the dpi info. So far just setting the dpi to
 	 * 96 in the image files themselves seems to be the only way to get them to
 	 * display properly. "
-	 * </p>
+	 * <p>
 	 * <p>
 	 * But when using 96 the images was to large in the final pdf. Tried different
 	 * values and 110 is the best so far. TODO: Find out how to derive the value
 	 * from the environment instead.
-	 * </p>
+	 * <p>
 	 */
 	private void writeScreenshot(BufferedImage screenshot, File file) {
 		writePngFile(screenshot, file, 110);

@@ -14,11 +14,10 @@ import org.jdesktop.swingx.painter.MattePainter;
 
 @SuppressWarnings("serial")
 /**
- * <p>
  * A small panel filled with the specified {@link Paint} as in this
  * example:
- * </p>
- * <img src="doc-files/PaintSamplePanel.png">
+ * <p>
+ * <img src="doc-files/PaintSamplePanel.png" alt="xxx" >
  * 
  * @author Goran Stack
  */

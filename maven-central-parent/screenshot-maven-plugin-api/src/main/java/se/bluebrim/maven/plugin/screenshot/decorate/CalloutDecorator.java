@@ -12,8 +12,9 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 
 /**
- * Draws a a filled circle with a number: 
- * </p> <img src="doc-files/CalloutDecorator.png" /> </p>
+ * Draws a a filled circle with a number:
+ * <p>
+ * <img src="doc-files/CalloutDecorator.png" alt="xxx">
  * 
  * @author Goran Stack
  * 

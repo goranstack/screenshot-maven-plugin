@@ -49,7 +49,7 @@ import com.sun.swingset3.DemoProperties;
 import com.sun.swingset3.demos.JHyperlink;
 
 /**
- * <img src="doc-files/ButtonDemo.png">
+ * <img src="doc-files/ButtonDemo.png" alt="xxx" >
  *
  * @author aim
  */
