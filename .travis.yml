@@ -5,7 +5,7 @@ jdk:
   
 install: true 
 
-script: mvn --settings .travis/settings.xml clean install
+script: mvn clean install
 
 deploy:
 - 
