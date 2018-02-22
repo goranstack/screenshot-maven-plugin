@@ -537,18 +537,18 @@ href="images/photo-camera.svg">
 <h1>Configure your pom files</h1>
 <div class="details">
 <span id="revnumber">version 1.0.0-SNAPSHOT,</span>
-<span id="revdate">2018-02-21 15:46</span>
+<span id="revdate">2018-02-22 10:02</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_configuration_in_the_parent_pom">1. Configuration in the parent pom</a>
+<li><a href="#_configuration_in_the_parent_code_pom_code">1. Configuration in the parent <code>pom</code></a>
 <ul class="sectlevel2">
 <li><a href="#_specify_the_following_properties">1.1. Specify the following properties</a></li>
 <li><a href="#_add_a_plugin_element_to_the_pluginmanagement_part">1.2. Add a plugin element to the pluginManagement part</a></li>
 </ul>
 </li>
-<li><a href="#_configuration_in_module_pom">2. Configuration in module pom</a></li>
+<li><a href="#_configuration_in_module_code_pom_code">2. Configuration in module <code>pom</code></a></li>
 <li><a href="#_add_a_gh_pages_module">3. Add a gh-pages module</a></li>
 <li><a href="#_test_your_configuration">4. Test your configuration</a></li>
 <li><a href="#_deploy_content_to_github_pages">5. Deploy content to GitHub pages</a></li>
@@ -566,10 +566,10 @@ in the Screenshot Maven Plugin project it self.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_in_the_parent_pom">1. Configuration in the parent pom</h2>
+<h2 id="_configuration_in_the_parent_code_pom_code">1. Configuration in the parent <code>pom</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Define as much as possible in the parent pom to avoid duplicated configuration.</p>
+<p>Define as much as possible in the parent <code>pom</code> to avoid duplicated configuration.</p>
 </div>
 <div class="sect2">
 <h3 id="_specify_the_following_properties">1.1. Specify the following properties</h3>
@@ -694,10 +694,10 @@ Screenshot images are stored in a separate directory for each module.</td>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_configuration_in_module_pom">2. Configuration in module pom</h2>
+<h2 id="_configuration_in_module_code_pom_code">2. Configuration in module <code>pom</code></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Add the following to the pom files of modules containing Swing classes that you like to generate screenshots of.</p>
+<p>Add the following to the <code>pom</code> files of modules containing Swing classes that you like to generate screenshots of.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -742,7 +742,7 @@ handwritten AsciiDoc and publish it on GitHub pages.</p>
 </div>
 <div class="paragraph">
 <p>Since other modules writes to the <code>target</code> directory of the <code>gh-pages</code> module before the <code>gh-pages</code> module
-is build, we must skip the cleaning by adding the following in the pom file:</p>
+is build, we must skip the cleaning by adding the following in the <code>pom</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -762,7 +762,7 @@ is build, we must skip the cleaning by adding the following in the pom file:</p>
 </div>
 <div class="paragraph">
 <p>Instead the cleaning of the <code>gh-pages</code> module is done at the beginning of the build by adding the following to the
-root parent pom file:</p>
+root parent <code>pom</code> file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -930,7 +930,7 @@ rm -rf .git</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0.0-SNAPSHOT<br>
-Last updated 2018-02-21 15:46:37 UTC
+Last updated 2018-02-22 10:01:52 UTC
 </div>
 </div>
 </body>
