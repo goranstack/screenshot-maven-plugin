@@ -3,7 +3,7 @@ package se.bluebrim.maven.plugin.screenshot.example;
 import java.awt.Font;
 
 /**
- * <img src="doc-files/FontFactory.png" alt="xxx" >
+ * <img src="doc-files/FontFactory.png" alt="Screenshot image of class: FontFactory" >
  * <p>
  * This is an example of a resource class with visual samples included in the Javadoc.
  * The images for the Javadoc are created by a few lines of  code in a test class.
@@ -15,7 +15,7 @@ import java.awt.Font;
 public class FontFactory 
 {
 	/**
-	 * <img src="doc-files/FontFactory-serif14.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-serif14.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font serif14()
 	{
@@ -23,7 +23,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-serifBold14.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-serifBold14.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font serifBold14()
 	{
@@ -31,7 +31,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-serifItalic14.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-serifItalic14.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font serifItalic14()
 	{
@@ -39,7 +39,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-sansSerif14.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-sansSerif14.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font sansSerif14()
 	{
@@ -47,7 +47,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-sansSerif9.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-sansSerif9.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font sansSerif9()
 	{
@@ -55,7 +55,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-sansSerif20.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-sansSerif20.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font sansSerif20()
 	{
@@ -63,7 +63,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-sansSerif28.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-sansSerif28.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font sansSerif28()
 	{
@@ -71,7 +71,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-sansSerifBold14.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-sansSerifBold14.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font sansSerifBold14()
 	{
@@ -79,7 +79,7 @@ public class FontFactory
 	}
 	
 	/**
-	 * <img src="doc-files/FontFactory-sansSerifItalic14.png" alt="xxx" >
+	 * <img src="doc-files/FontFactory-sansSerifItalic14.png" alt="Screenshot image of class: FontFactory" >
 	 */
 	public static Font sansSerifItalic14()
 	{

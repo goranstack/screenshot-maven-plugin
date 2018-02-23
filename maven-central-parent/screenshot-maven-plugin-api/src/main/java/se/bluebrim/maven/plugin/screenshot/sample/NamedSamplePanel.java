@@ -15,7 +15,7 @@ import org.jdesktop.swingx.JXPanel;
  * A small panel with a sample of something that can be drawn by a {@link JComponent}
  * with a text label below the sample.
  * <p>
- * <img src="doc-files/NamedSamplePanel.png" alt="xxx" >
+ * <img src="doc-files/NamedSamplePanel.png" alt="Screenshot image of class: NamedSamplePanel" >
  * 
  * @author Goran Stack
  *

@@ -14,7 +14,7 @@ import javax.swing.JComponent;
 /**
  * Draws a a filled circle with a number:
  * <p>
- * <img src="doc-files/CalloutDecorator.png" alt="xxx">
+ * <img src="doc-files/CalloutDecorator.png" alt="Screenshot image of class: CalloutDecorator">
  * 
  * @author Goran Stack
  * 

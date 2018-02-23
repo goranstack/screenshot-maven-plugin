@@ -43,7 +43,7 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil.StaticMethodVisitor
  * Various sizes of the same font are grouped together. The fonts are specified as a Map to enable each font
  * to be associated with a string that is drawn as the font source.
  * <p>
- * <img src="doc-files/FontChartPanel.png" alt="xxx" >
+ * <img src="doc-files/FontChartPanel.png" alt="Screenshot image of class: FontChartPanel" >
  * 
  * @author Goran Stack
  *
@@ -117,7 +117,7 @@ public class FontChartPanel extends JPanel
 	/**
 	 * A panel that draw font info and sample text of the font. 
 	 * <p>
-	 * <img src="doc-files/FontPanel.png" alt="xxx" >
+	 * <img src="doc-files/FontPanel.png" alt="Screenshot image of class: FontPanel" >
 	 */
 	public static class FontPanel extends JPanel implements Comparable<FontChartPanel.FontPanel>
 	{
@@ -197,7 +197,7 @@ public class FontChartPanel extends JPanel
 	/**
 	 * A panel that draw the font size as a formatted number. 
 	 * <p>
-	 * <img src="doc-files/FontSizeLabel.png" alt="xxx" >
+	 * <img src="doc-files/FontSizeLabel.png" alt="Screenshot image of class: FontSizeLabel" >
 	 */
 	public static class FontSizeLabel extends AntialiasedLabel
 	{
@@ -242,7 +242,7 @@ public class FontChartPanel extends JPanel
 	 * A panel that illustrates the font metrics by drawing ascender, base and descender line
 	 * on top of text sample with a rather large font size.
 	 * <p>
-	 * <img src="doc-files/FontMetricPanel.png" alt="xxx" >
+	 * <img src="doc-files/FontMetricPanel.png" alt="Screenshot image of class: FontMetricPanel" >
 	 */
 	public static class FontMetricPanel extends BestRenderQualityLabel
 	{
@@ -282,7 +282,7 @@ public class FontChartPanel extends JPanel
 	/**
 	 * Draw a text sample twice one with kerning on and one without kerning.
 	 * <p>
-	 * <img src="doc-files/FontKerningPanel.png" alt="xxx" >
+	 * <img src="doc-files/FontKerningPanel.png" alt="Screenshot image of class: FontKerningPanel" >
 	 *
 	 */
 	public static class FontKerningPanel extends JPanel

@@ -17,7 +17,7 @@ import org.jdesktop.swingx.painter.MattePainter;
  * A small panel filled with the specified {@link Paint} as in this
  * example:
  * <p>
- * <img src="doc-files/PaintSamplePanel.png" alt="xxx" >
+ * <img src="doc-files/PaintSamplePanel.png" alt="Screenshot image of class: PaintSamplePanel" >
  * 
  * @author Goran Stack
  */

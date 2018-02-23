@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 /**
  * Enables more than one screenshot decorator per Swing component
  * <p> 
- * <img src="doc-files/CompositeDecorator.png" alt="xxx" >
+ * <img src="doc-files/CompositeDecorator.png" alt="Screenshot image of class: CompositeDecorator" >
  * 
  * @author Goran Stack
  *

@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
 /**
  * Draws a frame around a component as in this example: 
  * <p>
- * <img src="doc-files/FrameDecorator.png" alt="xxx" >
+ * <img src="doc-files/FrameDecorator.png" alt="Screenshot image of class: FrameDecorator" >
  * <p>
  * @author Goran Stack
  * 
