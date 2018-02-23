@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -114,7 +115,9 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 			getLog().info("Unable to parse source file due to: " + e.getMessage());
 			return;			
 		}
-		String screenShotImageTag = "<img src=\"" + srcPath + "\" alt=\"xxx\">";
+		String template = "<img src=\"{0}\" alt=\"Screenshot image of class: {1}\">";
+
+		String screenShotImageTag = MessageFormat.format(template, srcPath, javadocClass.getSimpleName());
 		if (StringUtils.isEmpty(classComment))
 		{
 			getLog().info("Missing \"" + screenShotImageTag + "\" in class: " + javadocClass.getName());
