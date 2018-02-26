@@ -147,19 +147,22 @@
 	<modules>
 		<module>screenshot-maven-plugin-api</module>
 		<module>screenshot-maven-plugin</module>
-		<module>gh-pages</module>
-		<module>swingset3-demo-app</module>
-		<module>screenshot-examples</module>
-		<module>worldclock-example</module>
 	</modules>
 
 	<profiles>
 		<profile>
-			<id>release</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<modules>
-				<module>screenshot-maven-plugin-api</module>
-				<module>screenshot-maven-plugin</module>
+				<module>gh-pages</module>
+				<module>swingset3-demo-app</module>
+				<module>screenshot-examples</module>
+				<module>worldclock-example</module>
 			</modules>
+		</profile>
+		<profile>
+			<id>release</id>
 			<build>
 				<plugins>
 					<plugin>
