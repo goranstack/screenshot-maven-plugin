@@ -1,5 +1,5 @@
 // Badges
-image:http://img.shields.io/travis/goranstack/screenshot-maven-plugin/master.svg["Build Status (Travis CI)", link="https://travis-ci.org/goranstack/screenshot-maven-plugin"]
+image:https://img.shields.io/travis/goranstack/screenshot-maven-plugin/master.svg["Build Status (Travis CI)", link="https://travis-ci.org/goranstack/screenshot-maven-plugin"]
 image:https://img.shields.io/maven-central/v/se.bluebrim.maven.plugin/screenshot-maven-plugin-api.svg[Maven Central]
 
 = image:doc/images/photo-camera.svg[width=50] screenshot-maven-plugin
