@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 /**
  * The classic "Hello World" used to demonstrate the Screenshot Maven Plugin.
  * The camera image was found at: http://wefunction.com/2008/07/function-free-icon-set
+ * <br>
+ * <img src="doc-files/HelloWorldPanel.png" alt="Screenshot image of class: HelloWorldPanel">
  * 
  * @author Goran Stack
  *

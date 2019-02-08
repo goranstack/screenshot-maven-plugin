@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>screenshot-maven-plugin-parent</artifactId>
 		<groupId>se.bluebrim.maven.plugin</groupId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>screenshot-examples</artifactId>
 	<name>${project.artifactId}</name>
@@ -64,7 +64,7 @@
 											screenshot-maven-plugin
 										</artifactId>
 										<versionRange>
-											[1.0.1-SNAPSHOT,)
+											[1.0.2-SNAPSHOT,)
 										</versionRange>
 										<goals>
 											<goal>splashscreen</goal>
@@ -91,7 +91,7 @@
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-swing</artifactId>
-			<version>5.0</version>
+			<version>5.2</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>se.bluebrim.maven.plugin</groupId>
 		<artifactId>screenshot-maven-plugin-parent</artifactId>
-		<version>1.0.1-SNAPSHOT</version>
+		<version>1.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>screenshot-maven-plugin-api</artifactId>
 	<description>API for annotation of methods in test classes used by the screenshot-maven-plugin.</description>
@@ -13,7 +13,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.7</version>
+			<version>3.8.1</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -26,12 +26,12 @@
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-core</artifactId>
-			<version>5.0</version>
+			<version>5.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-swing</artifactId>
-			<version>5.0</version>
+			<version>5.2</version>
 		</dependency>
 	</dependencies>
 </project>
