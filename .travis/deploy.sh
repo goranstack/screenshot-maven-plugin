@@ -6,7 +6,7 @@ set -e
 if [ ! -z "$TRAVIS_TAG" ]
 then
     echo "on a tag -> set pom.xml <version> to $TRAVIS_TAG"
-    mvn org.codehaus.mojo:versions-maven-plugin:2.3:set -DnewVersion=$TRAVIS_TAG
+    mvn org.codehaus.mojo:versions-maven-plugin:2.7:set -DnewVersion=$TRAVIS_TAG
 
 
     if [ ! -z "$TRAVIS" -a -f "$HOME/.gnupg" ]; then
