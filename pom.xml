@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>se.bluebrim.maven.plugin</groupId>
 	<artifactId>screenshot-maven-plugin-parent</artifactId>
-	<version>1.0.2-SNAPSHOT</version>
+	<version>1.0.2</version>
 	<packaging>pom</packaging>
 	<name>${project.artifactId}</name>
 	<description>Parent project to screenshot-maven-plugin and additional modules</description>
