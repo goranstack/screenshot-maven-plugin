@@ -59,7 +59,7 @@ public class SampleUtil {
 	}
 	
 	/**
-	 * Only non argument methods is visited.
+	 * Only non argument public methods are visited.
 	 * <p>
 	 * @param ofClass the class whose methods will be visited
 	 * @param returnType only methods of this return type will be visited 
@@ -69,7 +69,8 @@ public class SampleUtil {
 	{
 		Method[] methods = ofClass.getDeclaredMethods();
 		for (Method method : methods) {
-			if (returnType.isAssignableFrom(method.getReturnType()) && Modifier.isStatic(method.getModifiers()) && method.getParameterTypes().length == 0)
+			int modifiers = method.getModifiers();
+			if (returnType.isAssignableFrom(method.getReturnType()) && Modifier.isStatic(modifiers)  && Modifier.isPublic(modifiers) && method.getParameterTypes().length == 0)
 			{
 				Object returnValue;
 					try {
