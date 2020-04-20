@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>screenshot-maven-plugin-parent</artifactId>
 		<groupId>se.bluebrim.maven.plugin</groupId>
-		<version>1.0.2-SNAPSHOT</version>
+		<version>1.0.3-SNAPSHOT</version>
 	</parent>
 	<artifactId>gh-pages</artifactId>
 	<packaging>pom</packaging>
