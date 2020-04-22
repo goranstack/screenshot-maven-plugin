@@ -23,6 +23,9 @@ The example modules have test classes providing Swing components that is include
 
 link:gallery/gallery.html[Example Screenshot Gallery]
 
+== For developers
+<<publish-on-maven-central-adoc#,Publish on Maven Central>>
+
 '''
 ++++
 <small>

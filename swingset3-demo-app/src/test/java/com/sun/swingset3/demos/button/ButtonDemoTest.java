@@ -29,7 +29,7 @@ public class ButtonDemoTest
 	public JComponent createNimbusButtonDemoScreenshot() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
 		LookAndFeel laf = UIManager.getLookAndFeel();
-		UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		ButtonDemo buttonDemo = new ButtonDemo();
 		UIManager.setLookAndFeel(laf);
 		return buttonDemo;

@@ -31,9 +31,9 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.util.FileUtils;
 import org.jdesktop.swingx.image.GaussianBlurFilter;
-import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
-import org.reflections.util.ConfigurationBuilder;
+import org.reflections8.Reflections;
+import org.reflections8.scanners.MethodAnnotationsScanner;
+import org.reflections8.util.ConfigurationBuilder;
 
 import com.keypoint.PngEncoder;
 

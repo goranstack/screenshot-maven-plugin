@@ -13,25 +13,25 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.8.1</version>
+			<version>${commons-lang3.version}</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.swinglabs</groupId>
 			<artifactId>swingx</artifactId>
-			<version>1.6.1</version>
+			<version>${swingx.version}</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-core</artifactId>
-			<version>5.2</version>
+			<version>${miglayout-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-swing</artifactId>
-			<version>5.2</version>
+			<version>${miglayout-swing.version}</version>
 		</dependency>
 	</dependencies>
 </project>

@@ -41,7 +41,7 @@
 			<plugin>
 				<groupId>org.asciidoctor</groupId>
 				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<version>1.5.6</version>
+				<version>${asciidoctor-maven-plugin.version}</version>
 				<configuration>
 					<backend>html5</backend>
 					<imagesDir>.</imagesDir>
@@ -77,7 +77,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
+				<version>${maven-resources-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>copy-plugin-info-resources</id>

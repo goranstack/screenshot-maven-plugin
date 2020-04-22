@@ -12,7 +12,7 @@
   	<dependency>
   		<groupId>org.swinglabs</groupId>
   		<artifactId>swing-layout</artifactId>
-  		<version>1.0.3</version>
+  		<version>${swing-layout.version}</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>

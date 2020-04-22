@@ -34,7 +34,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>templating-maven-plugin</artifactId>
-				<version>1.0.0</version>
+				<version>${templating-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>filter-src</id>
@@ -85,13 +85,13 @@
 		<dependency>
 			<groupId>org.swinglabs</groupId>
 			<artifactId>swingx</artifactId>
-			<version>1.6.1</version>
+			<version>${swingx.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
 			<artifactId>miglayout-swing</artifactId>
-			<version>5.2</version>
+			<version>${miglayout-swing.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
