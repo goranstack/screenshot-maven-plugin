@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.8">
-<title>Screenshot Maven Plugin</title>
+<title>Publish on Maven Central</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -539,86 +539,43 @@ href="images/photo-camera.svg">
 </head>
 <body class="article">
 <div id="header">
-<h1>Screenshot Maven Plugin</h1>
+<h1>Publish on Maven Central</h1>
 <div class="details">
 <span id="revnumber">version 1.0.3-SNAPSHOT,</span>
 <span id="revdate">2020-04-22 12:24</span>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
 <div class="paragraph">
-<p>A plugin that generates screenshots from Java Swing GUI components to be used in JavaDoc or in
-a AsciiDoc based screenshot gallery.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_documentation">Documentation</h2>
-<div class="sectionbody">
-<div class="hdlist">
-<table>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="./images/GitHub-Mark-32px.png" alt="GitHub Mark 32px"></span>
-</td>
-<td class="hdlist2">
-<p><a href="https://github.com/goranstack/screenshot-maven-plugin">The readme of the GitHub project</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="http://maven.apache.org/images/logos/build-by-maven-black.png" alt="build by maven black"></span>
-</td>
-<td class="hdlist2">
-<p><a href="plugin-info/plugin-info.html">Maven generated Plugin Documentation</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="./images/xml-file.svg" alt="xml file" width="40"></span>
-</td>
-<td class="hdlist2">
-<p><a href="configure-your-pom-files.html">Configure your pom files</a></p>
-</td>
-</tr>
-<tr>
-<td class="hdlist1">
-<span class="image"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cf/Eclipse-SVG.svg" alt="Eclipse SVG"></span>
-</td>
-<td class="hdlist2">
-<p><a href="getting-started-with-eclipse.html">Getting started developing with Eclipse</a></p>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_example_of_a_screenshot_gallery_created_by_the_plugin">Example of a screenshot gallery created by the plugin</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>The GitHub project contains a couple of example modules to demonstrate the output of the Screenshot Maven Plugin.
-The example modules have test classes providing Swing components that is included in the gallery.</p>
+<p>These steps requires that the project has published before otherwise you have to follow this:
+<a href="https://central.sonatype.org/pages/producers.html" class="bare">https://central.sonatype.org/pages/producers.html</a></p>
 </div>
 <div class="paragraph">
-<p><a href="gallery/gallery.html">Example Screenshot Gallery</a></p>
+<p>The Maven Travis setup in my open source project is based on: <a href="https://github.com/idealo/logback-redis/wiki/Release-Process" class="bare">https://github.com/idealo/logback-redis/wiki/Release-Process</a> that describes
+how to get rid of gpg key management and implement a trivial push-button release process with Github and TravisCI.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Build a release by checking in a tag. The Travis build script will deploy a release with a version number same as the tag.</p>
+</li>
+<li>
+<p>Go to: <a href="https://oss.sonatype.org/#stagingRepositories" class="bare">https://oss.sonatype.org/#stagingRepositories</a> and find the release as a Staging Repository. Follow this: <a href="https://central.sonatype.org/pages/releasing-the-deployment.html" class="bare">https://central.sonatype.org/pages/releasing-the-deployment.html</a></p>
+</li>
+<li>
+<p>Wait</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./images/nexus-repository-manager.png" alt="nexus repository manager">
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_for_developers">For developers</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p><a href="publish-on-maven-central-adoc.html">Publish on Maven Central</a></p>
-</div>
-<hr>
-<small>
-<div>XML icon made by <a href="https://www.flaticon.com/authors/icomoon" title="Icomoon">Icomoon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-<div>Eclipse icon by Eduemoni (Own work) [<a href="https://creativecommons.org/licenses/by-sa/3.0">CC BY-SA 3.0</a>], <a href="https://commons.wikimedia.org/wiki/File%3AEclipse-SVG.svg">via Wikimedia Commons</a></div>
-</small>
-</div>
+<p>Links to Sonatype Jira and Nexus:<br>
+<a href="https://issues.sonatype.org" class="bare">https://issues.sonatype.org</a><br>
+<a href="https://oss.sonatype.org/" class="bare">https://oss.sonatype.org/</a></p>
 </div>
 </div>
 <div id="footer">
