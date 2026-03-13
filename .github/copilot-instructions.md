@@ -121,7 +121,36 @@ The plugin loads user test classes via a separate `URLClassLoader`. When adding 
 ## Java & Build Tooling
 
 - **Java source/target**: 1.8
-- **Maven**: 3.6.x
-- **CI**: Travis CI (`.travis.yml`), runs on OracleJDK 11
-- **Releases**: Sonatype OSSRH → Maven Central; release profile triggers GPG signing
+- **Maven**: 3.9.x (installed at `~/tools/maven/apache-maven-3.9.9`); `JAVA_HOME` points to JDK 8 Temurin
+- **Project-local Maven settings**: `.mvn/maven.config` + `.mvn/settings.xml` override the corporate `~/.m2/settings.xml` so builds resolve from Maven Central
 - **Docs**: AsciiDoc (`readme.adoc`, `gh-pages` module), published to GitHub Pages
+
+## CI/CD (GitHub Actions)
+
+Three workflows in `.github/workflows/`:
+
+| Workflow | Trigger | What it does |
+|----------|---------|--------------|
+| `ci.yml` | Every push and PR | `mvn clean install` on Java 11 (ubuntu-latest) |
+| `pages.yml` | Push to `master` | Full build, deploys `gh-pages/target/generated-docs` to `gh-pages` branch |
+| `release.yml` | Tag push (`v*`) | Sets pom version from tag, deploys signed artifacts to Sonatype OSSRH |
+
+All workflows start Xvfb (`:99`) before building because the example modules render Swing components.
+
+### Release process
+
+1. Push a tag matching `v*` (e.g. `v1.0.3`)
+2. The release workflow imports the GPG key from the `GPG_PRIVATE_KEY` secret, sets the pom version to match the tag, then runs:
+   ```bash
+   mvn clean deploy -P release -DskipTests -s .github/release-settings.xml
+   ```
+3. Artifacts are staged on Sonatype OSSRH and must be promoted to Maven Central via the [Sonatype Nexus UI](https://oss.sonatype.org).
+
+### Required repository secrets
+
+| Secret | Purpose |
+|--------|---------|
+| `GPG_PRIVATE_KEY` | Artifact signing (`gpg --export-secret-keys --armor <key-id>`) |
+| `GPG_PASSPHRASE` | GPG key passphrase |
+| `SONATYPE_USERNAME` | Sonatype OSSRH username |
+| `SONATYPE_PASSWORD` | Sonatype OSSRH password |
