@@ -29,7 +29,7 @@
 		<maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
 		<asciidoctor-maven-plugin.version>1.6.0</asciidoctor-maven-plugin.version>
 		<templating-maven-plugin.version>1.0.0</templating-maven-plugin.version>
-		<nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+		<!-- nexus-staging-maven-plugin replaced by central-publishing-maven-plugin -->
 		<maven-source-plugin.version>3.2.1</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
 		<maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
@@ -76,16 +76,7 @@
 		</license>
 	</licenses>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+	<!-- Publishing handled by central-publishing-maven-plugin in release profile -->
 
 	<build>
 		<resources>
@@ -202,14 +193,14 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.sonatype.plugins</groupId>
-						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>${nexus-staging-maven-plugin.version}</version>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>0.10.0</version>
 						<extensions>true</extensions>
 						<configuration>
-							<serverId>ossrh</serverId>
-							<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-							<autoReleaseAfterClose>false</autoReleaseAfterClose>
+							<publishingServerId>central</publishingServerId>
+							<autoPublish>true</autoPublish>
+							<waitUntil>published</waitUntil>
 						</configuration>
 					</plugin>
 					<plugin>

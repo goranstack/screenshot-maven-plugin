@@ -1,9 +1,8 @@
-name: Release to Maven Central
+name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    tags: [ '*' ]
 
 jobs:
   release:
@@ -11,26 +10,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-java@v4
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'temurin'
-          cache: maven
+          server-id: central
+          server-username: CENTRAL_USERNAME
+          server-password: CENTRAL_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
 
-      - name: Start virtual display (required for Swing rendering)
+      - name: Start virtual display
         run: |
           Xvfb :99 -screen 0 1024x768x24 &
           echo "DISPLAY=:99" >> $GITHUB_ENV
 
-      - name: Import GPG key
-        run: echo "${{ secrets.GPG_PRIVATE_KEY }}" | gpg --import --batch
+      - name: Set version from tag
+        run: mvn org.codehaus.mojo:versions-maven-plugin:2.3:set -DnewVersion=${{ github.ref_name }}
 
-      - name: Set release version from tag
-        run: mvn versions:set -DnewVersion=${{ github.ref_name }} -DgenerateBackupPoms=false
-
-      - name: Deploy to Sonatype OSSRH
-        run: mvn clean deploy -P release -DskipTests -s .github/release-settings.xml
+      - name: Deploy to Maven Central
+        run: mvn clean deploy -DskipTests=true -B -U -P release
         env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
