@@ -1,5 +1,5 @@
 // Badges
-image:https://github.com/goranstack/screenshot-maven-plugin/actions/workflows/ci.yml/badge.svg["Build Status", link="https://github.com/goranstack/screenshot-maven-plugin/actions/workflows/ci.yml"]
+image:https://github.com/goranstack/screenshot-maven-plugin/actions/workflows/build.yml/badge.svg["Build Status", link="https://github.com/goranstack/screenshot-maven-plugin/actions/workflows/build.yml"]
 image:https://img.shields.io/maven-central/v/se.bluebrim.maven.plugin/screenshot-maven-plugin-api.svg[Maven Central, link="https://search.maven.org/artifact/se.bluebrim.maven.plugin/screenshot-maven-plugin-api"]
 
 
