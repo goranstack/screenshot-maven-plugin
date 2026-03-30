@@ -12,6 +12,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
+import org.apache.maven.project.MavenProject;
 
 
 /**
@@ -64,6 +65,14 @@ public class JavadocMojo extends AbstractMojo
 	protected File sourceDirectory;
 
 	/**
+	 * All projects in the Maven reactor. Used to locate source files of
+	 * {@code @Screenshot} target classes that belong to a different Maven module
+	 * than the test class containing the screenshot method.
+	 */
+	@Parameter( defaultValue = "${reactorProjects}", readonly = true, required = true )
+	private List<MavenProject> reactorProjects;
+
+	/**
 	 * The directory containing compiled test classes of the project.
 	 * 
 	 */
@@ -96,12 +105,67 @@ public class JavadocMojo extends AbstractMojo
 	public void execute() throws MojoExecutionException, MojoFailureException
 	{
 		getLog().info("Generate screenshot executed. The source directory is: " + sourceDirectory.getPath(), null);
-		JavaDocScreenshotScanner screenshotScanner = new JavaDocScreenshotScanner(this, testClassesDirectory, classesDirectory, testClasspathElements, sourceDirectory, updateSrcFiles, srcFileEncoding, locales);
+		List<File> allSourceDirectories = collectSourceDirectories();
+		getLog().info("Searching " + allSourceDirectories.size() + " source directories for target class source files.");
+		JavaDocScreenshotScanner screenshotScanner = new JavaDocScreenshotScanner(this, testClassesDirectory, classesDirectory, testClasspathElements, sourceDirectory, allSourceDirectories, updateSrcFiles, srcFileEncoding, locales);
 		if (javaDocImageScale > 0 && javaDocImageScale <= 1)
 			screenshotScanner.setScaleFactor(javaDocImageScale);
 		else
 			getLog().error("The \"imageScale\" parameter must be > 0 and <= 1");
 		screenshotScanner.execute();
+	}
+
+	/**
+	 * Collects source directories to search when resolving the source file for a
+	 * {@code @Screenshot} targetClass.
+	 * <p>
+	 * Two complementary strategies are used so the plugin works correctly both
+	 * when invoked from the multi-module root (where {@code reactorProjects}
+	 * contains all modules) and when invoked directly on a single module (where
+	 * {@code reactorProjects} only contains that one module):
+	 * <ol>
+	 *   <li>Add every source directory reported by the Maven reactor.</li>
+	 *   <li>Scan sibling directories on the file system: {@code sourceDirectory}
+	 *       is typically {@code <module>/src/main/java}; four levels up is the
+	 *       parent directory that contains all sibling modules, so every
+	 *       {@code <sibling>/src/main/java} that exists is added as well.</li>
+	 * </ol>
+	 */
+	private List<File> collectSourceDirectories() {
+		List<File> dirs = new ArrayList<File>();
+
+		// Strategy 1: reactor projects (populated when invoked from the root)
+		if (reactorProjects != null) {
+			for (MavenProject p : reactorProjects) {
+				File dir = new File(p.getBuild().getSourceDirectory());
+				if (dir.isDirectory() && !dirs.contains(dir))
+					dirs.add(dir);
+			}
+		}
+
+		// Strategy 2: filesystem scan of sibling modules.
+		// sourceDirectory = <module>/src/main/java  →  4 levels up = <modules-parent>
+		File modulesParentDir = sourceDirectory.getParentFile();
+		for (int i = 0; i < 3 && modulesParentDir != null; i++)
+			modulesParentDir = modulesParentDir.getParentFile();
+
+		if (modulesParentDir != null && modulesParentDir.isDirectory()) {
+			File[] siblings = modulesParentDir.listFiles();
+			if (siblings != null) {
+				for (File sibling : siblings) {
+					if (!sibling.isDirectory())
+						continue;
+					File srcDir = new File(sibling, "src/main/java");
+					if (srcDir.isDirectory() && !dirs.contains(srcDir))
+						dirs.add(srcDir);
+				}
+			}
+		}
+
+		// Always include the current module's source directory
+		if (!dirs.contains(sourceDirectory))
+			dirs.add(0, sourceDirectory);
+		return dirs;
 	}
 		
 }

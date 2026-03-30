@@ -43,8 +43,11 @@ public class SampleUtil {
 	{
 		Field[] fields = ofClass.getDeclaredFields();
 		for (Field field : fields) {
+			if (field.isSynthetic())
+				continue;
 			if (fieldType.isAssignableFrom(field.getType()) && Modifier.isStatic(field.getModifiers()))
 			{
+				field.setAccessible(true);
 				Object value;
 				try {
 					value = field.get(null);
@@ -59,7 +62,12 @@ public class SampleUtil {
 	}
 	
 	/**
-	 * Only non argument public methods are visited.
+	 * Only non-argument, non-synthetic, public static methods are visited.
+	 * <p>
+	 * {@code method.setAccessible(true)} is called before invocation to prevent
+	 * {@code IllegalAccessException} on synthetic bridge methods that the Java
+	 * compiler may mark as {@code public} in bytecode but that the JVM still
+	 * refuses to invoke across ClassLoader boundaries.
 	 * <p>
 	 * @param ofClass the class whose methods will be visited
 	 * @param returnType only methods of this return type will be visited 
@@ -70,8 +78,11 @@ public class SampleUtil {
 		Method[] methods = ofClass.getDeclaredMethods();
 		for (Method method : methods) {
 			int modifiers = method.getModifiers();
+			if (method.isSynthetic())
+				continue;
 			if (returnType.isAssignableFrom(method.getReturnType()) && Modifier.isStatic(modifiers)  && Modifier.isPublic(modifiers) && method.getParameterTypes().length == 0)
 			{
+				method.setAccessible(true);
 				Object returnValue;
 					try {
 						returnValue = method.invoke(null, new Object[]{});

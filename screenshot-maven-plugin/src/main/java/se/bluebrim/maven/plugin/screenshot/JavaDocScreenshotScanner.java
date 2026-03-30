@@ -39,13 +39,15 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 {
 	private static final String DOC_FILES = "doc-files";
 	private File sourceDirectory;
+	private List<File> allSourceDirectories;
     private boolean updateSrcFiles;
     private String srcFileEncoding;
 
-	public JavaDocScreenshotScanner(AbstractMojo mojo, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, File sourceDirectory, boolean updateSrcFiles, String srcFileEncoding, List<LocaleSpec> locales) 
+	public JavaDocScreenshotScanner(AbstractMojo mojo, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, File sourceDirectory, List<File> allSourceDirectories, boolean updateSrcFiles, String srcFileEncoding, List<LocaleSpec> locales) 
 	{
 		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements, locales);
 		this.sourceDirectory = sourceDirectory;
+		this.allSourceDirectories = allSourceDirectories;
 		this.updateSrcFiles = updateSrcFiles;
 		this.srcFileEncoding = srcFileEncoding;
 	}
@@ -80,9 +82,41 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 
 	private void createJavadocScreenshot(String screenshotName, JComponent screenshotComponent, Class<?> javadocClass) 
 	{
-		File docFilesDirectory = new File(sourceDirectory, org.springframework.util.ClassUtils.classPackageAsResourcePath(javadocClass) + "/" + DOC_FILES);
+		File srcDir = findSourceDirectory(javadocClass);
+		File docFilesDirectory = new File(srcDir, org.springframework.util.ClassUtils.classPackageAsResourcePath(javadocClass) + "/" + DOC_FILES);
 		docFilesDirectory.mkdirs();
 		createScreenshotFile(screenshotComponent, docFilesDirectory, screenshotName);
+	}
+
+	/**
+	 * Searches all known reactor source directories for the source file of the
+	 * given class. Falls back to the current module's source directory when the
+	 * file cannot be found (e.g. the class lives in a jar dependency rather than
+	 * a sibling module).
+	 */
+	private File findSourceDirectory(Class<?> javadocClass) {
+		String resourcePath = toSourceFilePath(javadocClass);
+		if (allSourceDirectories != null) {
+			for (File dir : allSourceDirectories) {
+				if (new File(dir, resourcePath).exists())
+					return dir;
+			}
+		}
+		return sourceDirectory;
+	}
+
+	/**
+	 * Returns the relative path to the {@code .java} source file for the given
+	 * class, taking inner classes into account. Inner classes (whose names contain
+	 * {@code $}) share their enclosing class's {@code .java} file, so only the
+	 * outer class name is used to build the path.
+	 */
+	private String toSourceFilePath(Class<?> javadocClass) {
+		String className = javadocClass.getName();
+		int dollarIndex = className.indexOf('$');
+		if (dollarIndex >= 0)
+			className = className.substring(0, dollarIndex);
+		return className.replace('.', '/') + ".java";
 	}
 
 	/**
@@ -98,8 +132,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	private void addMissingImageTagToJavadoc(Class<?> javadocClass, String screenshotName)
 	{
 		final String srcPath = DOC_FILES + "/" + screenshotName + "." + FORMAT_PNG;
-		// TODO: Find a solution that works for inner classes as well.
-		File javaFile = new File(sourceDirectory, org.springframework.util.ClassUtils.convertClassNameToResourcePath(javadocClass.getName()) + ".java");
+		File javaFile = new File(findSourceDirectory(javadocClass), toSourceFilePath(javadocClass));
 		String classComment = null;
 		try {
 			classComment = getClassComment(javaFile);
