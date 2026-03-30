@@ -277,13 +277,16 @@ public abstract class ScreenshotScanner {
 		} catch (Exception e) {
 			handleExceptionInCalledMethod(targetClass, screenshotMethod, e);
 			return null;
+		} catch (Error e) {
+			handleExceptionInCalledMethod(targetClass, screenshotMethod, e);
+			return null;
 		}
 	}
 
 	private void handleExceptionInCalledMethod(Class<?> targetClass, Method screenshotMethod, Throwable e) {
 		getLog().info(
-				"Unable to create screenshot by calling: " + targetClass.getName() + "." + screenshotMethod.getName(),
-				e);
+				"Unable to create screenshot by calling: " + targetClass.getName() + "." + screenshotMethod.getName());
+		e.printStackTrace();
 	}
 
 	protected void takeScreenShot(JComponent component, File file) {
@@ -302,6 +305,11 @@ public abstract class ScreenshotScanner {
 		Rectangle2D rect = calculateDecoratorBounds(component);
 		Rectangle2D dest = new Rectangle2D.Float();
 		Rectangle2D.union(rect, component.getBounds(), dest);
+		if (dest.getWidth() <= 0 || dest.getHeight() <= 0) {
+			throw new IllegalArgumentException("Component has zero size after layout (" +
+					(int) dest.getWidth() + "x" + (int) dest.getHeight() + "). " +
+					"The test method may need to call setPreferredSize() on the returned component.");
+		}
 		BufferedImage image = new BufferedImage((int) dest.getWidth(), (int) dest.getHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		final Graphics2D g = createGraphics(image, dest);

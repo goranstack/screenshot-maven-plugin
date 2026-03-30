@@ -65,8 +65,12 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 			JComponent screenshotComponent = (JComponent)screenshot;
 			Class<?> javadocClass = getTargetClass(annotation, screenshotComponent);
 			String screenshotName = createScreenshotName(javadocClass, getSceneName(annotation));
-			createJavadocScreenshot(screenshotName, screenshotComponent, javadocClass);
-			addMissingImageTagToJavadoc(javadocClass, screenshotName);
+			try {
+				createJavadocScreenshot(screenshotName, screenshotComponent, javadocClass);
+				addMissingImageTagToJavadoc(javadocClass, screenshotName);
+			} catch (Exception e) {
+				getLog().info("Unable to create screenshot for " + candidateClass.getName() + "." + method.getName() + ": " + e.getMessage());
+			}
 		} else
 			if (screenshot instanceof Collection<?>)
 			{
@@ -75,7 +79,11 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 				for (ScreenshotDescriptor screenshotDescriptor : screenShots) {
 					Class<?> javadocClass = screenshotDescriptor.getTargetClass();
 					String scene = StringUtils.isEmpty(screenshotDescriptor.getScene()) ? "" + index : screenshotDescriptor.getScene();
-					createJavadocScreenshot(javadocClass.getSimpleName() + "-" + scene, screenshotDescriptor.getScreenshot(), javadocClass);
+					try {
+						createJavadocScreenshot(javadocClass.getSimpleName() + "-" + scene, screenshotDescriptor.getScreenshot(), javadocClass);
+					} catch (Exception e) {
+						getLog().info("Unable to create screenshot for " + javadocClass.getSimpleName() + "-" + scene + ": " + e.getMessage());
+					}
 				}
 			}				
 	}
