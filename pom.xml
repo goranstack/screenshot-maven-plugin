@@ -237,6 +237,7 @@
 						<artifactId>maven-gpg-plugin</artifactId>
 						<version>${maven-gpg-plugin.version}</version>
 						<configuration>
+							<passphrase>${env.GPG_PASSPHRASE}</passphrase>
 							<gpgArguments>
 								<arg>--pinentry-mode</arg>
 								<arg>loopback</arg>
