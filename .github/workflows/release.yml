@@ -15,11 +15,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-          server-id: central
-          server-username: CENTRAL_USERNAME
-          server-password: CENTRAL_PASSWORD
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: GPG_PASSPHRASE
 
       - name: Start virtual display
         run: |
@@ -30,7 +26,7 @@ jobs:
         run: mvn org.codehaus.mojo:versions-maven-plugin:2.3:set -DnewVersion=${{ github.ref_name }}
 
       - name: Deploy to Maven Central
-        run: mvn clean deploy -DskipTests=true -B -U -P release
+        run: mvn clean deploy -DskipTests=true -B -U -P release -s .github/release-settings.xml
         env:
           CENTRAL_USERNAME: ${{ secrets.CENTRAL_TOKEN_USERNAME }}
           CENTRAL_PASSWORD: ${{ secrets.CENTRAL_TOKEN_PASSWORD }}
