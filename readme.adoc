@@ -30,11 +30,18 @@ have to be repeated for each supported language.
 The `screenshot-maven-plugin` automates the task of creating those kind of screenshots with a little bit of coding from
 your side
 
+== Requirements
+
+* Java 8 or later
+* Maven 3.3.1 or later (required for `${maven.multiModuleProjectDirectory}`, see <<configure-your-pom-files.adoc#,Configure your pom files>>)
+
 == The plugin goals
 
 The plugin has three goals for various purposes:
 
-* Create screenshots of UI components to include in the JavaDoc of your classes.
+* Create screenshots of UI components to include in the JavaDoc of your classes. The `targetClass` of a `@Screenshot`
+method may reside in a *different Maven module* — the plugin resolves source directories across all modules in the
+reactor and falls back to a filesystem sibling scan when running outside a multi-module build.
 
 * Create a screenshot galleries of all your UI component. The gallery is created as an AsciiDoc article for further
 processing to HTML, pdf or other format that AsciiDoctor is capable of.
@@ -122,3 +129,24 @@ http://goranstack.github.io/screenshot-maven-plugin[GitHub Pages]
 <div>The camera icon made by <a href="https://www.flaticon.com/authors/daniel-bruce" title="Daniel Bruce">Daniel Bruce</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 </small>
 ++++
+
+== Release history
+
+=== 1.0.6
+
+* *Cross-module `targetClass` support*: `@Screenshot` methods whose `targetClass` belongs to a different Maven module
+  now work correctly. The plugin searches all reactor project source directories and falls back to a filesystem sibling
+  scan (walking up to the modules parent and scanning all subdirectories for `src/main/java`) when reactor projects
+  are unavailable.
+
+* *Robustness improvements*:
+** `Error` subclasses (e.g. `NoSuchMethodError`) caught in `callScreenshotMethod` so that one bad method no longer
+   causes a `BUILD FAILURE` for the entire module.
+** Zero-size component guard in `ripSwingComponent` prevents empty-component exceptions.
+** Rendering exceptions inside `handleFoundMethod` are caught per-component so remaining screenshots are still generated.
+** Full stack traces now printed for `NullPointerException` and similar errors without a message, making failures
+   easier to diagnose.
+
+* *`SampleUtil` fixes*:
+** Synthetic bridge methods and synthetic fields are skipped to avoid `IllegalAccessException`.
+** `setAccessible(true)` called before reflective invocation so private/protected sample methods and fields work.

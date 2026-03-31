@@ -4,6 +4,8 @@
 :icons: font
 :sectnums:
 
+NOTE: Maven 3.3.1 or later is required.
+
 We assume that you have a multi module project and the screenshot gallery should be aggregated from several
 modules and published with GitHub pages. You find a working example of the configuration described here
 in the Screenshot Maven Plugin project it self.
@@ -17,21 +19,15 @@ Define as much as possible in the parent `pom` to avoid duplicated configuration
 ----
 <properties>
     <screenshot-maven-plugin.version>{current-version}</screenshot-maven-plugin.version>
-    <rootDirectory>${project.basedir}</rootDirectory> <1>
-    <localRepositoryPath>${rootDirectory}/maven-repo</localRepositoryPath>
-    <screenshotGalleryTarget>${rootDirectory}/gh-pages/target/gallery-src</screenshotGalleryTarget> <2>
+    <screenshotGalleryTarget>${maven.multiModuleProjectDirectory}/gh-pages/target/gallery-src</screenshotGalleryTarget> <1>
 </properties>
 ----
 
-<1> I haven't found any Maven property that specifies the root of the project so I've made one up. The `rootDirectory`
-property is redefined in every module with a relative path to the root. Append as many `/..` necessary to reach the root.
+<1> `${maven.multiModuleProjectDirectory}` is a Maven built-in property (available since Maven 3.3.1) that always
+resolves to the directory containing the top-level `pom.xml`, regardless of which sub-module is being built.
+Use it as a stable root-relative path instead of maintaining per-module `../..` relative paths.
 +
-[source, xml]
-----
-<rootDirectory>${project.basedir}/..</rootDirectory>
-----
-
-<2> Specify a common directory for gallery screenshots from different modules
+Specify a common directory for gallery screenshots from different modules.
 
 === Add a plugin element to the pluginManagement part
 
@@ -84,8 +80,12 @@ command:
 +
 [source, bash]
 ----
-mvn se.bluebrim.maven.plugin:screenshot-maven-plugin:gallery@create-gallery
+mvn screenshot:gallery@create-gallery
 ----
++
+TIP: The short `screenshot:` prefix requires the `goalPrefix` configuration shown above. When invoking a goal directly
+(not through lifecycle) the `create-gallery` execution configuration is used, so `${maven.multiModuleProjectDirectory}`
+is already resolved and the aggregated `gallery.adoc` lands in the correct shared directory.
 
 <3> Specify a path to the directory where the `gallery` goal aggregates screenshots from different modules.
 Screenshot images are stored in a separate directory for each module.
@@ -191,6 +191,34 @@ root parent `pom` file:
 </build>
 ----
 
+
+== Cross-module `targetClass`
+
+The `@Screenshot` annotation accepts a `targetClass` parameter that names the class whose JavaDoc will receive
+the generated image. Since 1.0.6 this class may live in a *different Maven module* from the test class that
+creates the screenshot.
+
+[source, java]
+----
+// Test class in module: com.example.feature
+@Screenshot(targetClass = MyButton.class)  // MyButton is in module: com.example.core.ui
+public JComponent createMyButtonScreenshot() {
+    return new MyButton("Click me");
+}
+----
+
+The plugin resolves the source file of `targetClass` by:
+
+. Searching the source directories of all reactor projects (available when building from the multi-module root).
+. Falling back to a filesystem sibling scan — walking up from the current project to the common modules parent and
+  scanning every subdirectory for a `src/main/java` folder.
+
+No extra configuration is needed. Run from the multi-module root to ensure all reactor projects are available:
+
+[source, bash]
+----
+mvn screenshot:javadoc
+----
 
 == Test your configuration
 Verify the configuration by adding the following classes to one of those modules:
