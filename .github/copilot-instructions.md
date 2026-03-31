@@ -37,7 +37,7 @@ mvn clean install -pl screenshot-maven-plugin
 # Run tests (minimal unit tests exist; functional validation happens via examples)
 mvn test
 
-# Release build (signs artifacts, requires GPG key and Sonatype OSSRH credentials)
+# Release build (signs artifacts, requires GPG key and Central Portal credentials)
 mvn install -P release
 ```
 
@@ -127,24 +127,23 @@ The plugin loads user test classes via a separate `URLClassLoader`. When adding 
 
 ## CI/CD (GitHub Actions)
 
-Three workflows in `.github/workflows/`:
+Two workflows in `.github/workflows/`:
 
 | Workflow | Trigger | What it does |
 |----------|---------|--------------|
-| `ci.yml` | Every push and PR | `mvn clean install` on Java 11 (ubuntu-latest) |
-| `pages.yml` | Push to `master` | Full build, deploys `gh-pages/target/generated-docs` to `gh-pages` branch |
-| `release.yml` | Tag push (`v*`) | Sets pom version from tag, deploys signed artifacts to Sonatype OSSRH |
+| `build.yml` | Every push and PR | `mvn clean install` on Java 11; on `master` push also deploys `gh-pages/target/generated-docs` to GitHub Pages |
+| `release.yml` | Tag push (`v*`) | Sets pom version from tag, deploys signed artifacts to Maven Central via Central Publishing Maven Plugin |
 
 All workflows start Xvfb (`:99`) before building because the example modules render Swing components.
 
 ### Release process
 
-1. Push a tag matching `v*` (e.g. `v1.0.3`)
+1. Push a tag (e.g. `git tag 1.0.7 && git push origin 1.0.7`)
 2. The release workflow imports the GPG key from the `GPG_PRIVATE_KEY` secret, sets the pom version to match the tag, then runs:
    ```bash
-   mvn clean deploy -P release -DskipTests -s .github/release-settings.xml
+   mvn clean deploy -DskipTests -B -U -P release
    ```
-3. Artifacts are staged on Sonatype OSSRH and must be promoted to Maven Central via the [Sonatype Nexus UI](https://oss.sonatype.org).
+3. The `central-publishing-maven-plugin` uploads to the Central Portal with `autoPublish` enabled, so artifacts are promoted to Maven Central automatically.
 
 ### Required repository secrets
 
@@ -152,5 +151,5 @@ All workflows start Xvfb (`:99`) before building because the example modules ren
 |--------|---------|
 | `GPG_PRIVATE_KEY` | Artifact signing (`gpg --export-secret-keys --armor <key-id>`) |
 | `GPG_PASSPHRASE` | GPG key passphrase |
-| `SONATYPE_USERNAME` | Sonatype OSSRH username |
-| `SONATYPE_PASSWORD` | Sonatype OSSRH password |
+| `CENTRAL_TOKEN_USERNAME` | Central Portal token username |
+| `CENTRAL_TOKEN_PASSWORD` | Central Portal token password |

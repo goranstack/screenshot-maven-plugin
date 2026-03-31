@@ -256,22 +256,18 @@ The screenshot plugin detect the missing img tag in the Javadoc of `HelloWorldPa
 To include the screenshot in the Javadoc of the HelloWorldPanel class copy the image tag from Maven console and paste
 into the Javadoc. You should now be able to see the image as part of the Javadoc.
 
-== Deploy content to GitHub pages
-Travis has build in support for GitHub pages deployment. If you use a CI without this feature
-its also possible to use a script like this:
+== Deploy content to GitHub Pages
+Deployment to GitHub Pages is handled automatically by the `build.yml` GitHub Actions workflow.
+On every push to `master`, the workflow:
 
-[source, bash]
-----
-#!/bin/bash
-cd gh-pages/target/generated-docs <1>
-git init
-git remote add origin git@github.com:goranstack/screenshot-maven-plugin.git <2>
-git add .
-git commit -m "Updated generated doc"
-git push --force origin master:gh-pages <3>
-rm -rf .git
-----
+. Runs `mvn clean install` (which generates the AsciiDoc gallery and HTML output in `gh-pages/target/generated-docs`).
+. Uploads the generated docs as a GitHub Pages artifact using `actions/upload-pages-artifact`.
+. Deploys the artifact to GitHub Pages using `actions/deploy-pages`.
 
-<1> Specify a module with a build output to be published on GitHub pages
-<2> Specify your GitHub repo
-<3> Use force push to completely replace old content with new
+=== GitHub Pages setup
+
+To enable this for your own repository:
+
+. Go to your repository *Settings > Pages*.
+. Under *Source*, select *GitHub Actions*.
+. Ensure the workflow has `pages: write` and `id-token: write` permissions (already configured in `build.yml`).

@@ -2,21 +2,37 @@
 :docinfo: shared
 :icons: font
 
-These steps requires that the project has published before otherwise you have to follow this:
-https://central.sonatype.org/pages/producers.html[]
+Publishing is handled by a GitHub Actions release workflow and the
+https://central.sonatype.org/publish/publish-portal-maven/[Central Publishing Maven Plugin].
+Artifacts are signed with GPG and published automatically — no manual staging/promotion step is needed.
 
-The Maven Travis setup in my open source project is based on: https://github.com/idealo/logback-redis/wiki/Release-Process that describes 
-how to get rid of gpg key management and implement a trivial push-button release process with Github and TravisCI.
+== Prerequisites
 
-* Build a release by checking in a tag. The Travis build script will deploy a release with a version number same as the tag.
-* Go to: https://oss.sonatype.org/#stagingRepositories and find the release as a Staging Repository. Follow this: https://central.sonatype.org/pages/releasing-the-deployment.html
-* Wait
+* The project must already be registered with the Sonatype Central Portal.
+  If this is a first-time publish, follow https://central.sonatype.org/register/central-portal/[Register on the Central Portal].
+* The following GitHub repository secrets must be configured:
++
+[cols="1,2", options="header"]
+|===
+| Secret | Purpose
+| `GPG_PRIVATE_KEY` | Armor-exported GPG signing key (`gpg --export-secret-keys --armor <key-id>`)
+| `GPG_PASSPHRASE` | Passphrase for the GPG key
+| `CENTRAL_TOKEN_USERNAME` | Central Portal token username (generated at https://central.sonatype.com[central.sonatype.com])
+| `CENTRAL_TOKEN_PASSWORD` | Central Portal token password
+|===
 
-image::images/nexus-repository-manager.png[]
+== Release process
 
+. Push a Git tag (e.g. `git tag 1.0.7 && git push origin 1.0.7`).
+. The `release.yml` GitHub Actions workflow will:
+.. Set the POM version to match the tag name.
+.. Build, sign, and deploy the artifacts using the `release` profile.
+.. The `central-publishing-maven-plugin` uploads to the Central Portal with `autoPublish` enabled,
+   so the release is promoted to Maven Central automatically.
+. Wait a few minutes for the artifacts to appear on https://search.maven.org[Maven Central].
 
-Links to Sonatype Jira and Nexus: +
-https://issues.sonatype.org[] +
-https://oss.sonatype.org/[]
+== Useful links
 
+https://central.sonatype.com[] — Central Portal (token management, deployments) +
+https://search.maven.org[search.maven.org] — verify published artifacts
 
